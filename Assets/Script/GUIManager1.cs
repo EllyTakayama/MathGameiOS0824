@@ -205,6 +205,7 @@ public class GUIManager1 : MonoBehaviour {
         Debug.Log("SceneCount"+GameManager.singleton.SceneCount);
         int IScount = GameManager.singleton.SceneCount;
         if(IScount>0 && IScount%3 ==0){
+            DOTween.KillAll();
             AdMobManager.GetComponent<AdMobInterstitial>().ShowAdMobInterstitial();
             return;
         }

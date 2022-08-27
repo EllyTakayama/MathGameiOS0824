@@ -90,6 +90,7 @@ public class EndImage : MonoBehaviour
              Instantiate(pickSkullEffect,gameOverPanel.transform,false);
              
         }
+
         
     //SoundManager.instance.StopBGM();
     //piyoボード表示時にBGMオフではなく、SEを追加しようかなと。

@@ -29,6 +29,7 @@ public class AdMobInterstitial : MonoBehaviour
         }
         else
         {
+            SceneManager.LoadScene("Menu");
             Debug.Log("広告読み込み未完了");
         }
     }
@@ -94,6 +95,7 @@ public class AdMobInterstitial : MonoBehaviour
         //インタースティシャル再読み込み開始
         RequestInterstitial();
         Debug.Log("インタースティシャル広告再読み込み");
+        SceneManager.LoadScene("Menu");
     }
 
 }

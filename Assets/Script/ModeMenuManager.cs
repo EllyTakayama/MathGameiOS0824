@@ -44,6 +44,12 @@ public class ModeMenuManager : MonoBehaviour
         settingPanel.SetActive(false);
         playExPanel.SetActive(false);
         SoundManager.instance.PlayBGM("TopMenuPanel");
+        if(GameManager.singleton.SceneCount==5||GameManager.singleton.SceneCount==20||
+        GameManager.singleton.SceneCount==50||GameManager.singleton.SceneCount==70||
+        GameManager.singleton.SceneCount==100||GameManager.singleton.SceneCount==130){
+        AdMobManager.GetComponent<StoreReviewManager>().RequestReview();
+        Debug.Log("レビュー画面表示");
+        }
         
     }
 
@@ -97,8 +103,8 @@ public class ModeMenuManager : MonoBehaviour
     {
       
       Debug.Log("SceneCount"+GameManager.singleton.SceneCount);
-        SoundManager.instance.PlaySEButton();
-         settingPanel.SetActive(true);
+    SoundManager.instance.PlaySEButton();
+        settingPanel.SetActive(true);
          
     }
 
@@ -127,12 +133,19 @@ public class ModeMenuManager : MonoBehaviour
             studyPanel.SetActive(false);
         }
         if(ModeMenuPanel == true){
-            TopMenuPanel.SetActive(true);
             ModeMenuPanel.SetActive(false);
         }
         if(IScount>0 && IScount%3 ==0){
+            DOTween.KillAll();
             AdMobManager.GetComponent<AdMobInterstitial>().ShowAdMobInterstitial();
             return;
+        }
+
+        if(GameManager.singleton.SceneCount==15||GameManager.singleton.SceneCount==30||
+        GameManager.singleton.SceneCount==60||GameManager.singleton.SceneCount==90||
+        GameManager.singleton.SceneCount==110||GameManager.singleton.SceneCount==140){
+        AdMobManager.GetComponent<StoreReviewManager>().RequestReview();
+        Debug.Log("レビュー画面表示");
         }
      
     }
@@ -251,7 +264,7 @@ public class ModeMenuManager : MonoBehaviour
                 case "Button5":
                 SoundManager.instance.PlaySE11Button3();//SoundManagerからSEButtonを実行
                 GameManager.singleton.currentMode = 15;
-                 DOTween.KillAll();
+                DOTween.KillAll();
                     // テストボタンからの5段でcurrentMode15を選択してMathAndScript.csに
                    SceneManager.LoadScene("Renshuu");
                break;
@@ -259,7 +272,7 @@ public class ModeMenuManager : MonoBehaviour
                 case "Button6":
                 SoundManager.instance.PlaySE11Button3();//SoundManagerからSEButtonを実行
                 GameManager.singleton.currentMode = 16;
-                 DOTween.KillAll();
+                DOTween.KillAll();
                     // テストボタンからの2段でcurrentMode16を選択してMathAndScript.csに
                    SceneManager.LoadScene("Renshuu");
                  break;

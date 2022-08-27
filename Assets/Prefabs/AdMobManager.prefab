@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5898220059924503801}
   - component: {fileID: 3000078853981945359}
   - component: {fileID: 1288037039534757325}
+  - component: {fileID: 1537836004708377255}
   m_Layer: 0
   m_Name: AdMobManager
   m_TagString: Untagged
@@ -75,3 +76,15 @@ MonoBehaviour:
   endHaloImage: {fileID: 0}
   gameOverMarkText: {fileID: 0}
   messageText: {fileID: 0}
+--- !u!114 &1537836004708377255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9197166423184399451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f73dcba97ba1846f695548953e3a0e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

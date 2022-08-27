@@ -2794,7 +2794,7 @@ RectTransform:
   - {fileID: 1525731134}
   - {fileID: 499771927}
   m_Father: {fileID: 699131846}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3625,8 +3625,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1365407432}
   - {fileID: 592832714}
+  - {fileID: 1365407432}
   - {fileID: 1911401834}
   - {fileID: 1501908334}
   - {fileID: 1885838338}
@@ -8348,7 +8348,7 @@ RectTransform:
   - {fileID: 2108167327}
   - {fileID: 94745804}
   m_Father: {fileID: 699131846}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -10624,6 +10624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1667429072}
   - component: {fileID: 1667429071}
+  - component: {fileID: 1667429073}
   m_Layer: 0
   m_Name: TestToggleManager
   m_TagString: Untagged
@@ -10660,6 +10661,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1667429073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667429070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f73dcba97ba1846f695548953e3a0e31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1725561201
 GameObject:
   m_ObjectHideFlags: 0
@@ -10713,7 +10726,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 247, y: -1828.5192}
+  m_AnchoredPosition: {x: 247, y: -1828.519}
   m_SizeDelta: {x: 665.6663, y: 3437.038}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1725561203
@@ -11005,7 +11018,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 273.2, y: -2410.0002}
+  m_AnchoredPosition: {x: 273.2, y: -2410}
   m_SizeDelta: {x: 546.9932, y: 4600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1773907292
@@ -12632,7 +12645,6 @@ GameObject:
   - component: {fileID: 1977966056}
   - component: {fileID: 1977966055}
   - component: {fileID: 1977966054}
-  - component: {fileID: 1977966057}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -12705,18 +12717,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1977966057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1977966053}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1982746615
 GameObject:
   m_ObjectHideFlags: 0
@@ -12886,7 +12886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1986174025
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13371,7 +13371,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1190978829}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.18043478
+  m_Size: 0.09021739
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13853,7 +13853,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 982096746}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.24148698
+  m_Size: 0.12074349
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -14409,6 +14409,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1288037039534757325, guid: 2545cfe8696974b5ba455aef3f04b8b6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5898220059924503801, guid: 2545cfe8696974b5ba455aef3f04b8b6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9197166423184399450, guid: 2545cfe8696974b5ba455aef3f04b8b6, type: 3}
       propertyPath: m_RootOrder
       value: 6

@@ -16582,6 +16582,10 @@ PrefabInstance:
       propertyPath: gameOverMarkText
       value: 
       objectReference: {fileID: 1041865620}
+    - target: {fileID: 5898220059924503801, guid: 2545cfe8696974b5ba455aef3f04b8b6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9197166423184399428, guid: 2545cfe8696974b5ba455aef3f04b8b6, type: 3}
       propertyPath: endImage
       value: 
