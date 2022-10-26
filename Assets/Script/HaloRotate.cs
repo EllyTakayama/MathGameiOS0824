@@ -24,6 +24,7 @@ public class HaloRotate : MonoBehaviour
         RotateMode.FastBeyond360)
         .SetDelay(0.2f)
         .SetLoops(-1, LoopType.Yoyo)
+        .SetLink(gameObject)
         .SetId("idFlash18");
         Debug.Log("idFlash18");
         ;  

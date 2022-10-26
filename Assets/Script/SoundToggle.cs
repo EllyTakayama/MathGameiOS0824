@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+//20221024
 
 public class SoundToggle : MonoBehaviour
 {
     public Toggle bgmToggle;
     public Toggle seToggle;
-     public Toggle test9Toggle;
+    public Toggle test9Toggle;
     
      public bool canAnswer;//Buttonの不具合を解消するため連続してボタンを押せなないよう制御
 
@@ -21,11 +22,6 @@ public class SoundToggle : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void OnClickBGMToggle(){
 
         if (canAnswer == false)

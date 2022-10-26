@@ -27,17 +27,14 @@ public class SoundManager : MonoBehaviour
     //public bool BGMis;//toggleでのBGMのオンオフ設定
     //public bool SEis;//toggleでのSEのオンオフ設定
     
-    // Start is called before the first frame update
-    void Start()
-    {
+    public void SetBgmVolume(float bgmVolume){
+        audioSourseBGM.volume = bgmVolume;
+    }
     
+    public void SetSeVolume(float seVolume){
+        audioSourceSE.volume = seVolume;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void StopBGM()
     {
         audioSourseBGM.Stop();
@@ -132,13 +129,11 @@ public class SoundManager : MonoBehaviour
     //
     }
 
-
-
     public void BGMmute(){
         audioSourseBGM.mute = true;
     }
 
-　public void UnmuteBGM(){
+    public void UnmuteBGM(){
         audioSourseBGM.mute = false;
     }
     
@@ -146,7 +141,7 @@ public class SoundManager : MonoBehaviour
         audioSourceSE.mute = true;
     }
 
-　public void UnmuteSE(){
+    public void UnmuteSE(){
         audioSourceSE.mute = false;
     }
 
