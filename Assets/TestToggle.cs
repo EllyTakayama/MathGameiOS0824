@@ -22,13 +22,6 @@ public class TestToggle : MonoBehaviour
       Debug.Log("TestQuestion"+testQuestion);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    
     public void OnClickTestTog(){ 
       if (test5Toggle.isOn == true){
             testQuestion = 5;

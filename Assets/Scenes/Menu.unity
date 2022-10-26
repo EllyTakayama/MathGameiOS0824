@@ -4008,7 +4008,6 @@ GameObject:
   - component: {fileID: 711072886}
   - component: {fileID: 711072885}
   - component: {fileID: 711072884}
-  - component: {fileID: 711072887}
   m_Layer: 5
   m_Name: testToggle
   m_TagString: Untagged
@@ -4092,21 +4091,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711072882}
   m_CullTransparentMesh: 0
---- !u!114 &711072887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 711072882}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d70cf41f359b14a2594fff23a129fdca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  test5Toggle: {fileID: 1208274616}
-  test7Toggle: {fileID: 638859117}
-  test9Toggle: {fileID: 1258761676}
 --- !u!1 &711924572
 GameObject:
   m_ObjectHideFlags: 0
@@ -6415,7 +6399,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003365086}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05fcc4ad123ea45fda4b0baa6af8aead, type: 3}
   m_Name: 
@@ -11234,7 +11218,7 @@ GameObject:
   - component: {fileID: 1667429073}
   - component: {fileID: 1667429074}
   m_Layer: 0
-  m_Name: TestToggleManager
+  m_Name: TestSliderManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11715,7 +11699,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 273.2, y: -2410.0002}
+  m_AnchoredPosition: {x: 273.2, y: -2410}
   m_SizeDelta: {x: 546.9932, y: 4600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1773907292
