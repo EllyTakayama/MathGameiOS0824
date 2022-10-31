@@ -134,6 +134,8 @@ public class ModeMenuManager : MonoBehaviour
         }
         if(ModeMenuPanel == true){
             ModeMenuPanel.SetActive(false);
+            TopMenuPanel.SetActive(true);
+
         }
         if(IScount>0 && IScount%3 ==0){
             DOTween.KillAll();
