@@ -5782,6 +5782,7 @@ GameObject:
   m_Component:
   - component: {fileID: 953696022}
   - component: {fileID: 953696023}
+  - component: {fileID: 953696024}
   m_Layer: 5
   m_Name: seSlider
   m_TagString: Untagged
@@ -5874,6 +5875,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &953696024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953696021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf746eec53b54e1e9093d729f0aa8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 953696023}
+  TestSliderManager: {fileID: 1667429070}
 --- !u!1 &967785854
 GameObject:
   m_ObjectHideFlags: 0
@@ -10591,6 +10606,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1595823813}
   - component: {fileID: 1595823814}
+  - component: {fileID: 1595823815}
   m_Layer: 5
   m_Name: bgmSlider
   m_TagString: Untagged
@@ -10683,6 +10699,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1595823815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595823812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baf746eec53b54e1e9093d729f0aa8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 1595823814}
+  TestSliderManager: {fileID: 1667429070}
 --- !u!1 &1602547413
 GameObject:
   m_ObjectHideFlags: 0
@@ -11279,6 +11309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSlider: {fileID: 1595823814}
   seSlider: {fileID: 953696023}
+  sliderHelper: {fileID: 1595823815}
 --- !u!1 &1694780402
 GameObject:
   m_ObjectHideFlags: 0

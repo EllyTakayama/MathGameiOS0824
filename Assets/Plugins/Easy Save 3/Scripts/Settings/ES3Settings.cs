@@ -4,6 +4,11 @@ using ES3Internal;
 using UnityEditor;
 #endif
 
+#if UNITY_VISUAL_SCRIPTING
+[Unity.VisualScripting.IncludeInSettings(true)]
+#elif BOLT_VISUAL_SCRIPTING
+[Ludiq.IncludeInSettings(true)]
+#endif
 public class ES3Settings : System.ICloneable
 {
 
@@ -114,8 +119,8 @@ public class ES3Settings : System.ICloneable
     public int bufferSize = 2048;
 	/// <summary>The text encoding to use for text-based format. Note that changing this may invalidate previous save data.</summary>
 	public System.Text.Encoding encoding = System.Text.Encoding.UTF8;
-	// <summary>Whether we should serialise children when serialising a GameObject.</summary>
-	public bool saveChildren = true;
+    // <summary>Whether we should serialise children when serialising a GameObject.</summary>
+    public bool saveChildren = true;
 	
 	/// <summary>Whether we should check that the data we are loading from a file matches the method we are using to load it.</summary>
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]

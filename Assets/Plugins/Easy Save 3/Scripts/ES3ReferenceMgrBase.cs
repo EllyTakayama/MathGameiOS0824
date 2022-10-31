@@ -18,8 +18,9 @@ namespace ES3Internal
         private static ES3ReferenceMgrBase _current = null;
         private static HashSet<ES3ReferenceMgrBase> mgrs = new HashSet<ES3ReferenceMgrBase>();
 #if UNITY_EDITOR
-        private const int CollectDependenciesDepth = 5;
+        private const int CollectDependenciesDepth = 3;
         protected static bool isEnteringPlayMode = false;
+        static readonly HideFlags[] invalidHideFlags = new HideFlags[] { HideFlags.DontSave, HideFlags.DontSaveInBuild, HideFlags.DontSaveInEditor, HideFlags.HideAndDontSave };
 #endif
 
         private static System.Random rng;
@@ -36,25 +37,49 @@ namespace ES3Internal
                 // If the reference manager hasn't been assigned, or we've got a reference to a manager in a different scene which isn't marked as DontDestroyOnLoad, look for this scene's manager.
                 if (_current == null /*|| (_current.gameObject.scene.buildIndex != -1 && _current.gameObject.scene != SceneManager.GetActiveScene())*/)
                 {
-                    var scene = SceneManager.GetActiveScene();
-                    var roots = scene.GetRootGameObjects();
-                    ES3ReferenceMgr mgr = null;
-
-                    // First, look for Easy Save 3 Manager in the top-level.
-                    foreach (var root in roots)
-                        if (root.name == "Easy Save 3 Manager")
-                            mgr = root.GetComponent<ES3ReferenceMgr>();
-
-                    // If the user has moved or renamed the Easy Save 3 Manager, we need to perform a deep search.
-                    if (mgr == null)
-                        foreach (var root in roots)
-                            if ((_current = root.GetComponentInChildren<ES3ReferenceMgr>()) != null)
-                                return _current;
-
-                    mgrs.Add(_current = mgr);
+                    ES3ReferenceMgrBase mgr = GetManagerFromScene(SceneManager.GetActiveScene());
+                    if(mgr != null)
+                        mgrs.Add(_current = mgr);
                 }
                 return _current;
             }
+        }
+
+        public static ES3ReferenceMgrBase GetManagerFromScene(Scene scene)
+        {
+            // This has been removed as isLoaded is false during the initial Awake().
+            /*if (!scene.isLoaded)
+                return null;*/
+
+            GameObject[] roots;
+            try
+            {
+                roots = scene.GetRootGameObjects();
+            }
+            catch
+            {
+                return null;
+            }
+
+            ES3ReferenceMgr mgr = null;
+
+            // First, look for Easy Save 3 Manager in the top-level.
+            foreach (var root in roots)
+            {
+                if (root.name == "Easy Save 3 Manager")
+                {
+                    mgr = root.GetComponent<ES3ReferenceMgr>();
+                    break;
+                }
+            }
+
+            // If the user has moved or renamed the Easy Save 3 Manager, we need to perform a deep search.
+            if (mgr == null)
+                foreach (var root in roots)
+                    if ((mgr = root.GetComponentInChildren<ES3ReferenceMgr>()) != null)
+                        break;
+
+            return mgr;
         }
 
         public bool IsInitialised { get { return idRef.Count > 0; } }
@@ -102,10 +127,7 @@ namespace ES3Internal
                 if (Current != null)
                 {
                     existing.Merge(this);
-                    if (gameObject.name.Contains("Easy Save 3 Manager"))
-                        Destroy(this.gameObject);
-                    else
-                        Destroy(this);
+                    Destroy(this);
                     _current = existing; // Undo the call to Current, which may have set it to NULL.
                 }
             }
@@ -116,6 +138,8 @@ namespace ES3Internal
 
         private void OnDestroy()
         {
+            if (_current == this)
+                _current = null;
             mgrs.Remove(this);
         }
 
@@ -249,7 +273,8 @@ namespace ES3Internal
             lock (_lock)
             {
                 idRef[id] = obj;
-                refId[obj] = id;
+                if(obj != null)
+                    refId[obj] = id;
             }
             return id;
         }
@@ -298,9 +323,9 @@ namespace ES3Internal
             }
         }
 
-        public void RemoveNullValues()
+        public void RemoveNullOrInvalidValues()
         {
-            var nullKeys = idRef.Where(pair => pair.Value == null)
+            var nullKeys = idRef.Where(pair => pair.Value == null || !CanBeSaved(pair.Value))
                                 .Select(pair => pair.Key).ToList();
             foreach (var key in nullKeys)
                 idRef.Remove(key);
@@ -430,8 +455,16 @@ namespace ES3Internal
             {
                 // SerializedObject is expensive, so for known classes we manually gather references.
 
-                if (type == typeof(Animator) || obj is Transform || type == typeof(CanvasRenderer) || type == typeof(Mesh) || type == typeof(AudioClip) || type == typeof(Rigidbody) || obj is Texture || obj is HorizontalOrVerticalLayoutGroup)
+                if (type == typeof(Animator) || obj is Transform || type == typeof(CanvasRenderer) || type == typeof(Mesh) || type == typeof(AudioClip) || type == typeof(Rigidbody) || obj is HorizontalOrVerticalLayoutGroup)
                     return;
+
+                if(obj is Texture)
+                {
+                    // This ensures that Sprites which are children of the Texture are also added. In the Editor you would otherwise need to expand the Texture to add the Sprite.
+                    foreach(var dependency in UnityEditor.AssetDatabase.LoadAllAssetsAtPath(UnityEditor.AssetDatabase.GetAssetPath(obj)))
+                        if (dependency != obj)
+                            dependencies.Add(dependency);
+                }
 
                 if (obj is Graphic)
                 {
@@ -462,7 +495,19 @@ namespace ES3Internal
 
                 if (type == typeof(Material))
                 {
-                    dependencies.Add(((Material)obj).shader);
+                    var material = (Material)obj;
+                    var shader = material.shader;
+                    if (shader != null)
+                    {
+                        dependencies.Add(material.shader);
+
+#if UNITY_2019_3_OR_NEWER
+                        for (int i = 0; i < shader.GetPropertyCount(); i++)
+                            if (shader.GetPropertyType(i) == UnityEngine.Rendering.ShaderPropertyType.Texture)
+                                dependencies.Add(material.GetTexture(shader.GetPropertyName(i)));
+                    }
+#endif
+
                     return;
                 }
 
@@ -497,7 +542,9 @@ namespace ES3Internal
 
                 if (obj is Renderer)
                 {
-                    dependencies.UnionWith(((Renderer)obj).sharedMaterials);
+                    var renderer = (Renderer)obj;
+                    foreach (var material in renderer.sharedMaterials)
+                        CollectDependenciesFromFields(material, dependencies, depth - 1);
                     return;
                 }
             }
@@ -517,7 +564,7 @@ namespace ES3Internal
                 try
                 {
                     // If it's an array which contains UnityEngine.Objects, add them as dependencies.
-                    if (property.isArray)
+                    if (property.isArray && property.propertyType != UnityEditor.SerializedPropertyType.String)
                     {
                         for (int i = 0; i < property.arraySize; i++)
                         {
@@ -545,7 +592,7 @@ namespace ES3Internal
                     {
                         var propertyValue = property.objectReferenceValue;
                         if (propertyValue == null)
-                            break;
+                            continue;
 
                         // If it's a GameObject, use CollectDependencies so that Components are also added.
                         if (propertyValue.GetType() == typeof(GameObject))
@@ -576,18 +623,10 @@ namespace ES3Internal
             if (obj == null)
                 return true;
 
-            var type = obj.GetType();
-
-            // Check if any of the hide flags determine that it should not be saved.
-            if ((((obj.hideFlags & HideFlags.DontSave) == HideFlags.DontSave) ||
-                 ((obj.hideFlags & HideFlags.DontSaveInBuild) == HideFlags.DontSaveInBuild) ||
-                 ((obj.hideFlags & HideFlags.DontSaveInEditor) == HideFlags.DontSaveInEditor) ||
-                 ((obj.hideFlags & HideFlags.HideAndDontSave) == HideFlags.HideAndDontSave)))
-            {
-                // Meshes are marked with HideAndDontSave, but shouldn't be ignored.
-                if (type == typeof(Mesh) || type == typeof(Material))
-                    return true;
-            }
+            foreach (var flag in invalidHideFlags)
+                if ((obj.hideFlags & flag) != 0 && obj.hideFlags != HideFlags.HideInHierarchy && obj.hideFlags != HideFlags.HideInInspector && obj.hideFlags != HideFlags.NotEditable)
+                    if (!(obj is Mesh || obj is Material))
+                        return false;
 
             // Exclude the Easy Save 3 Manager, and all components attached to it.
             if (obj.name == "Easy Save 3 Manager")

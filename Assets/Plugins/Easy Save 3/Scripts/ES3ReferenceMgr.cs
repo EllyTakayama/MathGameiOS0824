@@ -10,6 +10,10 @@ using System.Reflection;
 using System;
 #endif
 
+#if UNITY_VISUAL_SCRIPTING
+using Unity.VisualScripting;
+[IncludeInSettings(true)]
+#endif
 public class ES3ReferenceMgr : ES3ReferenceMgrBase
 {
 #if UNITY_EDITOR
@@ -25,7 +29,8 @@ public class ES3ReferenceMgr : ES3ReferenceMgrBase
         // This will get the dependencies for all GameObjects and Components from the active scene.
         AddDependencies(this.gameObject.scene.GetRootGameObjects());
         AddPrefabsToManager();
-        RemoveNullValues();
+        RemoveNullOrInvalidValues();
+
         ES3ReferenceMgrBase.isEnteringPlayMode = false;
     }
 

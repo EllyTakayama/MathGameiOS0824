@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UniRx;
+using UnityEngine.EventSystems;
 
 public class SoundSlider : MonoBehaviour
 {
     [SerializeField] private Slider bgmSlider;//BGMスライダー
     [SerializeField] private Slider seSlider;//SEスライダー
+    [SerializeField] private SliderHelper sliderHelper;//スライダーイベント取得用
+   
 
     void Start()
     {
         BgmLoadSlider();
         SeLoadSlider();
         
-    }
+   }
     public void BgmVolume(){
         float a = bgmSlider.value*0.8f;
         SoundManager.instance.SetBgmVolume(a);
-        BgmSave();
-        print(a);
+        //BgmSave();
+        //print(a);
     }
 
     public void SeVolume(){
@@ -31,6 +35,7 @@ public class SoundSlider : MonoBehaviour
 
     public void BgmSave(){
         ES3.Save<float>("bgmSliderValue", bgmSlider.value,"bgmSlider.es3");
+        print("bgmSliderValue");
     }
     public void SeSave(){
         ES3.Save<float>("seSliderValue", seSlider.value,"seSlider.es3");

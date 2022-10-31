@@ -7,18 +7,30 @@ using UnityEngine.Networking;
 using System;
 using ES3Internal;
 
+#if UNITY_VISUAL_SCRIPTING
+[Unity.VisualScripting.IncludeInSettings(true)]
+#elif BOLT_VISUAL_SCRIPTING
+[Ludiq.IncludeInSettings(true)]
+#endif
 public class ES3Cloud : ES3WebClass
 {
+    int timeout = 20;
+
 	/// <summary>Constructs an new ES3Cloud object with the given URL to an ES3.php file.</summary>
 	/// <param name="url">The URL of the ES3.php file on your server you want to use.</param>
 	public ES3Cloud(string url, string apiKey) : base(url, apiKey)
 	{
 	}
 
-	#region Downloaded Data Handling
+    public ES3Cloud(string url, string apiKey, int timeout) : base(url, apiKey)
+    {
+        this.timeout = timeout;
+    }
 
-	/// <summary>The encoding to use when encoding and decoding data as strings.</summary>
-	public System.Text.Encoding encoding = System.Text.Encoding.UTF8;
+    #region Downloaded Data Handling
+
+    /// <summary>The encoding to use when encoding and decoding data as strings.</summary>
+    public System.Text.Encoding encoding = System.Text.Encoding.UTF8;
 
 
 	private byte[] _data = null;
@@ -46,7 +58,7 @@ public class ES3Cloud : ES3WebClass
 		{
 			if(data == null || data.Length == 0)
 				return new string[0];
-			return text.Split(';');
+			return text.Split(new char[]{';'}, StringSplitOptions.RemoveEmptyEntries);
 		}
 		
 	}
@@ -218,7 +230,7 @@ public class ES3Cloud : ES3WebClass
 	/// <param name="es3File">An ES3File containing the data we want to upload.</param>
 	public IEnumerator UploadFile(ES3File es3File)
 	{
-		return UploadFile(es3File.LoadRawBytes(), es3File.settings, "", "", DateTimeToUnixTimestamp(DateTime.Now));
+		return UploadFile(es3File.GetBytes(), es3File.settings, "", "", DateTimeToUnixTimestamp(DateTime.Now));
 	}
 
 	/// <summary>Uploads a local file to the server, overwriting any existing file.</summary>
@@ -226,7 +238,7 @@ public class ES3Cloud : ES3WebClass
 	/// <param name="user">The unique name of the user this file belongs to, if the file isn't globally accessible.</param>
 	public IEnumerator UploadFile(ES3File es3File, string user)
 	{
-		return UploadFile(es3File.LoadRawBytes(), es3File.settings, user, "", DateTimeToUnixTimestamp(DateTime.Now));
+		return UploadFile(es3File.GetBytes(), es3File.settings, user, "", DateTimeToUnixTimestamp(DateTime.Now));
 	}
 
 	/// <summary>Uploads a local file to the server, overwriting any existing file.</summary>
@@ -235,11 +247,10 @@ public class ES3Cloud : ES3WebClass
 	/// <param name="password">The password of the user this file belongs to.</param>
 	public IEnumerator UploadFile(ES3File es3File, string user, string password)
 	{
-		return UploadFile(es3File.LoadRawBytes(), es3File.settings, user, password, DateTimeToUnixTimestamp(DateTime.Now));
+		return UploadFile(es3File.GetBytes(), es3File.settings, user, password, DateTimeToUnixTimestamp(DateTime.Now));
 	}
 
 	/// <summary>Uploads a local file to the server, overwriting any existing file.</summary>
-	/// <param name="es3File">An ES3File containing the data we want to upload.</param>
 	/// <param name="user">The unique name of the user this file belongs to, if the file isn't globally accessible.</param>
 	/// <param name="password">The password of the user this file belongs to.</param>
 	public IEnumerator UploadFile(ES3Settings settings, string user, string password)
@@ -247,7 +258,7 @@ public class ES3Cloud : ES3WebClass
 		return UploadFile(ES3.LoadRawBytes(settings), settings, user, password);
 	}
 	
-	private IEnumerator UploadFile(byte[] bytes, ES3Settings settings, string user, string password)
+	public IEnumerator UploadFile(byte[] bytes, ES3Settings settings, string user, string password)
 	{
 		return UploadFile(bytes, settings, user, password, DateTimeToUnixTimestamp(ES3.GetTimestamp(settings)));
 	}
@@ -265,6 +276,7 @@ public class ES3Cloud : ES3WebClass
 
 		using(var webRequest = UnityWebRequest.Post(url, form))
 		{
+            webRequest.timeout = timeout;
 			yield return SendWebRequest(webRequest);
 			HandleError(webRequest, true);
 		}
@@ -370,7 +382,9 @@ public class ES3Cloud : ES3WebClass
 
 		using(var webRequest = UnityWebRequest.Post(url, form))
 		{
-			yield return SendWebRequest(webRequest);
+            webRequest.timeout = timeout;
+
+            yield return SendWebRequest(webRequest);
 
 			if(!HandleError(webRequest, false))
 			{
@@ -403,7 +417,9 @@ public class ES3Cloud : ES3WebClass
 
 		using(var webRequest = UnityWebRequest.Post(url, form))
 		{
-			yield return SendWebRequest(webRequest);
+            webRequest.timeout = timeout;
+
+            yield return SendWebRequest(webRequest);
 			if(!HandleError(webRequest, false))
 			{
 				if(webRequest.downloadedBytes > 0)
@@ -493,7 +509,9 @@ public class ES3Cloud : ES3WebClass
 
 		using(var webRequest = UnityWebRequest.Post(url, form))
 		{
-			yield return SendWebRequest(webRequest);
+            webRequest.timeout = timeout;
+
+            yield return SendWebRequest(webRequest);
 			HandleError(webRequest, true);
 		}
 
@@ -567,7 +585,9 @@ public class ES3Cloud : ES3WebClass
 
 		using(var webRequest = UnityWebRequest.Post(url, form))
 		{
-			yield return SendWebRequest(webRequest);
+            webRequest.timeout = timeout;
+
+            yield return SendWebRequest(webRequest);
 			HandleError(webRequest, true);
 		}
 
@@ -592,7 +612,9 @@ public class ES3Cloud : ES3WebClass
 
 		using(var webRequest = UnityWebRequest.Post(url, form))
 		{
-			yield return SendWebRequest(webRequest);
+            webRequest.timeout = timeout;
+
+            yield return SendWebRequest(webRequest);
 			if(!HandleError(webRequest, false))
 				_data = webRequest.downloadHandler.data;
 		}
@@ -617,6 +639,8 @@ public class ES3Cloud : ES3WebClass
 
         using (var webRequest = UnityWebRequest.Post(url, form))
         {
+            webRequest.timeout = timeout;
+
             yield return SendWebRequest(webRequest);
             if (!HandleError(webRequest, false))
                 _data = webRequest.downloadHandler.data;
@@ -697,7 +721,9 @@ public class ES3Cloud : ES3WebClass
 
 		using(var webRequest = UnityWebRequest.Post(url, form))
 		{
-			yield return SendWebRequest(webRequest);
+            webRequest.timeout = timeout;
+
+            yield return SendWebRequest(webRequest);
 			if(!HandleError(webRequest, false))
 				_data = webRequest.downloadHandler.data;
 		}

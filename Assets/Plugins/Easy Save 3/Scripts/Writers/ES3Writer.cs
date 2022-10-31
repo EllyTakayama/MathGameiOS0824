@@ -157,18 +157,30 @@ public abstract class ES3Writer : IDisposable
 	{
 		if(value == null){	WriteNull(); return; }
 
-		var type = ES3TypeMgr.GetOrCreateES3Type(value.GetType());
+        var type = ES3TypeMgr.GetOrCreateES3Type(value.GetType());
 		Write(value, type, memberReferenceMode);
 	}
 
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 	public virtual void Write(object value, ES3Type type, ES3.ReferenceMode memberReferenceMode = ES3.ReferenceMode.ByRef)
 	{
+        // Note that we have to check UnityEngine.Object types for null by casting it first, otherwise
+        // it will always return false.
+        if (value == null || (ES3Reflection.IsAssignableFrom(typeof(UnityEngine.Object), value.GetType()) && value as UnityEngine.Object == null))
+        {
+            WriteNull();
+            return;
+        }
+
         // Deal with System.Objects
-        if (type.type == typeof(object))
+        if (type == null || type.type == typeof(object))
         {
             var valueType = value.GetType();
             type = ES3TypeMgr.GetOrCreateES3Type(valueType);
+
+            if(type == null)
+                throw new NotSupportedException("Types of " + valueType + " are not supported. Please see the Supported Types guide for more information: https://docs.moodkie.com/easy-save-3/es3-supported-types/");
+
             if (!type.isCollection && !type.isDictionary)
             {
                 StartWriteObject(null);
@@ -181,20 +193,17 @@ public abstract class ES3Writer : IDisposable
             }
         }
 
-        // Note that we have to check UnityEngine.Object types for null by casting it first, otherwise
-        // it will always return false.
-        if (value == null || (type.isES3TypeUnityObject && ((UnityEngine.Object)value) == null))
-		{ 
-			WriteNull(); 
-			return; 
-		}
-
 		if(type == null)
 			throw new ArgumentNullException("ES3Type argument cannot be null.");
-		if(type.isUnsupported)
-			throw new NotSupportedException("Types of "+type.type+" are not supported.");
+        if (type.isUnsupported)
+        {
+            if(type.isCollection || type.isDictionary)
+                throw new NotSupportedException(type.type + " is not supported because it's element type is not supported. Please see the Supported Types guide for more information: https://docs.moodkie.com/easy-save-3/es3-supported-types/");
+            else
+                throw new NotSupportedException("Types of " + type.type + " are not supported. Please see the Supported Types guide for more information: https://docs.moodkie.com/easy-save-3/es3-supported-types/");
+        }
 
-        if (type.isPrimitive)
+        if (type.isPrimitive || type.isEnum)
             type.Write(value, this);
         else if (type.isCollection)
         {
@@ -409,8 +418,6 @@ public abstract class ES3Writer : IDisposable
 		// Get the baseWriter using the given Stream.
 		if(settings.format == ES3.Format.JSON)
 			return new ES3JSONWriter(stream, settings, writeHeaderAndFooter, overwriteKeys);
-        else if (settings.format == ES3.Format.Binary_Alpha)
-            return new ES3BinaryWriter(stream, settings, writeHeaderAndFooter, overwriteKeys);
         else
 			return null;
 	}
@@ -462,7 +469,7 @@ public abstract class ES3Writer : IDisposable
 	protected void Merge(ES3Reader reader)
 	{
 		foreach(KeyValuePair<string,ES3Data> kvp in reader.RawEnumerator)
-			if(!keysToDelete.Contains(kvp.Key))
+			if(!keysToDelete.Contains(kvp.Key) || kvp.Value.type == null) // Don't add keys whose data is of a type which no longer exists in the project.
 				Write(kvp.Key, kvp.Value.type.type, kvp.Value.bytes);
 	}
 
@@ -483,6 +490,7 @@ public abstract class ES3Writer : IDisposable
 
 		// If we're writing to a location which can become corrupted, rename the backup file to the file we want.
 		// This prevents corrupt data.
-		ES3IO.CommitBackup(settings);
+        if(settings.location == ES3.Location.File || settings.location == ES3.Location.PlayerPrefs)
+		    ES3IO.CommitBackup(settings);
 	}
 }

@@ -27,6 +27,7 @@ namespace ES3PlayMaker
 
     public abstract class ActionBase : FsmStateAction
     {
+        [ActionSection("Error handling")]
         [Tooltip("This event is triggered if an error occurs.")]
         public FsmEvent errorEvent;
         [Tooltip("If an error occurs, the error message will be stored in this variable.")]
@@ -67,29 +68,42 @@ namespace ES3PlayMaker
 
     public abstract class SettingsAction : ActionBase
     {
+        [ActionSection("Settings")]
         public FsmBool overrideDefaultSettings = false;
-
+        [HideIf("DefaultSettingsOverridden")]
         [Tooltip("The path this ES3Settings object points to, if any.")]
         public FsmString path;
+        [HideIf("DefaultSettingsOverridden")]
         [ObjectType(typeof(ES3.Location))]
         [Tooltip("The storage location where we wish to store data by default.")]
         public FsmEnum location;
+        [HideIf("DefaultSettingsOverridden")]
         [ObjectType(typeof(ES3.EncryptionType))]
         [Tooltip("The type of encryption to use when encrypting data, if any.")]
         public FsmEnum encryptionType;
+        [HideIf("DefaultSettingsOverridden")]
         [Tooltip("The password to use to encrypt the data if encryption is enabled.")]
         public FsmString encryptionPassword;
+        [HideIf("DefaultSettingsOverridden")]
         [ObjectType(typeof(ES3.CompressionType))]
         [Tooltip("The type of compression to use when compressing data, if any.")]
         public FsmEnum compressionType;
+        [HideIf("DefaultSettingsOverridden")]
         [ObjectType(typeof(ES3.Directory))]
         [Tooltip("The default directory in which to store files when using the File save location, and the location which relative paths should be relative to.")]
         public FsmEnum directory;
+        [HideIf("DefaultSettingsOverridden")]
         [ObjectType(typeof(ES3.Format))]
         [Tooltip("The format we should use when serializing and deserializing data.")]
         public FsmEnum format;
+        [HideIf("DefaultSettingsOverridden")]
         [Tooltip("Any stream buffers will be set to this length in bytes.")]
         public FsmInt bufferSize;
+
+        public bool DefaultSettingsOverridden()
+        {
+            return !overrideDefaultSettings.Value;
+        }
 
         public override void Reset()
         {
@@ -204,6 +218,7 @@ namespace ES3PlayMaker
         public FsmString key;
         [Tooltip("The value we want to save.")]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar value;
 
         public override void OnReset()
@@ -220,6 +235,40 @@ namespace ES3PlayMaker
                 ES3.Save(key.Value, new PMDataWrapper(value.arrayValue.Values), GetSettings());
             else
                 ES3.Save(key.Value, value.GetValue(), GetSettings());
+        }
+    }
+
+    [ActionCategory("Easy Save 3")]
+    [Tooltip("Saves multiple values to a file with the given keys.")]
+    public class SaveMultiple : SettingsAction
+    {
+        [RequiredField]
+        [CompoundArray("Count", "Key", "Value")]
+        public FsmString[] keys;
+        [Tooltip("The value we want to save.")]
+        [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
+        public FsmVar[] variables;
+
+        public override void OnReset()
+        {
+            keys = null;
+            variables = null;
+        }
+
+        public override void Enter()
+        {
+            for (int i = 0; i < variables.Length; i++)
+            {
+                var key = keys[i];
+                var value = variables[i];
+                value.UpdateValue();
+
+                if (value.Type == VariableType.Array)
+                    ES3.Save(key.Value, new PMDataWrapper(value.arrayValue.Values), GetSettings());
+                else
+                    ES3.Save(key.Value, value.GetValue(), GetSettings());
+            }
         }
     }
 
@@ -267,7 +316,7 @@ namespace ES3PlayMaker
         public override void Enter()
         {
             if (useBase64Encoding.Value)
-                ES3.SaveRaw(System.Convert.FromBase64String(str.Value) + (appendNewline.Value ? "\n" : ""), GetSettings());
+                ES3.SaveRaw(System.Convert.FromBase64String(str.Value + (appendNewline.Value ? "\n" : "")), GetSettings());
             else
                 ES3.SaveRaw(str.Value + (appendNewline.Value ? "\n" : ""), GetSettings());
         }
@@ -309,16 +358,19 @@ namespace ES3PlayMaker
         [Tooltip("The Texture2D we want to save as an image.")]
         [ObjectType(typeof(Texture2D))]
         public FsmTexture texture2D;
+        [Tooltip("The quality of the image when saving JPGs, from 1 to 100. Default is 75.")]
+        public FsmInt quality;
 
         public override void OnReset()
         {
             imagePath = "image.png";
             texture2D = null;
+            quality = 75;
         }
 
         public override void Enter()
         {
-            ES3.SaveImage((Texture2D)texture2D.Value, imagePath.Value, GetSettings());
+            ES3.SaveImage((Texture2D)texture2D.Value, quality.Value, imagePath.Value, GetSettings());
         }
     }
 
@@ -334,9 +386,11 @@ namespace ES3PlayMaker
         public FsmString key;
         [Tooltip("The variable we want to use to store our loaded data.")]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar value;
         [Tooltip("Optional: A value to return if the key does not exist.")]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar defaultValue;
 
         public override void OnReset()
@@ -370,6 +424,39 @@ namespace ES3PlayMaker
     }
 
     [ActionCategory("Easy Save 3")]
+    [Tooltip("Loads multiple values from a file with the given keys.")]
+    public class LoadMultiple : SettingsAction
+    {
+        [RequiredField]
+        [CompoundArray("Count", "Key", "Value")]
+        public FsmString[] keys;
+        [Tooltip("The variables we want to load into.")]
+        [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
+        public FsmVar[] variables;
+
+        public override void OnReset()
+        {
+            keys = null;
+            variables = null;
+        }
+
+        public override void Enter()
+        {
+            for (int i = 0; i < variables.Length; i++)
+            {
+                var key = keys[i];
+                var value = variables[i];
+
+                if (value.Type == VariableType.Array)
+                    value.SetValue(ES3.Load<PMDataWrapper>(key.Value, GetSettings()).array);
+                else
+                    value.SetValue(ES3.Load<object>(key.Value, GetSettings()));
+            }
+        }
+    }
+
+    [ActionCategory("Easy Save 3")]
     [Tooltip("Loads a value from a file with the given key into an existing object, rather than creating a new instance.")]
     public class LoadInto : SettingsAction
     {
@@ -378,6 +465,7 @@ namespace ES3PlayMaker
         [Tooltip("The object we want to load our data into.")]
         [RequiredField]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar value;
 
         public override void OnReset()
@@ -890,6 +978,7 @@ namespace ES3PlayMaker
 
         [Tooltip("The value we want to save.")]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar value;
 
         public override void OnReset()
@@ -915,6 +1004,7 @@ namespace ES3PlayMaker
 
         [Tooltip("The value we want to save.")]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar value;
 
         public override void OnReset()
@@ -1023,6 +1113,7 @@ namespace ES3PlayMaker
         public FsmString key;
         [Tooltip("The value we want to save.")]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar value;
 
         public override void OnReset()
@@ -1046,9 +1137,11 @@ namespace ES3PlayMaker
         public FsmString key;
         [Tooltip("The variable we want to use to store our loaded data.")]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar value;
         [Tooltip("Optional: A value to return if the key does not exist.")]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar defaultValue;
 
         public override void OnReset()
@@ -1076,6 +1169,7 @@ namespace ES3PlayMaker
         public FsmString key;
         [Tooltip("The variable we want to load our data into.")]
         [UIHint(UIHint.Variable)]
+        [HideTypeFilter]
         public FsmVar value;
 
         public override void OnReset()
@@ -1289,6 +1383,7 @@ namespace ES3PlayMaker
 
     public abstract class ES3CloudUserAction : ES3CloudAction
     {
+        [ActionSection("User  (optional)")]
         public FsmString user;
         public FsmString password;
 
@@ -1399,7 +1494,7 @@ namespace ES3PlayMaker
 
         public override void Enter()
         {
-            StartCoroutine(cloud.SearchFilenames(searchPattern.Value, user.Value, password.Value));
+            StartCoroutine(cloud.SearchFilenames(string.IsNullOrEmpty(searchPattern.Value) ? "%" : searchPattern.Value, user.Value, password.Value));
         }
 
         public override void OnUpdate()
@@ -1435,7 +1530,7 @@ namespace ES3PlayMaker
 
         public override void Enter()
         {
-            StartCoroutine(cloud.SearchFilenames(searchPattern.Value, user.Value, password.Value));
+            StartCoroutine(cloud.SearchFilenames(string.IsNullOrEmpty(searchPattern.Value) ? "%" : searchPattern.Value, user.Value, password.Value));
         }
 
         public override void OnUpdate()
@@ -1466,13 +1561,13 @@ namespace ES3PlayMaker
 
         public override void Enter()
         {
-            StartCoroutine(cloud.DownloadFilenames(user.Value, password.Value));
+            StartCoroutine(cloud.DownloadTimestamp(path.Value, user.Value, password.Value));
         }
 
         public override void OnUpdate()
         {
             if (cloud != null && cloud.isDone)
-                timestamp = cloud.timestamp.ToString("s");
+                timestamp.Value = cloud.timestamp.ToString("s");
             base.OnUpdate();
         }
     }
@@ -1541,6 +1636,35 @@ namespace ES3PlayMaker
         public override void Enter()
         {
             ES3.StoreCachedFile(filePath.Value, GetSettings());
+        }
+    }
+
+    #endregion
+
+    #region Misc actions
+
+    [ActionCategory("Easy Save 3")]
+    [Tooltip("Gets the Streaming Assets path (see https://docs.unity3d.com/Manual/StreamingAssets.html), and optionally appends onto it. It is strongly recommended to use Easy Save's default of Persistent Data Path instead as this works on all platforms.")]
+    public class GetStreamingAssetsPath : FsmStateAction
+    {
+        [Tooltip("The variable we want to output the Streaming Assets path to.")]
+        public FsmString output;
+        [Tooltip("[Optional] A string to append to the path, for example a filename. A forward slash is automatically added for you.")]
+        public FsmString append;
+
+        public override void Reset()
+        {
+            output = null;
+            append = null;
+        }
+
+        public override void OnEnter()
+        {
+            if (!string.IsNullOrEmpty(append.Value))
+                output.Value = Application.streamingAssetsPath + "/" + append.Value;
+            else
+                output.Value = Application.streamingAssetsPath;
+            Finish();
         }
     }
 

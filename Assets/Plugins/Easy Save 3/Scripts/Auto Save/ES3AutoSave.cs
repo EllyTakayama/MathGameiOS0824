@@ -1,13 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class ES3AutoSave : MonoBehaviour
+public class ES3AutoSave : MonoBehaviour, ISerializationCallbackReceiver
 {
-	public bool saveChildren = false;
-	private bool isQuitting = false;
+    public bool saveLayer = true;
+    public bool saveTag = true;
+    public bool saveName = true;
+    public bool saveHideFlags = true;
+    public bool saveActive = true;
+    public bool saveChildren = false;
 
-    [HideInInspector]
+    private bool isQuitting = false;
+
+    //[HideInInspector]
     public List<Component> componentsToSave = new List<Component>();
+
+    public void Reset()
+    {
+        // Initialise saveLayer (etc) to false for all new Components.
+        saveLayer = false;
+        saveTag = false;
+        saveName = false;
+        saveHideFlags = false;
+        saveActive = false;
+        saveChildren = false;
+    }
 
     public void Awake()
     {
@@ -18,15 +35,21 @@ public class ES3AutoSave : MonoBehaviour
     }
 
     public void OnApplicationQuit()
-	{
-		isQuitting = true;
-	}
+    {
+        isQuitting = true;
+    }
 
-	public void OnDestroy()
-	{
-		// If this is being destroyed, but not because the application is quitting,
-		// remove the AutoSave from the manager.
-		if(!isQuitting)
-			ES3AutoSaveMgr.RemoveAutoSave (this);
-	}
+    public void OnDestroy()
+    {
+        // If this is being destroyed, but not because the application is quitting,
+        // remove the AutoSave from the manager.
+        if (!isQuitting)
+            ES3AutoSaveMgr.RemoveAutoSave(this);
+    }
+    public void OnBeforeSerialize() { }
+    public void OnAfterDeserialize()
+    {
+        // Remove any null Components
+        componentsToSave.RemoveAll(c => c == null || c.GetType() == typeof(Component));
+    }
 }

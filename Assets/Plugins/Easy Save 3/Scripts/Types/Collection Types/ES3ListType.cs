@@ -26,7 +26,7 @@ namespace ES3Types
 			foreach(object item in list)
 			{
 				writer.StartWriteCollectionItem(i);
-				writer.Write(item, elementType, memberReferenceMode);
+                writer.Write(item, elementType, memberReferenceMode);
 				writer.EndWriteCollectionItem(i);
 				i++;
 			}

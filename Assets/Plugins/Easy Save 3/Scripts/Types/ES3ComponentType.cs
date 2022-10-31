@@ -64,6 +64,11 @@ namespace ES3Types
                 else if (propertyName == gameObjectPropertyName)
                 {
                     long goID = reader.Read_ref();
+
+                    // If we already have an instance for this Component, don't attempt to create a new GameObject for it.
+                    if (instance != null)
+                        break;
+
                     var go = (GameObject)refMgr.Get(goID, type);
 
                     if (go == null)
@@ -94,7 +99,10 @@ namespace ES3Types
                     break;
                 }
             }
-            ReadComponent<T>(reader, instance);
+
+            if(instance != null)
+                ReadComponent<T>(reader, instance);
+
             return instance;
         }
 

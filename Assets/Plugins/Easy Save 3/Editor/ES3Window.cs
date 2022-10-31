@@ -16,15 +16,19 @@ namespace ES3Editor
 		{
 			// Get existing open window or if none, make a new one:
 			ES3Window window = (ES3Window)EditorWindow.GetWindow(typeof(ES3Window));
-			window.Show();
+            if(window != null)
+			    window.Show();
 		}
 
 		public static void InitAndShowHome()
 		{
 			// Get existing open window or if none, make a new one:
 			ES3Window window = (ES3Window)EditorWindow.GetWindow(typeof(ES3Window));
-			window.Show();
-			window.SetCurrentWindow(typeof(HomeWindow));
+            if (window != null)
+            {
+                window.Show();
+                window.SetCurrentWindow(typeof(HomeWindow));
+            }
 		}
 
         [MenuItem("Tools/Easy Save 3/Auto Save", false, 100)]
@@ -32,16 +36,22 @@ namespace ES3Editor
 		{
 			// Get existing open window or if none, make a new one:
 			ES3Window window = (ES3Window)EditorWindow.GetWindow(typeof(ES3Window));
-			window.Show();
-			window.SetCurrentWindow(typeof(AutoSaveWindow));
+            if (window != null)
+            {
+                window.Show();
+                window.SetCurrentWindow(typeof(AutoSaveWindow));
+            }
 		}
 
         public static void InitAndShowReferences()
         {
             // Get existing open window or if none, make a new one:
             ES3Window window = (ES3Window)EditorWindow.GetWindow(typeof(ES3Window));
-            window.Show();
-            window.SetCurrentWindow(typeof(ReferencesWindow));
+            if (window != null)
+            {
+                window.Show();
+                window.SetCurrentWindow(typeof(ReferencesWindow));
+            }
         }
 
         [MenuItem("Tools/Easy Save 3/Types", false, 100)]
@@ -49,17 +59,23 @@ namespace ES3Editor
         {
             // Get existing open window or if none, make a new one:
             ES3Window window = (ES3Window)EditorWindow.GetWindow(typeof(ES3Window));
-            window.Show();
-            window.SetCurrentWindow(typeof(TypesWindow));
+            if (window != null)
+            {
+                window.Show();
+                window.SetCurrentWindow(typeof(TypesWindow));
+            }
         }
 
         public static void InitAndShowTypes(System.Type type)
         {
             // Get existing open window or if none, make a new one:
             ES3Window window = (ES3Window)EditorWindow.GetWindow(typeof(ES3Window));
-            window.Show();
-            var typesWindow = (TypesWindow)window.SetCurrentWindow(typeof(TypesWindow));
-            typesWindow.SelectType(type);
+            if (window != null)
+            {
+                window.Show();
+                var typesWindow = (TypesWindow)window.SetCurrentWindow(typeof(TypesWindow));
+                typesWindow.SelectType(type);
+            }
         }
 
         [MenuItem("Tools/Easy Save 3/Settings", false, 100)]
@@ -67,8 +83,11 @@ namespace ES3Editor
         {
             // Get existing open window or if none, make a new one:
             ES3Window window = (ES3Window)EditorWindow.GetWindow(typeof(ES3Window));
-            window.Show();
-            window.SetCurrentWindow(typeof(SettingsWindow));
+            if (window != null)
+            {
+                window.Show();
+                window.SetCurrentWindow(typeof(SettingsWindow));
+            }
         }
 
         [MenuItem("Tools/Easy Save 3/Tools", false, 100)]
@@ -76,8 +95,11 @@ namespace ES3Editor
         {
             // Get existing open window or if none, make a new one:
             ES3Window window = (ES3Window)EditorWindow.GetWindow(typeof(ES3Window));
-            window.Show();
-            window.SetCurrentWindow(typeof(ToolsWindow));
+            if (window != null)
+            {
+                window.Show();
+                window.SetCurrentWindow(typeof(ToolsWindow));
+            }
         }
 
         public void InitSubWindows()

@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
 using ES3Internal;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -91,13 +89,28 @@ namespace ES3Internal
 #if UNITY_EDITOR
         public void GeneratePrefabReferences()
         {
+#if UNITY_2021_3_OR_NEWER
+            if (this.gameObject.scene.name != null || UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() != null)
+#elif UNITY_2018_3_OR_NEWER
+            if (this.gameObject.scene.name != null || UnityEditor.Experimental.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage() != null)
+#else
             if (this.gameObject.scene.name != null)
+#endif
                 return;
 
             // Create a new reference list so that any objects which are no longer dependencies are removed.
             var tempLocalRefs = new ES3RefIdDictionary();
+
+            // Get dependencies of children also.
+            var transforms = GetComponentsInChildren<Transform>();
+            var gos = new GameObject[transforms.Length];
+            for (int i = 0; i < transforms.Length; i++)
+                gos[i] = transforms[i].gameObject;
+
+            bool addedNewReference = false;
+
             // Add the GameObject's dependencies to the reference list.
-            foreach (var obj in ES3ReferenceMgr.CollectDependencies(this.gameObject))
+            foreach (var obj in ES3ReferenceMgr.CollectDependencies(gos))
             {
                 var dependency = (UnityEngine.Object)obj;
                 if (obj == null || !ES3ReferenceMgr.CanBeSaved(dependency))
@@ -107,13 +120,15 @@ namespace ES3Internal
                 // If we're adding a new reference, do an Undo.RecordObject to ensure it persists.
                 if (id == -1)
                 {
+                    addedNewReference = true;
                     Undo.RecordObject(this, "Update Easy Save 3 Prefab");
                     EditorUtility.SetDirty(this);
                 }
                 tempLocalRefs.Add(dependency, id == -1 ? GetNewRefID() : id);
             }
 
-            localRefs = tempLocalRefs;
+            if (addedNewReference || tempLocalRefs.Count != localRefs.Count)
+                localRefs = tempLocalRefs;
         }
 #endif
     }
@@ -146,7 +161,7 @@ namespace ES3Types
      */
     public class ES3Type_ES3PrefabInternal : ES3Type
     {
-        public static ES3Type Instance = null;
+        public static ES3Type Instance = new ES3Type_ES3PrefabInternal();
 
         public ES3Type_ES3PrefabInternal() : base(typeof(ES3Type_ES3PrefabInternal)) { Instance = this; }
 
@@ -161,11 +176,6 @@ namespace ES3Types
         public override object Read<T>(ES3Reader reader)
         {
             var prefabId = reader.ReadRefProperty();
-            // Load as ES3Refs and convert to longs.
-            var localToGlobal_refs = reader.ReadProperty<Dictionary<ES3Ref, ES3Ref>>();
-            var localToGlobal = new Dictionary<long, long>();
-            foreach (var kvp in localToGlobal_refs)
-                localToGlobal.Add(kvp.Key.id, kvp.Value.id);
 
             if (ES3ReferenceMgrBase.Current == null)
                 return null;
@@ -186,9 +196,23 @@ namespace ES3Types
             if (instanceES3Prefab == null)
                 throw new MissingReferenceException("Prefab with ID " + prefabId + " was found, but it does not have an ES3Prefab component attached.");
 
-            instanceES3Prefab.ApplyReferences(localToGlobal);
+            ReadInto<T>(reader, instance);
 
             return instanceES3Prefab.gameObject;
+        }
+
+        public override void ReadInto<T>(ES3Reader reader, object obj)
+        {
+            // Load as ES3Refs and convert to longs.
+            var localToGlobal_refs = reader.ReadProperty<Dictionary<ES3Ref, ES3Ref>>(ES3Type_ES3RefDictionary.Instance);
+            var localToGlobal = new Dictionary<long, long>();
+            foreach (var kvp in localToGlobal_refs)
+                localToGlobal.Add(kvp.Key.id, kvp.Value.id);
+
+            if (ES3ReferenceMgrBase.Current == null)
+                return;
+
+            ((GameObject)obj).GetComponent<ES3Prefab>().ApplyReferences(localToGlobal);
         }
     }
 }

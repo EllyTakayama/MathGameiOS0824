@@ -4,6 +4,11 @@ using UnityEngine;
 using System.IO;
 using ES3Internal;
 
+#if UNITY_VISUAL_SCRIPTING
+[Unity.VisualScripting.IncludeInSettings(true)]
+#elif BOLT_VISUAL_SCRIPTING
+[Ludiq.IncludeInSettings(true)]
+#endif
 public class ES3Spreadsheet
 {
 	private int cols = 0;
@@ -17,11 +22,6 @@ public class ES3Spreadsheet
 	private const string ESCAPED_QUOTE = "\"\"";
 	private static char[] CHARS_TO_ESCAPE = { ',', '"', '\n', ' ' };
 
-    public ES3Spreadsheet()
-    {
-        ES3Debug.Log("ES3Spreadsheet created");
-    }
-
 	public int ColumnCount
 	{
 		get{ return cols; }
@@ -32,34 +32,31 @@ public class ES3Spreadsheet
 		get{ return rows; }
 	}
 
-	public void SetCell<T>(int col, int row, T value)
-	{
-        ES3Debug.Log("Setting cell (" + col + "," + row + ") to value " + value);
+    public void SetCell(int col, int row, object value)
+    {
+        var type = value.GetType();
 
         // If we're writing a string, add it without formatting.
-        if (value.GetType() == typeof(string))
-		{
-			SetCellString(col, row, (string)(object)value);
-			return;
-		}
+        if (type == typeof(string))
+        {
+            SetCellString(col, row, (string)value);
+            return;
+        }
 
-		var settings = new ES3Settings ();
-		using(var ms = new MemoryStream())
-		{
-			using (var jsonWriter = new ES3JSONWriter (ms, settings, false, false))
-				jsonWriter.Write(value, ES3.ReferenceMode.ByValue);
+        var settings = new ES3Settings();
+        if (ES3Reflection.IsPrimitive(type))
+            SetCellString(col, row, value.ToString());
+        else
+            SetCellString(col, row, settings.encoding.GetString(ES3.Serialize(value, ES3TypeMgr.GetOrCreateES3Type(type))));
 
-			SetCellString(col, row, settings.encoding.GetString(ms.ToArray()));
-		}
+        // Expand the spreadsheet if necessary.
+        if (col >= cols)
+            cols = (col + 1);
+        if (row >= rows)
+            rows = (row + 1);
+    }
 
-		// Expand the spreadsheet if necessary.
-		if(col >= cols)
-			cols = (col+1);
-		if(row >= rows)
-			rows = (row+1);
-	}
-
-	private void SetCellString(int col, int row, string value)
+    private void SetCellString(int col, int row, string value)
 	{
 		cells [new Index (col, row)] = value;
 
@@ -81,37 +78,25 @@ public class ES3Spreadsheet
         return (T)val;
 	}
 
-    internal object GetCell(System.Type type, int col, int row)
+    public object GetCell(System.Type type, int col, int row)
     {
         string value;
 
         if (col >= cols || row >= rows)
             throw new System.IndexOutOfRangeException("Cell (" + col + ", " + row + ") is out of bounds of spreadsheet (" + cols + ", " + rows + ").");
 
-        if (!cells.TryGetValue(new Index(col, row), out value) || string.IsNullOrEmpty(value))
-        {
-            ES3Debug.Log("Getting cell (" + col + "," + row + ") is empty, so default value is being returned");
+        if (!cells.TryGetValue(new Index(col, row), out value) || value == null)
             return null;
-        }
 
         // If we're loading a string, simply return the string value.
         if (type == typeof(string))
         {
             var str = (object)value;
-            ES3Debug.Log("Getting cell (" + col + "," + row + ") with value " + str);
             return str;
         }
 
         var settings = new ES3Settings();
-        using (var ms = new MemoryStream(settings.encoding.GetBytes(value)))
-        {
-            using (var jsonReader = new ES3JSONReader(ms, settings, false))
-            {
-                var obj = ES3TypeMgr.GetOrCreateES3Type(type, true).Read<object>(jsonReader);
-                ES3Debug.Log("Getting cell (" + col + "," + row + ") with value " + obj);
-                return obj;
-            }
-        }
+        return ES3.Deserialize(ES3TypeMgr.GetOrCreateES3Type(type, true), settings.encoding.GetBytes(value), settings);
     }
 
     public void Load(string filePath)
@@ -148,8 +133,6 @@ public class ES3Spreadsheet
 			string value = "";
 			int col = 0;
 			int row = 0;
-
-            ES3Debug.Log("Reading spreadsheet "+settings.path+" from "+settings.location);
 
 			// Read until the end of the stream.
 			while(true)
@@ -192,7 +175,6 @@ public class ES3Spreadsheet
 					value += c;
 			}
 		}
-        ES3Debug.Log("Finished reading spreadsheet " + settings.path + " from " + settings.location);
     }
 
 	public void Save(string filePath)
@@ -239,8 +221,6 @@ public class ES3Spreadsheet
 					if(col != 0)
 						writer.Write(COMMA_CHAR);
 
-                    ES3Debug.Log("Writing cell (" + col + "," + row + ") to file with value "+ array[col, row]);
-
                     writer.Write( Escape(array [col, row]) );
 				}
 			}
@@ -251,7 +231,9 @@ public class ES3Spreadsheet
 
 	private static string Escape(string str, bool isAlreadyWrappedInQuotes=false)
 	{
-		if(string.IsNullOrEmpty(str))
+        if (str == "")
+            return "\"\"";
+		else if(str == null)
 			return null;
 
 		// Now escape any other quotes.

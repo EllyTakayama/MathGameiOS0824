@@ -177,6 +177,7 @@ namespace ES3Internal
         private string password;
         private int bufferSize;
         private EncryptionAlgorithm alg;
+        private bool disposed = false;
 
         public UnbufferedCryptoStream(Stream stream, bool isReadStream, string password, int bufferSize, EncryptionAlgorithm alg) : base()
         {
@@ -193,6 +194,10 @@ namespace ES3Internal
 
         protected override void Dispose(bool disposing)
         {
+            if (disposed)
+                return;
+            disposed = true;
+
             if (!isReadStream)
                 alg.Encrypt(this, stream, password, bufferSize);
             stream.Dispose();
