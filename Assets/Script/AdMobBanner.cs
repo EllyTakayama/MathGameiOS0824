@@ -17,14 +17,14 @@ public class AdMobBanner : MonoBehaviour
     //最初からバナーを表示したくない場合はこの関数を消してください。
     private void Start()
     {
-        RequestBanner();//アダプティブバナーを表示する関数 呼び出し
+        //RequestBanner();//アダプティブバナーを表示する関数 呼び出し
     }
 
     //ボタン等に割り付けて使用
     //バナーを表示する関数
     public void BannerStart()
     {
-        RequestBanner();//アダプティブバナーを表示する関数 呼び出し       
+        //RequestBanner();//アダプティブバナーを表示する関数 呼び出し       
     }
 
     //ボタン等に割り付けて使用
@@ -48,8 +48,8 @@ public class AdMobBanner : MonoBehaviour
         
 
 #elif UNITY_IPHONE
-    //string adUnitId = "ca-app-pub-3940256099942544/2934735716";//テストiOSのバナーID
-    string adUnitId = "ca-app-pub-7439888210247528/9106055676";//ここにiOSのバナーIDを入力
+        //string adUnitId = "ca-app-pub-3940256099942544/2934735716";//テストiOSのバナーID
+        string adUnitId = "ca-app-pub-7439888210247528/9106055676";//ここにiOSのバナーIDを入力
 
 #else
         string adUnitId = "unexpected_platform";
@@ -89,8 +89,8 @@ public class AdMobBanner : MonoBehaviour
 
     //バナー表示完了 となった時に起動する関数
     public void HandleAdLoaded(object sender, EventArgs args)
-    {       
-        Debug.Log("バナー表示完了");        
+    {
+        Debug.Log("バナー表示完了");
     }
 
     //バナー読み込み失敗 となった時に起動する関数

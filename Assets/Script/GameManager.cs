@@ -5,6 +5,7 @@ using System;
 using System.Runtime.Serialization.Formatters.Binary;//this is required to convert data into binary
 using UnityEngine.UI;
 using GoogleMobileAds.Api;
+using UniRx;
 //MathAndScriptの方のゲームマネージャー
 
 public class GameManager : MonoBehaviour {
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour {
     //we make static so in games only one script is name as this
     public static GameManager singleton;
 
+    ReactiveProperty<int> currentCount1 = new ReactiveProperty<int>(0);
     //variable of gamedata
     private GameData data;
 
@@ -58,12 +60,13 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        // Initialize the Google Mobile Ads SDK.
-        MobileAds.Initialize(initStatus => { });
-        print("Admob初期化");
+    currentCount = 1;
+    // Initialize the Google Mobile Ads SDK.
+    MobileAds.Initialize(initStatus => { });
+        //print("Admob初期化");
         LoadSceneCount();
        //RequestReview();
-       Debug.Log("Sceneカウント"+SceneCount);
+       //Debug.Log("Sceneカウント"+SceneCount);
     }
 
     

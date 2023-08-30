@@ -35,22 +35,22 @@ public class SoundSlider : MonoBehaviour
 
     public void BgmSave(){
         ES3.Save<float>("bgmSliderValue", bgmSlider.value,"bgmSlider.es3");
-        print("bgmSliderValue");
+        //print("bgmSliderValue");
     }
     public void SeSave(){
         ES3.Save<float>("seSliderValue", seSlider.value,"seSlider.es3");
     }
     public void BgmLoadSlider(){
-      bgmSlider.value = ES3.Load<float>("bgmSliderValue","bgmSlider.es3",1.0f);
+      bgmSlider.value = ES3.Load<float>("bgmSliderValue","bgmSlider.es3",0.6f);
       float a = bgmSlider.value*0.8f;
       SoundManager.instance.SetBgmVolume(a);
-      print(a);
+      //print(a);
     }
     public void SeLoadSlider(){
-      seSlider.value = ES3.Load<float>("seSliderValue","seSlider.es3",1.0f);
+      seSlider.value = ES3.Load<float>("seSliderValue","seSlider.es3",0.6f);
       float b = seSlider.value;
       SoundManager.instance.SetSeVolume(b);
-      print(b);
+      //print(b);
     }
     
 }

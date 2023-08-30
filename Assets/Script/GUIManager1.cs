@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;//DoTweenを使用する記述
 //0908　練習画面でかけざん表を見るスクリプトを追加
-
+using UniRx;
+using TMPro;
 
 /// <summary>
 /// MathAndScriptのGUIマネージャーです
@@ -21,6 +22,7 @@ public class GUIManager1 : MonoBehaviour {
     public Animator gameOverAnim;
     public Text markText;
     public Text gameOverMarkText;
+    public TextMeshProUGUI fruitCountText;
     public Text countText;
     private int currentMode;
     public Text quesCountText;
@@ -60,7 +62,7 @@ public class GUIManager1 : MonoBehaviour {
           imageTable2.SetActive(false);
           imageTable3.SetActive(false);
           imageTable4.SetActive(false);
-           imageTable5.SetActive(false);
+          imageTable5.SetActive(false);
           imageTable6.SetActive(false);
           imageTable7.SetActive(false);
           imageTable8.SetActive(false);
@@ -146,12 +148,12 @@ public class GUIManager1 : MonoBehaviour {
         {
             
             if(AdMobManager.GetComponent<AdMobReward>().oyatsuReward == true){
-            return;//アドモブ友好時には上書きでデータ更新ストップ
+            return;//アドモブ有効時には上書きでデータ更新ストップ
         }
             
             //score 出題数を代入
             
-            markText.text = GameManager.singleton.currentScore.ToString();
+           markText.text = GameManager.singleton.currentScore.ToString();
            countText.text = GameManager.singleton.currentCount.ToString(); 
            //countText.GetComponent<CountText>().CountNum();
              if(GameManager.singleton.currentMode>10)
@@ -163,11 +165,31 @@ public class GUIManager1 : MonoBehaviour {
         }
         
     }
+    public void SetFruitText()
+    {
+        if (GameManager.singleton.currentMode > 10)
+        {
+            gameOverMarkText.text = "おやつ " + GameManager.singleton.currentScore.ToString() + "こ ゲット！";
+        }//力試し問題は正解数おやつゲット
+        else
+        {
+            gameOverMarkText.text = "おやつ 3こ ゲット！";//練習問題
+        }
+    }
+
+
+public void ResetCounts()
+{
+    GameManager.singleton.currentScore = 0;
+    GameManager.singleton.currentCount = 1;
+
+    }
 
 
     //ref method to retry button
     public void RetryButton()
     {
+        ResetCounts();
         if(GameManager.singleton.currentMode>10)
         {
             EasySaveManager.singleton.Save();
@@ -189,13 +211,10 @@ public class GUIManager1 : MonoBehaviour {
     
     public void MenuBackButton()
     {
-         SoundManager.instance.PlaySEButton();//SoundManagerからSEButtonを実行
+        ResetCounts();
+        SoundManager.instance.PlaySEButton();//SoundManagerからSEButtonを実行
           Invoke("MenuBackMove",0.3f);
-       /*
-       EasySaveManager.singleton.Save();
-        SceneManager.LoadScene("Menu");
-        Debug.Log("back");
-        */
+       
     }
     void MenuBackMove(){
         EasySaveManager.singleton.Save();
@@ -204,8 +223,8 @@ public class GUIManager1 : MonoBehaviour {
         GameManager.singleton.SaveSceneCount();
         Debug.Log("SceneCount"+GameManager.singleton.SceneCount);
         int IScount = GameManager.singleton.SceneCount;
-        if(IScount>0 && IScount%3 ==0){
-            DOTween.KillAll();
+        if(GameManager.singleton.SceneCount > 0 && GameManager.singleton.SceneCount % 3 ==0){
+
             AdMobManager.GetComponent<AdMobInterstitial>().ShowAdMobInterstitial();
             return;
         }

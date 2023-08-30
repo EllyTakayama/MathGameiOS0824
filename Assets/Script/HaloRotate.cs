@@ -15,20 +15,20 @@ public class HaloRotate : MonoBehaviour
         
         transform.DOLocalRotate(new Vector3(0, 0, 360f), 3f,RotateMode.FastBeyond360)
     .SetEase(Ease.OutCubic);*/
-    //Debug.Log("回転");
-    //ChangeAlphaTo1();
+        //Debug.Log("回転");
+        //ChangeAlphaTo1();
     }
-    public void Flash18(){
+    public void Flash18()
+    {
         transform.eulerAngles = new Vector3(0, 0, 0);
         transform.DOLocalRotate(new Vector3(0, 0, 360f), 6f,
         RotateMode.FastBeyond360)
         .SetDelay(0.2f)
         .SetLoops(-1, LoopType.Yoyo)
-        .SetLink(gameObject)
-        .SetId("idFlash18");
-        Debug.Log("idFlash18");
-        ;  
-        
+        .SetLink(gameObject);
+
+        ;
+
     }
 
     public void ChangeAlphaTo1()
@@ -42,5 +42,5 @@ public class HaloRotate : MonoBehaviour
             0 //0秒で
         );
     }
-    
+
 }

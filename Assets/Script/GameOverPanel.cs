@@ -8,26 +8,36 @@ using UnityEngine.UI;
 public class GameOverPanel : MonoBehaviour
 {
     public GameObject gameOverPanel;
-    
-    public void DoGameOverPanel(){
+    [SerializeField] private GameObject fruitsEffect;
+    [SerializeField] private GameObject gameOverMarkText;
 
-        gameOverPanel.GetComponent<RectTransform>()   
-        .DOAnchorPos(new Vector2(0,0), 1.5f)
+    void Start()
+    {
+        fruitsEffect.SetActive(false);
+        gameOverMarkText.SetActive(true);
+    }
+    public void DoGameOverPanel()
+    {
+        gameOverMarkText.SetActive(true);
+        gameOverPanel.GetComponent<RectTransform>()
+        .DOAnchorPos(new Vector2(0, 0), 1.5f)
     .SetEase(Ease.OutBack)
-    ;
-    DOTween.TweensById("idFlash18").ForEach((tween) =>
-        {
-            tween.Kill();
-            Debug.Log("idFlash18");
-            });
-    SoundManager.instance.PlayBGM("GameOverPanel");
-     if (!FoodGenerator.instance.isOneTimeFood)
-                {
+    .SetLink(gameObject)
+    .OnComplete(() =>
+            {
+                gameOverMarkText.GetComponent<DoButton>().OnButtonClick();
                     FoodGenerator.instance.Spawn();
-                    FoodGenerator.instance.isOneTimeFood = true;   
-                    
-                }
+                    SoundManager.instance.PlaySE3();
+                    FoodGenerator.instance.isOneTimeFood = true;
+               
+            });
+
+        SoundManager.instance.PlayBGM("GameOverPanel");
 
     }
-   
+    public void SetFruitEffect()
+    {
+        fruitsEffect.SetActive(true);
+    }
+
 }

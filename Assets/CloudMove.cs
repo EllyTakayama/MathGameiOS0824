@@ -14,6 +14,7 @@ public class CloudMove : MonoBehaviour
         .Append(transform.DOLocalMoveY(-120f, 2f))
         .Append(transform.DOLocalMoveY(120f, 2f))
         .SetRelative()
+        .SetLink(gameObject)
         .SetLoops(-1, LoopType.Restart)
         ;
     }

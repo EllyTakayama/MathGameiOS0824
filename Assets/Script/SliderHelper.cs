@@ -8,16 +8,15 @@ using UnityEngine.UI;
 
 public class SliderHelper : MonoBehaviour,IPointerUpHandler
 {
-
     //コピペUniRx
     [SerializeField] private Slider slider;
     [SerializeField] private GameObject TestSliderManager;
-    void Start()
+    /*void Start()
     {
         print("name_"+name);
         print("tag_"+tag);
         
-    }
+    }*/
     public void OnPointerUp(PointerEventData eventData)
     {
         print("event");

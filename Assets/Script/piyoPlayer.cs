@@ -15,10 +15,6 @@ public class piyoPlayer : MonoBehaviour
         
     }
 
-    void Update()
-    {
-
-     }
     //piyoのHappyメソッド、Damageメソッドを設定　
     //CheckButton.csのif(Compare)の正誤で呼び出してアニメーションを実行する
 
