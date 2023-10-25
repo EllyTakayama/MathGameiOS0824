@@ -14,15 +14,10 @@ public class KuKuSpawn : MonoBehaviour
        private int selectedDigit = 1; // 選択された数字
        public AudioSource audioSourceKuku;//SoundEffectのスピーカー
        public AudioClip[] audioClipKuku;//ならす音源
-       
-       private string[] buttonTexts2 = {
-           "<size=30>に いち が に</size>\n2 \u00d7 1 = 2", "<size=30>に にん が し</size>\n2 \u00d7 2 = 4",
-           "<size=30>に さん が ろく</size>\n2 \u00d7 3 = 6",
-           "<size=30>に し が はち</size>\n2\u00d7 4 = 8", "<size=30>に ご じゅう</size>\n2 \u00d7 5 = 10",
-           "<size=30>に ろく じゅうに</size>\n2 \u00d7 6 = 12", "<size=30>に しち じゅうし</size>\n2 \u00d7 7 = 14", 
-           "<size=30>にはち じゅうろく</size>\n2\u00d7 8 = 16","<size=30>に く じゅうはち</size>\n2 \u00d7 9 = 18"
-       };
-   
+       [SerializeField] private GameObject[] _balloonPrefabs;
+       //[SerializeField] private Transform balloonSpawnPoint; // 風船の生成位置
+       [SerializeField] private Transform ballonCanvas; // Canvasを参照するTransform
+       [SerializeField] private Sprite[] balloonImages;//風船のスプライト
        void Start(){
    
            // 各Toggleに対してリスナーを設定
@@ -36,6 +31,8 @@ public class KuKuSpawn : MonoBehaviour
                    {
                        selectedDigit = digit;
                        UpdateButtonTexts(selectedDigit);
+                       // SEを再生
+                       SoundManager.instance.PlaySE3();
                    }
                });
            }
@@ -60,6 +57,7 @@ public class KuKuSpawn : MonoBehaviour
        }
        public void PlayKukuSE(int digit, int number)
        {
+           audioSourceKuku.Stop();
            int index = (digit - 1) * 9 + (number - 1); // インデックスの計算
            print($"index_{index}");
            if (index >= 0 && index < audioClipKuku.Length)
@@ -67,6 +65,30 @@ public class KuKuSpawn : MonoBehaviour
                // 適切なAudioClipを再生
                audioSourceKuku.PlayOneShot(audioClipKuku[index]);
            }
+       }
+       // 風船を生成してククボタンの答えを表示
+       public void GenerateBalloon(int result)
+       {
+           // ランダムな x 座標を生成 (-150 から 150 の範囲)
+           float randomX = Random.Range(-150f, 150f);
+        
+           // ランダムな y 座標を生成 (-400 から -100 の範囲)
+           float randomY = Random.Range(-400f, -100f);
+        
+           // 風船の生成位置を設定
+           Vector3 spawnPosition = new Vector3(randomX, randomY, 0);
+           
+           // ランダムにプレファブを選択
+           int randomIndex = Random.Range(0, balloonImages.Length);
+           // 風船の生成
+           GameObject balloon = Instantiate(_balloonPrefabs[0], spawnPosition, Quaternion.identity);
+
+           balloon.GetComponent<Image>().sprite = balloonImages[randomIndex];
+           // Canvasの子として設定
+           balloon.transform.SetParent(ballonCanvas, false);
+           // 風船にククボタンの答えを表示
+           balloon.GetComponent<BallonClick>().balloonIndex = randomIndex;
+           balloon.GetComponentInChildren<TextMeshProUGUI>().text = result.ToString();
        }
 
    
@@ -77,6 +99,7 @@ public class KuKuSpawn : MonoBehaviour
            int result = ButtonNum * selectedDigit; // 九九の計算
            Debug.Log($"掛け算の結果{result}");
            //resultText.text = result.ToString(); // 結果を表示
+           GenerateBalloon(result);
            // 九九の計算結果を元に対応するAudioClipを再生
            PlayKukuSE(selectedDigit,ButtonNum);
        }

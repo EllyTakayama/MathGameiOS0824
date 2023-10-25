@@ -30938,6 +30938,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1392497489}
     m_Modifications:
+    - target: {fileID: 8465019732200015529, guid: 57702081ba54b4d78acc0fca959f8a38, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8465019732200015530, guid: 57702081ba54b4d78acc0fca959f8a38, type: 3}
       propertyPath: m_Name
       value: player_fly_f01
@@ -30952,6 +30956,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8465019732200015531, guid: 57702081ba54b4d78acc0fca959f8a38, type: 3}
       propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465019732200015531, guid: 57702081ba54b4d78acc0fca959f8a38, type: 3}
+      propertyPath: m_LocalScale.z
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8465019732200015531, guid: 57702081ba54b4d78acc0fca959f8a38, type: 3}
