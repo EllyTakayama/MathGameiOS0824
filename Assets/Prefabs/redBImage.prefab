@@ -112,7 +112,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: -1
+  m_GravityScale: -8
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -156,7 +156,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 3908202923255067781}
           m_TargetAssemblyTypeName: BallonClick, Assembly-CSharp
-          m_MethodName: OnClick
+          m_MethodName: Init
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

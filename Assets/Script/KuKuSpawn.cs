@@ -18,6 +18,8 @@ public class KuKuSpawn : MonoBehaviour
        //[SerializeField] private Transform balloonSpawnPoint; // 風船の生成位置
        [SerializeField] private Transform ballonCanvas; // Canvasを参照するTransform
        [SerializeField] private Sprite[] balloonImages;//風船のスプライト
+       [SerializeField] private TextMeshProUGUI danText;//段の差し替え
+       [SerializeField] private BalloonObjectPool balloonObjectPool;//バルーンオブジェクトプール取得
        void Start(){
    
            // 各Toggleに対してリスナーを設定
@@ -30,6 +32,7 @@ public class KuKuSpawn : MonoBehaviour
                    if (isOn)
                    {
                        selectedDigit = digit;
+                       danText.text = $"{selectedDigit} のだん";
                        UpdateButtonTexts(selectedDigit);
                        // SEを再生
                        SoundManager.instance.PlaySE3();
@@ -37,13 +40,17 @@ public class KuKuSpawn : MonoBehaviour
                });
            }
            // ボタンのテキストを段ごとに設定
-           for (int i = 0; i < calculateButtons.Length; i++)
+           //
+           // 
+           /*for (int i = 0; i < calculateButtons.Length; i++)
            {
                TextMeshProUGUI buttonText = calculateButtons[i].GetComponentInChildren<TextMeshProUGUI>();
                //buttonText.text = buttonTexts2[i];
                int buttonNumber = i + 1;
                buttonText.text = $"{selectedDigit}\u00d7{buttonNumber}= {selectedDigit * buttonNumber}";
-           }
+           }*/
+           UpdateButtonTexts(selectedDigit);
+           danText.text = $"{selectedDigit} のだん";
        }
        // ボタンのテキストを更新
        private void UpdateButtonTexts(int digit)
@@ -78,15 +85,19 @@ public class KuKuSpawn : MonoBehaviour
            // 風船の生成位置を設定
            Vector3 spawnPosition = new Vector3(randomX, randomY, 0);
            
-           // ランダムにプレファブを選択
+           // ランダムにspriteを選択
            int randomIndex = Random.Range(0, balloonImages.Length);
            // 風船の生成
-           GameObject balloon = Instantiate(_balloonPrefabs[0], spawnPosition, Quaternion.identity);
-
+           //GameObject balloon = Instantiate(_balloonPrefabs[0], spawnPosition, Quaternion.identity);
+           // オブジェクトプールから取得したオブジェクトに変更
+           GameObject balloon = balloonObjectPool.GetObject();
+           
            balloon.GetComponent<Image>().sprite = balloonImages[randomIndex];
            // Canvasの子として設定
            balloon.transform.SetParent(ballonCanvas, false);
-           // 風船にククボタンの答えを表示
+           balloon.GetComponent<RectTransform>().anchoredPosition = spawnPosition;
+           print($"表示位置_{spawnPosition}");
+           // 風船の位置を設
            balloon.GetComponent<BallonClick>().balloonIndex = randomIndex;
            balloon.GetComponentInChildren<TextMeshProUGUI>().text = result.ToString();
        }

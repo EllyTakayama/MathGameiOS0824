@@ -155,6 +155,11 @@ public class SoundManager : MonoBehaviour
         audioSourceSE.PlayOneShot(audioClipSE[13]);
         //
     }
+    public void PlaySE14BreakBalloon()
+    {
+        audioSourceSE.PlayOneShot(audioClipSE[14]);
+        //
+    }
 
     public void BGMmute()
     {
