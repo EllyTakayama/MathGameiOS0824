@@ -22,18 +22,22 @@ public class DOToggleAnimation : MonoBehaviour, IToggleAnimation
     {
         if (isOn)
         {
-            AnimateToggle(1.2f);
+            //Toggleが選択された時呼ばれるメソッド
+            AnimateToggle(1.2f);//引数で大きくした倍率を入力
         }
         /*
         else
         {
-            AnimateToggle(1f);
+            Toggleが選択されなくなった時の操作
         }*/
     }
 
     public void AnimateToggle(float scale)
     {
+        //0.2秒かけてscaleを1.2倍にし、それが完了したら0.1秒かけてデフォルトの大きさに戻す
         transform.DOScale(scale, 0.2f)
+            .SetEase(Ease.InOutQuart)//イージング
+            //.SetEase(Ease.OutBounce)//イージング
             .SetLink(gameObject).OnComplete(() => transform.DOScale(defaultScale, 0.1f));
     }
     
