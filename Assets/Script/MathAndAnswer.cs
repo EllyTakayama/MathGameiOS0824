@@ -14,6 +14,7 @@ public class MathAndAnswer : MonoBehaviour
     public static MathAndAnswer instance;
     [SerializeField] private DOTweenPanel doTweenPanel;//DoTweenPanel.csを直接参照
 
+    [SerializeField] private DORenshuButtonAnim _doRenshuButtonAnim;//AnsButtonのアニメーション
     //MathTypeをれんしゅうボタンmultiplication1-9
     //テストボタンmultiplication11-19で設定します
     public enum MathsType
@@ -119,9 +120,7 @@ public class MathAndAnswer : MonoBehaviour
             //Nextメソッドは引数未満の数値がランダムで返る
             int j = randomNum.Next(i + 1);
             //tmpは配列間でやりとりする値を一時的に格納する変数
-            int tmp = ary[i];
-            ary[i] = ary[j];
-            ary[j] = tmp;
+            (ary[i], ary[j]) = (ary[j], ary[i]);
             //ログに乱数を表
         }
 
@@ -143,14 +142,13 @@ public class MathAndAnswer : MonoBehaviour
     public void MathsProblem()
     {
         //SoundManager.instance.PlaySE3();
-
+        _doRenshuButtonAnim.ResetButton();
         //switch文でれんしゅう問題（1ー9段）、テスト問題（1ー9段）の18種類の分岐を作成します
         //今はテスト（ランダム表示）の2段のみです
         //れんしゅう問題はかけ算表の通り1✖️1、1✖️2・・1✖️9　と9問出題
         //テストは選択した段の中でランダムに9問出題されるようにしたいです
         //今回はテスト→2の段の場合の設定のみしています
-
-
+        
         switch (mathsType)
         {
             case (MathsType.multiplicationRenshuu):

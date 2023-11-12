@@ -35,6 +35,7 @@ MonoBehaviour:
     - UniRx.Examples
     - PsdPlugin
     - GoogleMobileAds.Editor
+    - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 1
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

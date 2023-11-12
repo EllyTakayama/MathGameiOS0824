@@ -39,6 +39,7 @@ public class GUIManager1 : MonoBehaviour {
     public GameObject imageTable9;
     public Text messageText;
     public GameObject AdMobManager;
+    public GameObject[] imageTables;
 
 
 	// Use this for initialization
@@ -58,89 +59,34 @@ public class GUIManager1 : MonoBehaviour {
             quesCountText.text = "9" ;
              tableButton.SetActive(true);
         }
-         imageTable1.SetActive(false);
-          imageTable2.SetActive(false);
-          imageTable3.SetActive(false);
-          imageTable4.SetActive(false);
-          imageTable5.SetActive(false);
-          imageTable6.SetActive(false);
-          imageTable7.SetActive(false);
-          imageTable8.SetActive(false);
-          imageTable9.SetActive(false);
+
+        InitializeImageTables();
            messageText.enabled = true;
 
 	}
-	
-
-    public void ImageTable(){
-        if(GameManager.singleton.currentMode ==1){
-            SoundManager.instance.PlaySE10Button2();
-           imageTable1.SetActive(true);
-        }
-        else if(GameManager.singleton.currentMode ==2){
-            SoundManager.instance.PlaySE10Button2();
-            imageTable2.SetActive(true);
-        }
-        else if(GameManager.singleton.currentMode ==3){
-            SoundManager.instance.PlaySE10Button2();
-            imageTable3.SetActive(true);
-        }
-        else if(GameManager.singleton.currentMode ==4){
-            SoundManager.instance.PlaySE10Button2();
-            imageTable4.SetActive(true);
-        }
-        else if(GameManager.singleton.currentMode ==5){
-            SoundManager.instance.PlaySE10Button2();
-            imageTable5.SetActive(true);
-        }
-         else if(GameManager.singleton.currentMode ==6){
-            SoundManager.instance.PlaySE10Button2();
-            imageTable6.SetActive(true);
-        }
-        else if(GameManager.singleton.currentMode ==7){
-            SoundManager.instance.PlaySE10Button2();
-            imageTable7.SetActive(true);
-        }
-        else if(GameManager.singleton.currentMode ==8){
-            SoundManager.instance.PlaySE10Button2();
-            imageTable8.SetActive(true);
-        }
-        else if(GameManager.singleton.currentMode ==9){
-            SoundManager.instance.PlaySE10Button2();
-            imageTable9.SetActive(true);
+    
+    void InitializeImageTables()
+    {
+        foreach (var imageTable in imageTables)
+        {
+            imageTable.SetActive(false);
         }
     }
 
+    public void ImageTable()
+    {
+        int index = GameManager.singleton.currentMode;
+        SoundManager.instance.PlaySE10Button2();
+        imageTables[index -1].SetActive(true);
+        
+    }
         public void CloseTablePre(){
-        if(GameManager.singleton.currentMode ==1){
-           imageTable1.SetActive(false);
-        }
-        else if(GameManager.singleton.currentMode ==2){
-            imageTable2.SetActive(false);
-        }
-        else if(GameManager.singleton.currentMode ==3){
-            imageTable3.SetActive(false);
-        }
-        else if(GameManager.singleton.currentMode ==4){
-            imageTable4.SetActive(false);
-        }
-        else if(GameManager.singleton.currentMode ==5){
-            imageTable5.SetActive(false);
-        }
-        else if(GameManager.singleton.currentMode ==6){
-            imageTable6.SetActive(false);
-        }
-        else if(GameManager.singleton.currentMode ==7){
-            imageTable7.SetActive(false);
-        }
-        else if(GameManager.singleton.currentMode ==8){
-            imageTable8.SetActive(false);
-        }
-        else if(GameManager.singleton.currentMode ==9){
-            imageTable9.SetActive(false);
-        }
+            int index = GameManager.singleton.currentMode;
+            SoundManager.instance.PlaySE10Button2();
+            imageTables[index -1].SetActive(false);
     }
 	
+        /*
 	// Update is called once per frame
 	void Update ()
     {
@@ -148,23 +94,22 @@ public class GUIManager1 : MonoBehaviour {
         {
             
             if(AdMobManager.GetComponent<AdMobReward>().oyatsuReward == true){
-            return;//アドモブ有効時には上書きでデータ更新ストップ
-        }
+                return;//アドモブ有効時には上書きでデータ更新ストップ
+            }
             
             //score 出題数を代入
             
-           markText.text = GameManager.singleton.currentScore.ToString();
-           countText.text = GameManager.singleton.currentCount.ToString(); 
-           //countText.GetComponent<CountText>().CountNum();
-             if(GameManager.singleton.currentMode>10)
-        {
-            gameOverMarkText.text = "おやつ "+GameManager.singleton.currentScore.ToString()+"こ ゲット！";
+            markText.text = GameManager.singleton.currentScore.ToString();
+            countText.text = GameManager.singleton.currentCount.ToString(); 
+            //countText.GetComponent<CountText>().CountNum();
+            if(GameManager.singleton.currentMode>10)
+            {
+                gameOverMarkText.text = "おやつ "+GameManager.singleton.currentScore.ToString()+"こ ゲット！";
             }//力試し問題は正解数おやつゲット
             else{gameOverMarkText.text = "おやつ 3こ ゲット！";//練習問題
             }
-        }
-        
-    }
+        }   
+    }*/
     public void SetFruitText()
     {
         if (GameManager.singleton.currentMode > 10)
@@ -182,8 +127,8 @@ public void ResetCounts()
 {
     GameManager.singleton.currentScore = 0;
     GameManager.singleton.currentCount = 1;
-
-    }
+  
+}
 
 
     //ref method to retry button
@@ -195,13 +140,13 @@ public void ResetCounts()
             EasySaveManager.singleton.Save();
             SceneManager.LoadScene("Renshuu");
             MathAndAnswer.instance.MultiplicationMethodTest();
-            }
+        }
         if(GameManager.singleton.currentMode<10)
         {
             EasySaveManager.singleton.Save();
             SceneManager.LoadScene("Renshuu");
             MathAndAnswer.instance.MultiplicationMethodRenshuu();
-            }
+        }
 
         //MathAndAnswer.instance.MathsProblem();
         //SceneManager.LoadScene("Renshuu");//use this for 5.3 version
@@ -232,3 +177,6 @@ public void ResetCounts()
     }
     
 }
+
+
+
