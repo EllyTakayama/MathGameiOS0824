@@ -13,8 +13,8 @@ public class MathAndAnswer : MonoBehaviour
     //we make this script instance
     public static MathAndAnswer instance;
     [SerializeField] private DOTweenPanel doTweenPanel;//DoTweenPanel.csを直接参照
-
     [SerializeField] private DORenshuButtonAnim _doRenshuButtonAnim;//AnsButtonのアニメーション
+    [SerializeField] private DOQuesPanelRotate _doQuesPanelRotate;//QuesPanelを回転させる
     //MathTypeをれんしゅうボタンmultiplication1-9
     //テストボタンmultiplication11-19で設定します
     public enum MathsType
@@ -23,8 +23,6 @@ public class MathAndAnswer : MonoBehaviour
         multiplicationTest,
 
     }
-
-
     public MathsType mathsType;
     //2 private floats this are the question values a and b
     public int a, b;
@@ -84,8 +82,7 @@ public class MathAndAnswer : MonoBehaviour
 
         //we call the methods
         CurrentMode();
-
-        MathsProblem();
+        //MathsProblem();
         SoundManager.instance.PlayBGM("Renshuu");
 
     }
@@ -142,28 +139,26 @@ public class MathAndAnswer : MonoBehaviour
     public void MathsProblem()
     {
         //SoundManager.instance.PlaySE3();
-        _doRenshuButtonAnim.ResetButton();
-        //switch文でれんしゅう問題（1ー9段）、テスト問題（1ー9段）の18種類の分岐を作成します
-        //今はテスト（ランダム表示）の2段のみです
-        //れんしゅう問題はかけ算表の通り1✖️1、1✖️2・・1✖️9　と9問出題
-        //テストは選択した段の中でランダムに9問出題されるようにしたいです
-        //今回はテスト→2の段の場合の設定のみしています
         
         switch (mathsType)
         {
             case (MathsType.multiplicationRenshuu):
-
                 MultiplicationMethodRenshuu();
-
                 break;
             case (MathsType.multiplicationTest):
 
                 MultiplicationMethodTest();
-
                 break;
 
-
         }
+
+        _doQuesPanelRotate.VisibleQuesPanel();
+        Invoke("DelayRenshuButton",0.2f);
+    }
+
+    void DelayRenshuButton()
+    {
+        _doRenshuButtonAnim.ResetButton();
     }
     /*
     public void Mul1Toggle(){
@@ -182,7 +177,7 @@ public class MathAndAnswer : MonoBehaviour
             doTweenPanel.DoGradeCall();
             return;
         }
-            int a = currentMode % 10; // 10で割ったあまりなのでcurrentModeが2なら2, 12なら2が出る
+        int a = currentMode % 10; // 10で割ったあまりなのでcurrentModeが2なら2, 12なら2が出る
         if (multi1 == true)
         {//かける9降順、デフォルトでは×数は9ではない
             b++;
@@ -254,7 +249,7 @@ public class MathAndAnswer : MonoBehaviour
             return;
         }
 
-            if (n >= ary.Length)
+        if (n >= ary.Length)
         {
             //return;
             n = 0;

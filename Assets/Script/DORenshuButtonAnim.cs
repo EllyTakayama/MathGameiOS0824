@@ -10,6 +10,7 @@ public class DORenshuButtonAnim : MonoBehaviour
     public GameObject effectPrefab; // エフェクトのプレハブ
     [SerializeField] private int ansButtonIndex;
     
+    //スタート時にボタンのAddListernerを登録する
     void Start()
     {
         for (int i = 0; i < AnsButtons.Length; i++)
@@ -22,8 +23,8 @@ public class DORenshuButtonAnim : MonoBehaviour
                 ResetButton();
             });
         }
-    }
-
+    } 
+    //押されたButtonのIndexを取得しそれ以外のButtonのサイズを0にして見えなくする
     public void AnimateOtherButtons(int clickedButtonIndex)
     {
         Debug.Log($"AnimateOtherButton{clickedButtonIndex}");
@@ -39,6 +40,7 @@ public class DORenshuButtonAnim : MonoBehaviour
         }
     }
 
+    //押したButtonにエフェクトを作成する
     public void CreateEffectAtButton(int targetButtonIndex)
     {
         if (effectPrefab != null)
@@ -47,13 +49,30 @@ public class DORenshuButtonAnim : MonoBehaviour
             Destroy(effect, 2.0f);
         }
     }
+    
+    //出題変更時にButtonを非表示させる
+    public void InvisibleButton()
+    {
+        for (int i = 0; i < AnsButtons.Length; i++)
+        {
+            AnsButtons[i].transform.localScale = Vector3.zero;
+            //AnsButtons[i].transform.localRotation = Quaternion.identity;
+        }
+    }
 
+    //出題時にButtonを再表示させる
     public void ResetButton()
     {
+        StartCoroutine(InitButton());
+    }
+    IEnumerator InitButton()
+    {
+        
         for (int i = 0; i < AnsButtons.Length; i++)
         {
             AnsButtons[i].transform.localScale = Vector3.one;
             AnsButtons[i].transform.localRotation = Quaternion.identity;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

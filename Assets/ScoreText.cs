@@ -7,17 +7,7 @@ using UnityEngine.UI;//練習PanelのCountをDOTweenでカウントアップす�
 public class ScoreText : MonoBehaviour
 {
     public GameObject markText;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void ScoreMove(){
         DOTween.Sequence()
         .Append(

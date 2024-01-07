@@ -47,7 +47,6 @@ public class GUIManager1 : MonoBehaviour {
     {
          if (GameManager.singleton != null)
         {
-           
             currentMode = GameManager.singleton.currentMode;
         }
         if(GameManager.singleton.currentMode>10){//ちから試し問題

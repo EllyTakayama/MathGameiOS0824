@@ -7,18 +7,7 @@ using UnityEngine.UI;//練習PanelのCountをDOTweenでカウントアップす�
 public class CountText : MonoBehaviour
 {
     public GameObject countText;
-    // Start is called before the first frame update
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void CountMove(){
         DOTween.Sequence()
         .Append(

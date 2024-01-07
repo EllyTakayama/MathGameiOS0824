@@ -151,9 +151,6 @@ public class ModeMenuManager : MonoBehaviour
         }
      
     }
-    
-
-    
 
     public void Onclick(string buttonname)//段を選ぶボタンのScriptです。OnClickでボタンの名前を取得します
     { 
