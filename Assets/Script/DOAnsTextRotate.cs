@@ -25,7 +25,7 @@ public class DOAnsTextRotate : MonoBehaviour
         Invoke("RotatePanel",0.2f);
     }
     [Button("AnswerRotete実行")]　//←[Button("ラベル名")]
-    void RotatePanel()
+    public void RotatePanel()
     {
         // 初期位置に戻す
         questionImage.transform.localPosition = initialPosition;
@@ -46,6 +46,7 @@ public class DOAnsTextRotate : MonoBehaviour
 
     public void ResetAnswerText()
     {
+        questionImage.transform.rotation = Quaternion.Euler(initialRotation);
         quesAnswer.SetActive(false);
     }
 

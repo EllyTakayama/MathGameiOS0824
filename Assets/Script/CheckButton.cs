@@ -35,7 +35,11 @@ public class CheckButton : MonoBehaviour {
     float time=0.0f;
     public bool isPressed;//マルバツ画像の表示を調整する為のbool、ボタンが押されると時間の測定を開始
     [SerializeField] private DORenshuButtonAnim doRenshuButtonAnim;//ボタンアニメーションスクリプトを取得
-
+    [SerializeField] private Text _quesAnsText;//答えをテキスト表示するため
+    [SerializeField] private Text _valueA;//かけられる数のテキスト
+    [SerializeField] private Text _valueB;//かける数のテキスト
+    [SerializeField] private GameObject ansImage;//クエスチョンのイメージ
+    [SerializeField] private DOAnsTextRotate _doAnsTextRotate;//クエスチョンを回転させる
     void Start()
     {
         //Startですること
@@ -68,11 +72,12 @@ public class CheckButton : MonoBehaviour {
         score = 0;
         count = 0;
     }
-  
-
+    
     //回答ボタンの正誤判定
     public void CheckTheTextofButton(int buttonIndex)
     {
+        StartCoroutine(CheckButtonCoroutine(buttonIndex));
+        /*
         Index = buttonIndex;
         count++;
         markText.text = $"{score}";
@@ -121,21 +126,103 @@ public class CheckButton : MonoBehaviour {
         Invoke("DelayImageOff", 0.4f);
         Invoke("DelayMathAnswer", 1.0f);
         //MathAndAnswer.instance.MathsProblem();
+        */
     }
+    //掛け算の答えを表示させる
+    void CalculateMultiplication()
+    {
+        // valueAとvalueBのテキストをintに変換
+        if (int.TryParse(_valueA.text, out int valueA) && int.TryParse(_valueB.text, out int valueB))
+        {
+            // 掛け算を実行
+            int result = valueA * valueB;
+
+            // 結果を表示（例えばデバッグログに表示）
+            _quesAnsText.text = $"{result}";
+            Debug.Log($"Result of multiplication: {result}");
+            
+        }
+        else
+        {
+            // テキストをintに変換できなかった場合のエラー処理
+            Debug.LogError("Failed to convert one or both values to integers.");
+        }
+    }
+    IEnumerator CheckButtonCoroutine(int buttonIndex)
+    {
+        CalculateMultiplication();
+        Index = buttonIndex;
+        count++;
+        yield return new WaitForSeconds(0.2f);
+        //markText.text = $"{score}";
+        //AnimateOtherButtons(AnsButtons[Index]);
+        doRenshuButtonAnim.AnimateOtherButtons(buttonIndex);
+        for(int i = 0; i < AnsButtons.Length; i++)
+        {
+            AnsButtons[i].enabled = false;
+        }
+        yield return new WaitForSeconds(0.4f);
+        _doAnsTextRotate.RotatePanel();
+        
+        //正解の場所（値）と回答したボタンのタグ（回答ボタンは左から1、2、3の文字列をタグ付してあります）を比較し正誤を判定します
+        //正解ボタンの場所（値）はMathAndScript.csで文字列に変換しtagOfButtonに代入されています
+        //Debug.Log("buttonIndex_" + buttonIndex);
+        //Debug.Log("i" + MathAndAnswer.instance.locationOfAnswer);
+        yield return new WaitForSeconds(0.8f);
+        if (buttonIndex == MathAndAnswer.instance.locationOfAnswer)
+        {
+            //正解ならマル画像表示、正解数score,問題出題数countが1ずつ増えます
+            //countが9超えたらGameOver画面に切り替え出題を終了予定です
+            //isPressed = true;
+            maruImage[buttonIndex].SetActive(true);
+            piyo.GetComponent<piyoPlayer>().Happy();//正解ならpiyoPlayer.csのHappy（）を実行
+            SoundManager.instance.PlaySE0();//SoundManagerからPlaySE0を実行
+            //UniRxのvalueの変化
+            currentCount.Value ++;
+            score++;
+            GameManager.singleton.currentScore = score;
+            GameManager.singleton.currentCount = count;
+            correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
+            //UpdateScore(scoreToAdd);
+            markText.text = $"{score}";
+            countText.GetComponent<CountText>().CountMove();
+            markText.GetComponent<ScoreText>().ScoreMove();
+        }   
+        else   
+        {
+            //不正解ならバツ画像表示、問題出題数countが1増えます
+            //isPressed = true;
+            piyo.GetComponent<piyoPlayer>().Damage();//正解ならpiyoPlayer.csのHappy（）を実行
+            batsuImage[buttonIndex].SetActive(true);
+            SoundManager.instance.PlaySE1();//SoundManagerからPlaySE1を実行
+            GameManager.singleton.currentCount = count;
+            countText.GetComponent<CountText>().CountMove();
+            correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
+
+        }
+        countText.text = $"{count}";
+        markText.text = $"{score}";
+        Invoke("DelayImageOff", 0.5f);
+        Invoke("DelayMathAnswer", 1.5f);
+        //MathAndAnswer.instance.MathsProblem();
+        
+    }
+
     void DelayImageOff()
     {
+        doRenshuButtonAnim.InvisibleButton();
         batsuImage[Index].SetActive(false);
         maruImage[Index].SetActive(false);
 
     }
     void DelayMathAnswer()
     {
+        _doAnsTextRotate.ResetAnswerText();
         MathAndAnswer.instance.MathsProblem();
         for (int i = 0; i < AnsButtons.Length; i++)
         {
             AnsButtons[i].enabled = true;
         }
-
     }
 
         void DelayReset()
