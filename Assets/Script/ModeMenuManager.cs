@@ -59,7 +59,7 @@ public class ModeMenuManager : MonoBehaviour
     public void SelectRenshuu()//れんしゅうボタンを押した場合
     {
         SoundManager.instance.PlaySEButton();//SoundManagerからPlaySE0を実行
-      
+        GameManager.singleton.isRenshu = true;//練習モードの時の分岐
         //renshuuButtonでisPressedをtrueにする
         ModeMenuPanel.SetActive(true);
         TopMenuPanel.SetActive(false);
@@ -73,6 +73,7 @@ public class ModeMenuManager : MonoBehaviour
     {
         SoundManager.instance.PlaySEButton();//SoundManagerからPlaySE0を実行
         //testButtonだとisPressedをfalseにする
+        GameManager.singleton.isRenshu = false;//テストモードの時の分岐
         ModeMenuPanel.SetActive(true);
         TopMenuPanel.SetActive(false);
         MulToggle.SetActive(false);

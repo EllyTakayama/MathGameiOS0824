@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour {
     public bool test7;
     public bool test5;
     public int SceneCount;//インタースティシャル広告表示のためにScene表示をカウントしていきます
+    public bool isRenshu;
+    
    
     //public bool canAnswer;//Buttonの不具合を解消するため連続してボタンを押せなないよう制御
 
@@ -35,9 +37,7 @@ public class GameManager : MonoBehaviour {
     public int hiScore;
     public bool isMusicOn;
     public bool isGameStartedFirstTime;
-
     
-
     //it is call only once in a scene
     void Awake()
     {

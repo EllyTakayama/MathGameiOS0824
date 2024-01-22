@@ -42,6 +42,8 @@ public class MathAndAnswer : MonoBehaviour
     public GameObject tableButton;
     private int n;//配列のスクリプトでiについてcs0103エラーが出たため宣言してます
     int[] ary = new int[9];
+    [SerializeField] private int countText;//出題数を表記する
+    [SerializeField] private GUIManager1 _guiManager1;//GUIの管理マネージャーの変数取得
 
     void Awake()
     {
@@ -59,6 +61,7 @@ public class MathAndAnswer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        countText = 0;
         if (MulToggle.Table1_OnOf == true)
         {
             multi1 = true;
@@ -102,7 +105,6 @@ public class MathAndAnswer : MonoBehaviour
 
         }
 
-
         //乱数を生成
         System.Random randomNum = new System.Random();
 
@@ -124,12 +126,6 @@ public class MathAndAnswer : MonoBehaviour
     }
     // 回答は3つのボタンから選択します
     // 正解ボタンの場所（値）を回答ボタンのタグに代入し正誤判定に使用します
-    /*
-    void Update()
-    {
-        tagOfButton = locationOfAnswer.ToString();
-
-    }*/
 
     void PiyoSE()
     {
@@ -138,6 +134,7 @@ public class MathAndAnswer : MonoBehaviour
 
     public void MathsProblem()
     {
+       
         //SoundManager.instance.PlaySE3();
         
         switch (mathsType)
@@ -177,6 +174,8 @@ public class MathAndAnswer : MonoBehaviour
             doTweenPanel.DoGradeCall();
             return;
         }
+        countText++;
+        _guiManager1.countText.text = $"{countText} 問目";
         int a = currentMode % 10; // 10で割ったあまりなのでcurrentModeが2なら2, 12なら2が出る
         if (multi1 == true)
         {//かける9降順、デフォルトでは×数は9ではない
@@ -238,9 +237,6 @@ public class MathAndAnswer : MonoBehaviour
         }
     }
 
-
-
-
     public void MultiplicationMethodTest()//力だめし
     {
         if (GameManager.singleton.currentCount > TestToggle.testQuestion - 1)
@@ -248,13 +244,14 @@ public class MathAndAnswer : MonoBehaviour
             doTweenPanel.DoGradeCall();
             return;
         }
-
         if (n >= ary.Length)
         {
             //return;
             n = 0;
         }
-        n++;
+        countText++;
+        _guiManager1.countText.text = $"{countText} 問目";
+        //n++;
         print("n_" + n);
         Invoke("PiyoSE", 0.6f);
         int b = ary[n];//かける数にランダムに取得した配列データを代入
@@ -289,6 +286,8 @@ public class MathAndAnswer : MonoBehaviour
             AnsButtons[1].GetComponentInChildren<Text>().text = (answer + a).ToString();
             AnsButtons[0].GetComponentInChildren<Text>().text = (answer + a + a).ToString();
         }
+        n++;
+        print($"{n}モン目");
     }
 
 }

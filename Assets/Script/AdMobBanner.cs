@@ -17,7 +17,7 @@ public class AdMobBanner : MonoBehaviour
     //最初からバナーを表示したくない場合はこの関数を消してください。
     private void Start()
     {
-        //RequestBanner();//アダプティブバナーを表示する関数 呼び出し
+        RequestBanner();//アダプティブバナーを表示する関数 呼び出し
     }
 
     //ボタン等に割り付けて使用

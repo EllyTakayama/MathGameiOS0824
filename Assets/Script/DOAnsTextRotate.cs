@@ -17,7 +17,8 @@ public class DOAnsTextRotate : MonoBehaviour
     {
         initialPosition = questionImage.transform.localPosition;
         initialRotation = new Vector3(0, 0, 0); // 初期のRotationを設定
-        finalRotation = new Vector3(0, 90, 0);  // 終了時のRotationを設定
+        //finalRotation = new Vector3(0, 90, 0);  // 終了時のRotationを設定
+        finalRotation = new Vector3(0, 360, 0);  // 終了時のRotationを設定
     }
 
     public void DeleyRotetePanel()
@@ -32,8 +33,9 @@ public class DOAnsTextRotate : MonoBehaviour
       
         // アニメーションの設定
         questionImage.transform.rotation = Quaternion.Euler(initialRotation);
-        questionImage.transform.DORotate(finalRotation, 0.8f)
+        questionImage.transform.DORotate(finalRotation, 0.8f,RotateMode.FastBeyond360)
             .SetLink(gameObject)
+            .SetEase(Ease.OutSine) // Ease.InSine を追加
             .OnComplete(() => SetAnswerText());
     }
 
@@ -41,11 +43,13 @@ public class DOAnsTextRotate : MonoBehaviour
     [Button("SetAnwerText実行")]　//←[Button("ラベル名")]
     void SetAnswerText()
     {
+        questionImage.SetActive(false);
         quesAnswer.SetActive(true);
     }
 
     public void ResetAnswerText()
     {
+        questionImage.SetActive(true);
         questionImage.transform.rotation = Quaternion.Euler(initialRotation);
         quesAnswer.SetActive(false);
     }
@@ -71,3 +75,4 @@ public class DOAnsTextRotate : MonoBehaviour
         
     }
 }
+

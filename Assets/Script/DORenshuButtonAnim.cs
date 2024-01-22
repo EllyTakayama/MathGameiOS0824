@@ -9,7 +9,7 @@ public class DORenshuButtonAnim : MonoBehaviour
     public Button[] AnsButtons;
     public GameObject effectPrefab; // エフェクトのプレハブ
     [SerializeField] private int ansButtonIndex;
-    
+
     //スタート時にボタンのAddListernerを登録する
     void Start()
     {
@@ -35,7 +35,16 @@ public class DORenshuButtonAnim : MonoBehaviour
                 DOTween.Sequence()
                     .Append(AnsButtons[i].transform.DORotate(new Vector3(0f, 0f, 180f), 0.5f))
                     .Join(AnsButtons[i].transform.DOScale(Vector3.zero, 0.5f))
-                    .SetDelay(0.2f);
+                    .SetDelay(0.2f)
+                    .SetLink(gameObject);
+            }
+            else//clickButtonIndexがtrueの時　おさればボタンのアニメーション
+            {
+                DOTween.Sequence()
+                    .Append(AnsButtons[i].transform.DOScale(Vector3.one * 1.2f, 0.4f).SetEase(Ease.OutSine))
+                    .AppendInterval(1.2f)
+                    //.Append(AnsButtons[i].transform.DOScale(Vector3.one, 0).SetEase(Ease.InSine))
+                    .SetLink(gameObject);
             }
         }
     }

@@ -32,6 +32,11 @@ MonoBehaviour:
     - Assembly-CSharp
     - UniRx
     - Assembly-CSharp-firstpass
+    - CW.Common
+    - LeanCommonPlus
+    - LeanTouch
+    - LeanTouchPlus
+    - LeanCommon
     - UniRx.Examples
     - PsdPlugin
     - GoogleMobileAds.Editor

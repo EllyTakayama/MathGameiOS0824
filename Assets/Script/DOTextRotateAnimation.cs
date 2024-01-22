@@ -8,11 +8,11 @@ public class DOTextRotateAnimation : MonoBehaviour
     public Text questionCountText;
     public Text correctCountText;
 
-    void Start()
+    /*void Start()
     {
         // アニメーションの開始
         StartCoroutine(StartTextRotationAnimation());
-    }
+    }*/
 
     IEnumerator StartTextRotationAnimation()
     {

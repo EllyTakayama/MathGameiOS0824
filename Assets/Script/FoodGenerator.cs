@@ -18,12 +18,11 @@ public class FoodGenerator : MonoBehaviour
     public int rewardNumber;
     public GameObject AdMobManager;
     //public GameObject fruitEffect;//フルーツ用エフェクト
-
-
     //問題の解答後、GameOverPanelにフードを出現させピヨにあげたい
     void Awake()
     {
         MakeInstance();
+        
     }
 
     void MakeInstance()
@@ -34,8 +33,6 @@ public class FoodGenerator : MonoBehaviour
         }
     }
 
-
-
     void Start()
     {
         foodCount = 0;
@@ -44,12 +41,9 @@ public class FoodGenerator : MonoBehaviour
         //fruitEffect.SetActive(false);
 
     }
-
-
-
+    
     public void Spawn()
     {
-       
         if (AdMobManager.GetComponent<AdMobReward>().oyatsuReward == true)
         {
             rewardNumber = 5;
@@ -119,8 +113,10 @@ public class FoodGenerator : MonoBehaviour
             //Debug.Log("foodCount"+foodCount);
             //Debug.Log("endCount"+endCount);
         }
-        
     }
 }
+
+
+
 
 

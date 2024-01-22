@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UniRx;
 using UnityEngine.Serialization;
+using System.Text;
 
 /*かけ算アプリで解答ボタンを押したときに正誤判定スクリプト0628
 *マルばつ画像表示
@@ -24,6 +25,10 @@ public class CheckButton : MonoBehaviour {
     public Text countText;
     public Text correctAnswer;
     public Text wrongAnswer;
+    private StringBuilder _correctAnswerStringBuilder;
+    private StringBuilder _wrongAnswerStringBuilder;
+    public string correctAnswerString;
+    public string wrongAnswerString;
     public GameObject scoreMove;
     [SerializeField] private GameObject[] maruImage;  
     [SerializeField] private GameObject[] batsuImage;
@@ -40,15 +45,19 @@ public class CheckButton : MonoBehaviour {
     [SerializeField] private Text _valueB;//かける数のテキスト
     [SerializeField] private GameObject ansImage;//クエスチョンのイメージ
     [SerializeField] private DOAnsTextRotate _doAnsTextRotate;//クエスチョンを回転させる
+    [SerializeField] private DOTweenPanel doTweenPanel;//GradePanelを表示させるTween
+    
     void Start()
     {
         //Startですること
         //score,count リセット
         //maruImage,batsuImage 非表示
-        //当初は1つのオブジェクトにかけ算の結果判定に対してマル、バツを代入するつもりでしたがうまくいかなくてやめました
+
         score = 0;
-        count = 1;
+        count = 0;
         time = 0.0f;
+        _correctAnswerStringBuilder = new StringBuilder("せいかいしたもんだい\n");
+        _wrongAnswerStringBuilder = new StringBuilder("まちがえたもんだい\n");
 
         for (int i = 0; i < maruImage.Length; i++)
         {
@@ -71,62 +80,22 @@ public class CheckButton : MonoBehaviour {
     {
         score = 0;
         count = 0;
+        _correctAnswerStringBuilder.Clear();
+        _wrongAnswerStringBuilder.Clear();
+        _correctAnswerStringBuilder.Append("せいかいしたもんだい\n");
+        _wrongAnswerStringBuilder.Append("まちがえたもんだい\n");
+    }
+
+    void ToStringAnswer()
+    {
+        correctAnswerString = _correctAnswerStringBuilder.ToString();
+        wrongAnswerString = _wrongAnswerStringBuilder.ToString();
     }
     
     //回答ボタンの正誤判定
     public void CheckTheTextofButton(int buttonIndex)
     {
         StartCoroutine(CheckButtonCoroutine(buttonIndex));
-        /*
-        Index = buttonIndex;
-        count++;
-        markText.text = $"{score}";
-        //AnimateOtherButtons(AnsButtons[Index]);
-        doRenshuButtonAnim.AnimateOtherButtons(buttonIndex);
-        for(int i = 0; i < AnsButtons.Length; i++)
-        {
-            AnsButtons[i].enabled = false;
-        }
-        //正解の場所（値）と回答したボタンのタグ（回答ボタンは左から1、2、3の文字列をタグ付してあります）を比較し正誤を判定します
-        //正解ボタンの場所（値）はMathAndScript.csで文字列に変換しtagOfButtonに代入されています
-        //Debug.Log("buttonIndex_" + buttonIndex);
-        //Debug.Log("i" + MathAndAnswer.instance.locationOfAnswer);
-        if (buttonIndex == MathAndAnswer.instance.locationOfAnswer)
-        {
-            //正解ならマル画像表示、正解数score,問題出題数countが1ずつ増えます
-            //countが9超えたらGameOver画面に切り替え出題を終了予定です
-            //isPressed = true;
-            maruImage[buttonIndex].SetActive(true);
-            piyo.GetComponent<piyoPlayer>().Happy();//正解ならpiyoPlayer.csのHappy（）を実行
-            SoundManager.instance.PlaySE0();//SoundManagerからPlaySE0を実行
-            //UniRxのvalueの変化
-            currentCount.Value ++;
-            score++;
-            GameManager.singleton.currentScore = score;
-            GameManager.singleton.currentCount = count;
-            correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
-            //UpdateScore(scoreToAdd);
-            markText.text = $"{score}";
-            countText.GetComponent<CountText>().CountMove();
-            markText.GetComponent<ScoreText>().ScoreMove();
-        }   
-        else   
-        {
-            //不正解ならバツ画像表示、問題出題数countが1増えます
-            //isPressed = true;
-            piyo.GetComponent<piyoPlayer>().Damage();//正解ならpiyoPlayer.csのHappy（）を実行
-            batsuImage[buttonIndex].SetActive(true);
-            SoundManager.instance.PlaySE1();//SoundManagerからPlaySE1を実行
-            GameManager.singleton.currentCount = count;
-            countText.GetComponent<CountText>().CountMove();
-            correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
-
-        }
-        countText.text = $"{count}";
-        Invoke("DelayImageOff", 0.4f);
-        Invoke("DelayMathAnswer", 1.0f);
-        //MathAndAnswer.instance.MathsProblem();
-        */
     }
     //掛け算の答えを表示させる
     void CalculateMultiplication()
@@ -182,6 +151,8 @@ public class CheckButton : MonoBehaviour {
             score++;
             GameManager.singleton.currentScore = score;
             GameManager.singleton.currentCount = count;
+            _correctAnswerStringBuilder.AppendLine($"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}");
+            
             correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
             //UpdateScore(scoreToAdd);
             markText.text = $"{score}";
@@ -197,11 +168,12 @@ public class CheckButton : MonoBehaviour {
             SoundManager.instance.PlaySE1();//SoundManagerからPlaySE1を実行
             GameManager.singleton.currentCount = count;
             countText.GetComponent<CountText>().CountMove();
-            correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
+            _wrongAnswerStringBuilder.AppendLine($"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}");
+            wrongAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
 
         }
-        countText.text = $"{count}";
-        markText.text = $"{score}";
+        //countText.text = $"{count}/もんめ";
+        markText.text = $"せいかい{score}コ";
         Invoke("DelayImageOff", 0.5f);
         Invoke("DelayMathAnswer", 1.5f);
         //MathAndAnswer.instance.MathsProblem();
@@ -217,6 +189,19 @@ public class CheckButton : MonoBehaviour {
     }
     void DelayMathAnswer()
     {
+        if (GameManager.singleton.currentCount >= 9 && GameManager.singleton.isRenshu)
+        {
+            ToStringAnswer();
+            doTweenPanel.DoGradeCall();
+            return;
+        }else if 
+            (GameManager.singleton.currentCount > TestToggle.testQuestion - 1 && !GameManager.singleton.isRenshu)
+        {
+            ToStringAnswer();
+            doTweenPanel.DoGradeCall();
+            return;
+        }
+
         _doAnsTextRotate.ResetAnswerText();
         MathAndAnswer.instance.MathsProblem();
         for (int i = 0; i < AnsButtons.Length; i++)

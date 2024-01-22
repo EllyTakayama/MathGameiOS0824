@@ -84,31 +84,7 @@ public class GUIManager1 : MonoBehaviour {
             SoundManager.instance.PlaySE10Button2();
             imageTables[index -1].SetActive(false);
     }
-	
-        /*
-	// Update is called once per frame
-	void Update ()
-    {
-       if (GameManager.singleton != null)
-        {
-            
-            if(AdMobManager.GetComponent<AdMobReward>().oyatsuReward == true){
-                return;//アドモブ有効時には上書きでデータ更新ストップ
-            }
-            
-            //score 出題数を代入
-            
-            markText.text = GameManager.singleton.currentScore.ToString();
-            countText.text = GameManager.singleton.currentCount.ToString(); 
-            //countText.GetComponent<CountText>().CountNum();
-            if(GameManager.singleton.currentMode>10)
-            {
-                gameOverMarkText.text = "おやつ "+GameManager.singleton.currentScore.ToString()+"こ ゲット！";
-            }//力試し問題は正解数おやつゲット
-            else{gameOverMarkText.text = "おやつ 3こ ゲット！";//練習問題
-            }
-        }   
-    }*/
+
     public void SetFruitText()
     {
         if (GameManager.singleton.currentMode > 10)
