@@ -72,14 +72,16 @@ public class CheckButton : MonoBehaviour {
         GameManager.singleton.currentScore = score;
         GameManager.singleton.currentCount = count;
         canAnswer = true;
-        correctAnswer.text = "せいかいしたもんだい\n";
-        wrongAnswer.text = "まちがえたもんだい\n";
+        correctAnswer.text = "";
+        wrongAnswer.text = "";
     }
 
     public void ResetButtonScore()
     {
         score = 0;
         count = 0;
+        correctAnswer.text = "";
+        wrongAnswer.text = "";
         _correctAnswerStringBuilder.Clear();
         _wrongAnswerStringBuilder.Clear();
         _correctAnswerStringBuilder.Append("せいかいしたもんだい\n");
@@ -88,8 +90,28 @@ public class CheckButton : MonoBehaviour {
 
     void ToStringAnswer()
     {
-        correctAnswerString = _correctAnswerStringBuilder.ToString();
-        wrongAnswerString = _wrongAnswerStringBuilder.ToString();
+        int correctNum = _correctAnswerStringBuilder.Length;
+        int wrongNum = _wrongAnswerStringBuilder.Length;
+        print($"correctNum,{correctNum}");//11文字
+        print($"wrongNum,{wrongNum}");//10文字
+        if (correctNum == 11)
+        {
+            correctAnswerString = "せいかいしたもんだい\nなし";
+        }
+        else
+        {
+            correctAnswerString = _correctAnswerStringBuilder.ToString();
+        }
+
+        if (wrongNum == 10)
+        {
+            wrongAnswerString = "まちがえたもんだい\nなし";
+        }
+        else
+        {
+            wrongAnswerString = _wrongAnswerStringBuilder.ToString();
+        }
+        
     }
     
     //回答ボタンの正誤判定
@@ -153,7 +175,7 @@ public class CheckButton : MonoBehaviour {
             GameManager.singleton.currentCount = count;
             _correctAnswerStringBuilder.AppendLine($"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}");
             
-            correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
+            //correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
             //UpdateScore(scoreToAdd);
             markText.text = $"{score}";
             countText.GetComponent<CountText>().CountMove();
@@ -169,13 +191,13 @@ public class CheckButton : MonoBehaviour {
             GameManager.singleton.currentCount = count;
             countText.GetComponent<CountText>().CountMove();
             _wrongAnswerStringBuilder.AppendLine($"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}");
-            wrongAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
+            //wrongAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
 
         }
         //countText.text = $"{count}/もんめ";
         markText.text = $"せいかい{score}コ";
         Invoke("DelayImageOff", 0.5f);
-        Invoke("DelayMathAnswer", 1.5f);
+        Invoke("DelayMathAnswer", 1.2f);
         //MathAndAnswer.instance.MathsProblem();
         
     }

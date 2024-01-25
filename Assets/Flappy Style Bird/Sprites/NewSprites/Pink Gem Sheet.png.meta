@@ -1,0 +1,610 @@
+fileFormatVersion: 2
+guid: 3393f6c51c27a2d419b8c841e5575601
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8537750585534804463
+    second: Pink Gem Sheet_0
+  - first:
+      213: -4544599874879317051
+    second: Pink Gem Sheet_1
+  - first:
+      213: -1452954350272085798
+    second: Pink Gem Sheet_2
+  - first:
+      213: -758324301002720747
+    second: Pink Gem Sheet_3
+  - first:
+      213: -5470072221998533461
+    second: Pink Gem Sheet_4
+  - first:
+      213: 8719482000596785142
+    second: Pink Gem Sheet_5
+  - first:
+      213: 6254256511172624539
+    second: Pink Gem Sheet_6
+  - first:
+      213: 2931475081313938890
+    second: Pink Gem Sheet_7
+  - first:
+      213: 3407001102440130460
+    second: Pink Gem Sheet_8
+  - first:
+      213: -8223930896862174532
+    second: Pink Gem Sheet_9
+  - first:
+      213: -5743772379265695808
+    second: Pink Gem Sheet_10
+  - first:
+      213: 7558713618450368889
+    second: Pink Gem Sheet_11
+  - first:
+      213: 9031694477652703179
+    second: Pink Gem Sheet_12
+  - first:
+      213: 5324738534624056787
+    second: Pink Gem Sheet_13
+  - first:
+      213: -5370366587334363848
+    second: Pink Gem Sheet_14
+  - first:
+      213: -1747219185917238726
+    second: Pink Gem Sheet_15
+  - first:
+      213: -6903812754154542402
+    second: Pink Gem Sheet_16
+  - first:
+      213: -4694410186717844278
+    second: Pink Gem Sheet_17
+  - first:
+      213: -3406917066740358740
+    second: Pink Gem Sheet_18
+  - first:
+      213: -3807304195714098687
+    second: Pink Gem Sheet_19
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Pink Gem Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3228
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe17faf2cee2c7670800000000000000
+      internalID: 8537750585534804463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 3228
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cb988bfd765ee0c0800000000000000
+      internalID: -4544599874879317051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 1848
+        y: 3228
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad08c2d67b116dbe0800000000000000
+      internalID: -1452954350272085798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 3228
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51abf26e014e975f0800000000000000
+      internalID: -758324301002720747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 3696
+        y: 3228
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba4bb08bb466614b0800000000000000
+      internalID: -5470072221998533461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2152
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f7dbf68ea2d10970800000000000000
+      internalID: 8719482000596785142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 2152
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b904e9219259bc650800000000000000
+      internalID: 6254256511172624539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 1848
+        y: 2152
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acd60a90e01bea820800000000000000
+      internalID: 2931475081313938890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 2152
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c97ee4c9379184f20800000000000000
+      internalID: 3407001102440130460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 3696
+        y: 2152
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb2ab2beb6abedd80800000000000000
+      internalID: -8223930896862174532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1076
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cffa2fe3750a40b0800000000000000
+      internalID: -5743772379265695808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 1076
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97944aafcf1f5e860800000000000000
+      internalID: 7558713618450368889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 1848
+        y: 1076
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc7b8548646075d70800000000000000
+      internalID: 9031694477652703179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 1076
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d5d91e4c7545e940800000000000000
+      internalID: 5324738534624056787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 3696
+        y: 1076
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 835fe40da00a875b0800000000000000
+      internalID: -5370366587334363848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a32e7a65861a0c7e0800000000000000
+      internalID: -1747219185917238726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 0
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebaaec8c0eab030a0800000000000000
+      internalID: -6903812754154542402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 1848
+        y: 0
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acc25b6aeca1adeb0800000000000000
+      internalID: -4694410186717844278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 2772
+        y: 0
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca1a9b97af238b0d0800000000000000
+      internalID: -3406917066740358740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pink Gem Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 3696
+        y: 0
+        width: 924
+        height: 1076
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10a5b96810db92bc0800000000000000
+      internalID: -3807304195714098687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Pink Gem Sheet_5: 8719482000596785142
+      Pink Gem Sheet_9: -8223930896862174532
+      Pink Gem Sheet_8: 3407001102440130460
+      Pink Gem Sheet_16: -6903812754154542402
+      Pink Gem Sheet_14: -5370366587334363848
+      Pink Gem Sheet_11: 7558713618450368889
+      Pink Gem Sheet_15: -1747219185917238726
+      Pink Gem Sheet_0: 8537750585534804463
+      Pink Gem Sheet_7: 2931475081313938890
+      Pink Gem Sheet_19: -3807304195714098687
+      Pink Gem Sheet_1: -4544599874879317051
+      Pink Gem Sheet_17: -4694410186717844278
+      Pink Gem Sheet_10: -5743772379265695808
+      Pink Gem Sheet_4: -5470072221998533461
+      Pink Gem Sheet_13: 5324738534624056787
+      Pink Gem Sheet_6: 6254256511172624539
+      Pink Gem Sheet_2: -1452954350272085798
+      Pink Gem Sheet_3: -758324301002720747
+      Pink Gem Sheet_12: 9031694477652703179
+      Pink Gem Sheet_18: -3406917066740358740
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

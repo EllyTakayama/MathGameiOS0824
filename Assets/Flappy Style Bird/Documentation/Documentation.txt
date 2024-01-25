@@ -1,0 +1,36 @@
+	
+--------------2D Animated Birds(pack1)----------------------------
+
+This package includes "Flappy style bird" 2d Sprites for Mobile games.
+
+What's New:
+	- Added 2 Obstacles
+	- Added Coins and Gems
+	- Added 2 Powerups
+
+Technical Details:-
+
+	- 4 Bird Skins
+	- 2 Animations for each birds(Flying, Death)
+	- 3 Obstacles : "Electric Rod", "Virus", "Rock"
+	- FPS : 25 (For All)
+	- 2K Size for Each sprites
+
+Features:-
+
+	- Unique Animations
+	- High quality images
+	- Mobile supported
+	
+How to use:-
+	
+	Simply drag and drop any Spritesheet animation from the Prefab (Flappy style Bird > Prefabs) folder
+	to you scene.	(Example: "Cyan_Dead", "Cyan_Fly")
+
+..................................................................................
+
+About Us : "SR Studios Kerala", Game developing company located in Alappuzha, Kerala, India
+
+Contact : srstudioskerala@gmail.com
+
+................Thanks for downloading this package................................

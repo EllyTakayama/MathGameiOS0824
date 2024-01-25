@@ -12,11 +12,6 @@ public class GameManager : MonoBehaviour {
 
     //we make static so in games only one script is name as this
     public static GameManager singleton;
-
-    ReactiveProperty<int> currentCount1 = new ReactiveProperty<int>(0);
-    //variable of gamedata
-    private GameData data;
-
     //data not to store on device
    
     public int currentScore;
@@ -28,11 +23,11 @@ public class GameManager : MonoBehaviour {
     public bool test5;
     public int SceneCount;//インタースティシャル広告表示のためにScene表示をカウントしていきます
     public bool isRenshu;
+    public bool isAsendingOrder;//１から順に出題されるかどうか
+    public int TestMondaiCount;//Mondai数
     
-   
     //public bool canAnswer;//Buttonの不具合を解消するため連続してボタンを押せなないよう制御
-
-
+    
     //data to store on device
     public int hiScore;
     public bool isMusicOn;
@@ -42,7 +37,7 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         MakeSingleton();
-        InitializeVariables();
+
     }
 
     void MakeSingleton()
@@ -65,52 +60,24 @@ public class GameManager : MonoBehaviour {
     MobileAds.Initialize(initStatus => { });
         //print("Admob初期化");
         LoadSceneCount();
+        //LoadOrderJun();
        //RequestReview();
        //Debug.Log("Sceneカウント"+SceneCount);
     }
-
     
-    void InitializeVariables()
-    {
-        Load();
-
-        if (data != null)
-        {
-            isGameStartedFirstTime = data.getIsGameStartedFirstTime();
-        }
-        else
-        {
-            isGameStartedFirstTime = true;
-        }
-
-        if (isGameStartedFirstTime)
-        {
-
-            isGameStartedFirstTime = false;
-            hiScore = 0;
-            isMusicOn = true;
-
-            data = new GameData();
-
-
-            data.setHiScore(hiScore);
-           
-            data.setIsGameStartedFirstTime(isGameStartedFirstTime);
-
-            Save();
-
-            Load();
-
-        }
-        else
-        {
-            isGameStartedFirstTime = data.getIsGameStartedFirstTime();
-            
-            hiScore = data.getHiScore();
-        }
-
-
+    //isAsendingOrderのセーブ
+    public void SaveOrderJun(){
+        ES3.Save<bool>("isAsendingOrder",isAsendingOrder,"isAsendingOrder.es3" );
+        Debug.Log("セーブisAsendingOrder"+isAsendingOrder);
     }
+    
+    //isAsendingOrderのロード　データがない時はかける数は１から始める
+    public void LoadOrderJun()
+    {
+        isAsendingOrder = ES3.Load<bool>("isAsendingOrder", "isAsendingOrder.es3", true);
+        Debug.Log("ロードisAsendingOrder"+isAsendingOrder);
+    }
+
     public void SaveSceneCount(){
         //isGfontsize = SettingManager.instance.isfontSize;
         ES3.Save<int>("SceneCount",SceneCount,"SceneCount.es3" );
@@ -123,95 +90,5 @@ public class GameManager : MonoBehaviour {
          Debug.Log("ロードSceneCount"+SceneCount);
     }
 
-
-
-    public void Save()
-    {
-        FileStream file = null;
-
-        try
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            file = File.Create(Application.persistentDataPath + "/Renshuu.dat");
-            if (data != null)
-            {
-                data.setHiScore(hiScore);
-                
-                data.setIsGameStartedFirstTime(isGameStartedFirstTime);
-
-                bf.Serialize(file, data);
-
-            }
-        }
-        catch (Exception e)
-        {
-        }
-        finally
-        {
-            if (file != null)
-            {
-                file.Close();
-            }
-        }
-    }
-
-
-
-    public void Load()
-    {
-        FileStream file = null;
-
-        try
-        {
-            BinaryFormatter bf = new BinaryFormatter();
-            file = File.Open(Application.persistentDataPath + "/Renshuu.dat", FileMode.Open);
-            data = (GameData)bf.Deserialize(file);
-        }
-        catch (Exception e)
-        { }
-        finally
-        {
-            if (file != null)
-            {
-                file.Close();
-            }
-        }
-    }
-
-
-}
-
-[Serializable]
-class GameData
-{
-    private int hiScore;
-    
-    private bool isGameStartedFirstTime;
-
-
-
-    public void setIsGameStartedFirstTime(bool isGameStartedFirstTime)
-    {
-        this.isGameStartedFirstTime = isGameStartedFirstTime;
-    }
-
-    public bool getIsGameStartedFirstTime()
-    {
-        return isGameStartedFirstTime;
-    }
-
-
-    //HiScore
-    public void setHiScore(int hiScore)
-    {
-        this.hiScore = hiScore;
-    }
-
-    public int getHiScore()
-    {
-        return hiScore;
-    }
-
-    
 
 }

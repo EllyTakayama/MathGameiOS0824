@@ -38,9 +38,9 @@ public class DOTweenPanel : MonoBehaviour
     public void DoGradeCall()
     {
         //gradePanel.SetActive(true);
-        Invoke("SetGradePanel", 0.8f);
-        SoundManager.instance.PlaySE12GradePanel();
-        Invoke("DoGradePanel", 1.5f);
+        Invoke("SetGradePanel", 0.2f);
+        
+        Invoke("DoGradePanel", 0.8f);
     }
 
     void SetGradePanel()
@@ -59,6 +59,7 @@ public class DOTweenPanel : MonoBehaviour
     
     void DoGradePanel()
     {
+        
         StartCoroutine(DoGradePanelCoroutine());
     }
     // DoGradePanel メソッド内でコルーチンを使用して0.3秒待機
@@ -76,14 +77,11 @@ public class DOTweenPanel : MonoBehaviour
         yield return new WaitForSeconds(0.1f); // 0.1秒待機
     } 
         yield return new WaitForSeconds(0.3f); // 0.3秒待機
-        GradeImage();
+        //GradeImage();
         gradeImage.enabled = true;
         gradeImage.GetComponent<DoGradeImage>().DoImageChange();
-
         _doResultAnswerPanel.SetAnsResultPanel();
-
         yield return null; // コルーチンを終了する
-
     }
 
     void GradeImage()

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Shapes2D;
 
 
 //かけ算アプリ問題出題のScriptだよ
@@ -62,14 +63,16 @@ public class MathAndAnswer : MonoBehaviour
     void Start()
     {
         countText = 0;
-        if (MulToggle.Table1_OnOf == true)
+        if (GameManager.singleton.isAsendingOrder == true)
         {
             multi1 = true;
+            b = 0;
             //Debug.Log("Startmulti1"+multi1);
         }
         else
         {
             multi1 = false;
+            b = 10;
             //Debug.Log("Startmulti1"+multi1);
         }
 
@@ -87,6 +90,7 @@ public class MathAndAnswer : MonoBehaviour
         CurrentMode();
         //MathsProblem();
         SoundManager.instance.PlayBGM("Renshuu");
+        //Invoke("MathsProblem",1.2f);
 
     }
     //this method keeps the track of mode 
@@ -176,7 +180,10 @@ public class MathAndAnswer : MonoBehaviour
         }
         countText++;
         _guiManager1.countText.text = $"{countText} 問目";
-        int a = currentMode % 10; // 10で割ったあまりなのでcurrentModeが2なら2, 12なら2が出る
+        //Gameシーンデバッグ用
+        a = currentMode % 10; // 10で割ったあまりなのでcurrentModeが2なら2, 12なら2が出る
+        //Gameシーンデバッグ用
+        //a = 3;
         if (multi1 == true)
         {//かける9降順、デフォルトでは×数は9ではない
             b++;
@@ -191,8 +198,9 @@ public class MathAndAnswer : MonoBehaviour
             b--; //かける1順、デフォルトではこちら。
             if (b < 1)
             {
-                return;
-                //b = 9;
+                b = 10;
+                //return;
+                
                 //Debug.Log("falsemulti1"+multi1);
             }
         }

@@ -235,15 +235,15 @@ public class ModeMenuManager : MonoBehaviour
                 SoundManager.instance.PlaySE11Button3();//SoundManagerからSEButtonを実行
                 GameManager.singleton.currentMode = 11;
                  DOTween.KillAll();
-                   SceneManager.LoadScene("Renshuu");
+                   SceneManager.LoadScene("Game");
                 break;
 
                 case "Button2":
                 SoundManager.instance.PlaySE11Button3();//SoundManagerからSEButtonを実行
-                SceneManager.LoadScene("Renshuu");
+                SceneManager.LoadScene("Game");
                GameManager.singleton.currentMode = 12;
                  DOTween.KillAll();
-                   SceneManager.LoadScene("Renshuu");
+                   SceneManager.LoadScene("Game");
                 break;
 
                 case "Button3":
@@ -251,14 +251,14 @@ public class ModeMenuManager : MonoBehaviour
                 GameManager.singleton.currentMode = 13;
                  DOTween.KillAll();
                     // テストボタンからの3段でcurrentMode13を選択してMathAndScript.csに
-                   SceneManager.LoadScene("Renshuu");
+                   SceneManager.LoadScene("Game");
                 break;
 
                 case "Button4":
                 SoundManager.instance.PlaySE11Button3();//SoundManagerからSEButtonを実行
                 GameManager.singleton.currentMode = 14;
                  DOTween.KillAll();
-                   SceneManager.LoadScene("Renshuu");
+                   SceneManager.LoadScene("Game");
                 break;
 
                 case "Button5":
@@ -266,7 +266,7 @@ public class ModeMenuManager : MonoBehaviour
                 GameManager.singleton.currentMode = 15;
                 DOTween.KillAll();
                     // テストボタンからの5段でcurrentMode15を選択してMathAndScript.csに
-                   SceneManager.LoadScene("Renshuu");
+                   SceneManager.LoadScene("Game");
                break;
 
                 case "Button6":
@@ -274,7 +274,7 @@ public class ModeMenuManager : MonoBehaviour
                 GameManager.singleton.currentMode = 16;
                 DOTween.KillAll();
                     // テストボタンからの2段でcurrentMode16を選択してMathAndScript.csに
-                   SceneManager.LoadScene("Renshuu");
+                   SceneManager.LoadScene("Game");
                  break;
 
                 case "Button7":
@@ -282,20 +282,20 @@ public class ModeMenuManager : MonoBehaviour
             
                 GameManager.singleton.currentMode = 17;
                 DOTween.KillAll();
-                   SceneManager.LoadScene("Renshuu");
+                   SceneManager.LoadScene("Game");
                 break;
 
                 case "Button8":
                 SoundManager.instance.PlaySE11Button3();//SoundManagerからSEButtonを実行
                 GameManager.singleton.currentMode = 18;
                  DOTween.KillAll();
-                   SceneManager.LoadScene("Renshuu");
+                   SceneManager.LoadScene("Game");
                 break;
                 case "Button9":
                 SoundManager.instance.PlaySE11Button3();//SoundManagerからSEButtonを実行
                 GameManager.singleton.currentMode = 19;
                 DOTween.KillAll();
-                   SceneManager.LoadScene("Renshuu");
+                   SceneManager.LoadScene("Game");
                 break;
                 
             }

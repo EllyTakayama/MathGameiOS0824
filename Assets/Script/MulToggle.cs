@@ -13,18 +13,20 @@ public class MulToggle : MonoBehaviour
 
     void Start()
     {
-         //Debug.Log("スタート1toggle" +mul1Toggle.isOn);//かける1からのスタート
-         //Debug.Log("スタートTable1_OnOf"+Table1_OnOf);
+        GameManager.singleton.LoadOrderJun();//isAsendingOrderかける数のロード
+        if (GameManager.singleton.isAsendingOrder)
+        {
+            mul1Toggle.isOn = true;
+        }
+        else
+        {
+            mul9Toggle.isOn = true;
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnClickToggle1(){
         Table1_OnOf = true;
+        GameManager.singleton.isAsendingOrder = true;//かける数が1から出題される
+        GameManager.singleton.SaveOrderJun();//isAsendingOrderをセーブする
         SoundManager.instance.PlaySE11Button3();
         //Debug.Log("1toggle"+mul1Toggle.isOn);//toggleのboolの状態をisOnで取得
         //Debug.Log("9toggle"+mul9Toggle.isOn);
@@ -33,6 +35,8 @@ public class MulToggle : MonoBehaviour
 
     public void OnClickToggle9(){
         Table1_OnOf = false;
+        GameManager.singleton.isAsendingOrder = false;//かける数が9から出題される
+        GameManager.singleton.SaveOrderJun();//isAsendingOrderをセーブする
         SoundManager.instance.PlaySE11Button3();
         //Debug.Log("1toggle"+mul1Toggle.isOn);//toggleのboolの状態をisOnで取得
         //Debug.Log("9toggle"+mul9Toggle.isOn);

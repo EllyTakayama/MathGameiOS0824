@@ -16,10 +16,19 @@ public class DoResultAnswerPanel : MonoBehaviour
     {
         DOTween.Sequence()
             .Append(answerBackImage.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutSine))
-            .AppendInterval(0.2f)
-            .Append(correctAnswer.DOText(_checkButton.correctAnswerString,_checkButton.correctAnswerString.Length * 0.01f))
-            .AppendInterval(0.2f)
-            .Append(wrongAnswer.DOText(_checkButton.wrongAnswerString,_checkButton.wrongAnswerString.Length * 0.01f))
+            //.AppendInterval(0.2f)
+            .AppendCallback(() => 
+            {
+                print("correctAnswer");
+                // correctAnswerのDOTextアニメーション
+                correctAnswer.DOText(_checkButton.correctAnswerString, _checkButton.correctAnswerString.Length * 0.01f)
+                    .OnComplete(() => 
+                    {
+                        // wrongAnswerのDOTextアニメーション
+                        print("wrongAnswer");
+                        wrongAnswer.DOText(_checkButton.wrongAnswerString, _checkButton.wrongAnswerString.Length * 0.01f);
+                    });
+            })
             .SetLink(gameObject);
     }
 
