@@ -84,9 +84,7 @@ public class GameMath : MonoBehaviour
         CurrentMode();
         //MathsProblem();
         SoundManager.instance.PlayBGM("Renshuu");
-        a = 5;
-
-        Invoke("MathsProblem",0.5f);
+        //Invoke("MathsProblem",0.5f);
     }
     //this method keeps the track of mode 
     void CurrentMode()
@@ -153,7 +151,8 @@ public class GameMath : MonoBehaviour
 
     void DelayRenshuButton()
     {
-        _doRenshuButtonAnim.ResetButton();
+        //_doRenshuButtonAnim.ResetButton();
+        _doRenshuButtonAnim.GResetButton();
     }
     /*
     public void Mul1Toggle(){

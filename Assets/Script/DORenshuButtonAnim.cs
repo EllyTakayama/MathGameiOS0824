@@ -9,7 +9,8 @@ public class DORenshuButtonAnim : MonoBehaviour
     public Button[] AnsButtons;
     public GameObject effectPrefab; // エフェクトのプレハブ
     [SerializeField] private int ansButtonIndex;
-
+    //AnsButtonsの位置を登録するためButtonのキーとVector3の値を持つ連装配列　intialPositionという名前のDictionary
+    private Dictionary<Button, Vector3> initialPositions = new Dictionary<Button, Vector3>();
     //スタート時にボタンのAddListernerを登録する
     void Start()
     {
@@ -22,6 +23,8 @@ public class DORenshuButtonAnim : MonoBehaviour
                 CreateEffectAtButton(index);
                 ResetButton();
             });
+            // AnsButtonsの初期位置を保存
+            initialPositions[AnsButtons[i]] = AnsButtons[i].transform.position;
         }
     } 
     //押されたButtonのIndexを取得しそれ以外のButtonのサイズを0にして見えなくする
@@ -42,8 +45,8 @@ public class DORenshuButtonAnim : MonoBehaviour
             {
                 DOTween.Sequence()
                     .Append(AnsButtons[i].transform.DOScale(Vector3.one * 1.2f, 0.4f).SetEase(Ease.OutSine))
-                    .AppendInterval(1.2f)
-                    //.Append(AnsButtons[i].transform.DOScale(Vector3.one, 0).SetEase(Ease.InSine))
+                    .AppendInterval(1.0f)
+                    .Append(AnsButtons[i].transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.InSine))
                     .SetLink(gameObject);
             }
         }
@@ -65,10 +68,31 @@ public class DORenshuButtonAnim : MonoBehaviour
         for (int i = 0; i < AnsButtons.Length; i++)
         {
             AnsButtons[i].transform.localScale = Vector3.zero;
-            //AnsButtons[i].transform.localRotation = Quaternion.identity;
+            AnsButtons[i].transform.localRotation = Quaternion.identity;
+        }
+    }
+    //Gameシーンで回転させながらスケールを1.0にするスクリプト
+    public void ShowButtonsWithRotation()
+    {
+        for (int i = 0; i < AnsButtons.Length; i++)
+        {
+            DOTween.Sequence()
+                .Append(AnsButtons[i].transform.DORotate(new Vector3(0f, 0f, 360f), 0.8f,RotateMode.FastBeyond360))
+                .Join(AnsButtons[i].transform.DOScale(Vector3.one, 0.4f))
+                .SetEase(Ease.OutSine)
+                .SetLink(gameObject);
         }
     }
 
+    public void GResetButton()
+    {
+        foreach (var button in initialPositions.Keys)
+        {
+            button.transform.position = initialPositions[button];
+            button.transform.localRotation = Quaternion.identity;
+        }
+        ShowButtonsWithRotation();
+    }
     //出題時にButtonを再表示させる
     public void ResetButton()
     {
@@ -76,7 +100,6 @@ public class DORenshuButtonAnim : MonoBehaviour
     }
     IEnumerator InitButton()
     {
-        
         for (int i = 0; i < AnsButtons.Length; i++)
         {
             AnsButtons[i].transform.localScale = Vector3.one;

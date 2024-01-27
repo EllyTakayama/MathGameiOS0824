@@ -15,6 +15,7 @@ public class EndHalo : MonoBehaviour
         ;*/
        transform.DOLocalRotate(new Vector3(0, 0, 360f), 1.5f,RotateMode.FastBeyond360)
         .SetEase(Ease.OutCubic)
+        .SetLink(gameObject)
         .OnComplete(() => endHaloImage.SetActive(false))
         ;
     }
