@@ -8,12 +8,18 @@ using GoogleMobileAds.Api;
 using UniRx;
 //MathAndScriptの方のゲームマネージャー
 
+public enum GameManagerMathsType
+{
+    multiplicationRenshuu,
+    multiplicationTest,
+    multiplicationMusikui
+}
 public class GameManager : MonoBehaviour {
 
     //we make static so in games only one script is name as this
     public static GameManager singleton;
     //data not to store on device
-   
+    public GameManagerMathsType currentMathsType;//MathTypeを代入する変数 
     public int currentScore;
     public bool isGameOver;
     public int currentCount;
@@ -25,6 +31,7 @@ public class GameManager : MonoBehaviour {
     public bool isRenshu;
     public bool isAsendingOrder;//１から順に出題されるかどうか
     public int TestMondaiCount;//Mondai数
+    public int coinNum;//コインの数
     
     //public bool canAnswer;//Buttonの不具合を解消するため連続してボタンを押せなないよう制御
     
@@ -37,7 +44,6 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         MakeSingleton();
-
     }
 
     void MakeSingleton()
@@ -55,14 +61,43 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-    currentCount = 1;
+    //currentCount = 1;
     // Initialize the Google Mobile Ads SDK.
     MobileAds.Initialize(initStatus => { });
         //print("Admob初期化");
         LoadSceneCount();
-        //LoadOrderJun();
+        LoadOrderJun();
+        LoadMathsType();//MathTypeをダウンロード
+        LoadCoin();//coinの枚数をロード
        //RequestReview();
        //Debug.Log("Sceneカウント"+SceneCount);
+    }
+
+    public void CoinSave()
+    {
+        ES3.Save<int>("coinNum",coinNum,"coinNum.es3" );
+        Debug.Log("セーブcoinNum"+coinNum);
+    }
+    public void LoadCoin()
+    {
+        coinNum = ES3.Load<int>("coinNum","coinNum.es3",0 );
+        Debug.Log("ロードcoinNum"+coinNum);
+    }
+    
+    // MathsTypeのセーブ
+    public void SaveMathsType()
+    {
+        // MathsTypeはenumなのでintに変換してセーブ
+        ES3.Save<int>("currentMathsType", (int)currentMathsType, "currentMathsType.es3");
+        Debug.Log("セーブcurrentMathsType" + currentMathsType);
+    }
+
+    // MathsTypeのロード
+    public void LoadMathsType()
+    {
+        // ロードしたintをenumに変換
+        currentMathsType = (GameManagerMathsType)ES3.Load<int>("currentMathsType", "currentMathsType.es3", (int)GameManagerMathsType.multiplicationRenshuu);
+        Debug.Log("ロードcurrentMathsType" + currentMathsType);
     }
     
     //isAsendingOrderのセーブ
