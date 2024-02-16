@@ -64,16 +64,12 @@ public class SoundManager : MonoBehaviour
                 break;
 
             case "Renshuu":
-                if (GameManager.singleton.currentMode < 10)
-                {
                     audioSourseBGM.clip = audioClipsBGM[2];
-                }
-                else
-                {
-                    audioSourseBGM.clip = audioClipsBGM[3];
-                }
                 break;
-
+            
+            case "Test":
+                audioSourseBGM.clip = audioClipsBGM[3];
+                break;
             case "GameOverPanel":
                 audioSourseBGM.clip = audioClipsBGM[4];
                 break;

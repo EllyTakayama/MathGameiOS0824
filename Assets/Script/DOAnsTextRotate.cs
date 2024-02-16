@@ -40,7 +40,7 @@ public class DOAnsTextRotate : MonoBehaviour
       
         // アニメーションの設定
         questionImage.transform.rotation = Quaternion.Euler(initialRotation);
-        questionImage.transform.DORotate(finalRotation, 0.8f,RotateMode.FastBeyond360)
+        questionImage.transform.DORotate(finalRotation, 0.4f,RotateMode.FastBeyond360)
             .SetLink(gameObject)
             .SetEase(Ease.OutSine) // Ease.InSine を追加
             .OnComplete(() => SetAnswerText());
@@ -54,7 +54,7 @@ public class DOAnsTextRotate : MonoBehaviour
       
         // アニメーションの設定
         valueBQuestionImage.transform.rotation = Quaternion.Euler(initialRotation);
-        valueBQuestionImage.transform.DORotate(finalRotation, 0.8f,RotateMode.FastBeyond360)
+        valueBQuestionImage.transform.DORotate(finalRotation, 0.4f,RotateMode.FastBeyond360)
             .SetLink(gameObject)
             .SetEase(Ease.OutSine) // Ease.InSine を追加
             .OnComplete(() => SetValueBAnswerText());

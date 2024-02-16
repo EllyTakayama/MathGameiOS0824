@@ -8,17 +8,12 @@ public class GameMath : MonoBehaviour
 {
     //we make this script instance
     public static GameMath instance;
-    [SerializeField] private DOTweenPanel doTweenPanel;//DoTweenPanel.csを直接参照
+    [SerializeField] private DOGTweenPanel doTweenPanel;//DoTweenPanel.csを直接参照
     [SerializeField] private DORenshuButtonAnim _doRenshuButtonAnim;//AnsButtonのアニメーション
     [SerializeField] private DOQuesPanelRotate _doQuesPanelRotate;//QuesPanelを回転させる
     //MathTypeをれんしゅうボタンmultiplication1-9
     //テストボタンmultiplication11-19で設定します
-    /*public enum MathsType
-    {
-        multiplicationRenshuu,
-        multiplicationTest,
-        multiplicationMusikui//musikui算を追加
-    }*/
+
     public GameManagerMathsType mathsType;
     //2 private floats this are the question values a and b
     public int a, b;
@@ -93,12 +88,15 @@ public class GameMath : MonoBehaviour
         //we call the methods
         CurrentMode();
         //MathsProblem();
-        SoundManager.instance.PlayBGM("Renshuu");
+        SoundManager.instance.PlayBGM("Test");
+        // GameManagerのmathsTypeをmultiplicationTestに設定
+        GameManager.singleton.currentMathsType = GameManagerMathsType.multiplicationTest;
         //Invoke("MathsProblem",0.5f);
     }
     //this method keeps the track of mode 
     void CurrentMode()
     {
+        /*
         switch (GameManager.singleton.currentMathsType)
         {
             case GameManagerMathsType.multiplicationRenshuu:
@@ -122,7 +120,7 @@ public class GameMath : MonoBehaviour
                 // 未知のケースに対するデフォルトの処理を書く
                 mathsType = GameManagerMathsType.multiplicationRenshuu;
                 break;
-        }
+        }*/
         /*
         if (currentMode < 10)
         {
@@ -180,9 +178,8 @@ public class GameMath : MonoBehaviour
 
     public void MathsProblem()
     {
-       
         //SoundManager.instance.PlaySE3();
-        
+        currentMode = GameManager.singleton.currentMode;
         switch (mathsType)
         {
             case (GameManagerMathsType.multiplicationRenshuu):
@@ -225,8 +222,7 @@ public class GameMath : MonoBehaviour
                 break;
         }
     }
-
-
+    
     void DelayRenshuButton()
     {
         _doRenshuButtonAnim.GResetButton();
@@ -245,13 +241,13 @@ public class GameMath : MonoBehaviour
     {
         if (GameManager.singleton.currentCount >= 9)
         {
-            doTweenPanel.DoGradeCall();
+            doTweenPanel.DoGameGradeCall();
             return;
         }
         countText++;
         _guiManager1.countText.text = $"{countText} 問目";
         //Degubようコメント
-        a = currentMode % 10; // 10で割ったあまりなのでcurrentModeが2なら2, 12なら2が出る
+        a = currentMode;
         if (multi1 == true)
         {//かける9降順、デフォルトでは×数は9ではない
             b++;
@@ -311,12 +307,12 @@ public class GameMath : MonoBehaviour
             AnsButtons[0].GetComponentInChildren<Text>().text = (answer + a + a).ToString();
         }
     }
-
     public void MultiplicationMethodTest()//力だめし
     {
-        if (GameManager.singleton.currentCount > TestToggle.testQuestion - 1)
+        //if (GameManager.singleton.currentCount > TestToggle.testQuestion - 1)
+            if (GameManager.singleton.currentCount > 9)
         {
-            doTweenPanel.DoGradeCall();
+            doTweenPanel.DoGameGradeCall();
             return;
         }
         if (n >= ary.Length)
@@ -330,7 +326,7 @@ public class GameMath : MonoBehaviour
         print("n_" + n);
         Invoke("PiyoSE", 0.6f);
         int b = ary[n];//かける数にランダムに取得した配列データを代入
-        int a = currentMode % 10;//1の段
+        int a = currentMode;//1の段
 
 
         valueA.text = a.ToString();//段の数を表示
@@ -369,7 +365,7 @@ public class GameMath : MonoBehaviour
     {
         if (GameManager.singleton.currentCount > TestToggle.testQuestion - 1)
         {
-            doTweenPanel.DoGradeCall();
+            doTweenPanel.DoGameGradeCall();
             return;
         }
         if (n >= ary.Length)

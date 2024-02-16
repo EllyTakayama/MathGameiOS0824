@@ -38,9 +38,16 @@ MonoBehaviour:
     - LeanTouchPlus
     - LeanCommon
     - UniRx.Examples
+    - SimpleScrollSnap
+    - SimpleInspectorAttributes
+    - Utilities
     - PsdPlugin
     - GoogleMobileAds.Editor
     - Sirenix.OdinInspector.Modules.UnityMathematics
+    - SimpleScrollSnapEditor
+    - UtilitiesEditor
+    - CopyrightNoticeEditor
+    - SimpleInspectorAttributesEditor
     showAdvancedSettings: 1
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

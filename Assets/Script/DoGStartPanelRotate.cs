@@ -16,7 +16,7 @@ public class DoGStartPanelRotate : MonoBehaviour
         
         Debug.Log($"初期時の取得{initialPosition}");
         //スタートから0.2秒後にRotatePanelを呼び出す
-        DeleyRotetePanel();
+        //DeleyRotetePanel();
     }
 
     public void DeleyRotetePanel()

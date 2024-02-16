@@ -7,7 +7,11 @@ public class ParticleManager : MonoBehaviour
   public GameObject[] particlePrefabs; // パーティクルのプレハブをアサイン
     public int poolSizePerPrefab = 5; // 各プレハブごとのプールのサイズ
     private GameObject[][] particlePools; // パーティクルのプール
-
+    /*
+     * 0~3インデックスはConfetti
+     * 4~6は正解時のButtonへのエフェクト
+     * 7は不正解時のButtonへのエフェクト
+     */
     void Start()
     {
         // プールの初期化

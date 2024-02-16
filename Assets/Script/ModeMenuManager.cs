@@ -80,11 +80,23 @@ public class ModeMenuManager : MonoBehaviour
         TestAnnounceText.SetActive(true);
          SoundManager.instance.PlayBGM("ModeMenuPanel");
         isPressed =false;
-     
+    }
+    //Gameシーンを選択したい場合（）
+    public void GamePlayButtonClicked()
+    {
+        SoundManager.instance.PlaySEButton();
+        // GameManagerのmathsTypeを設定
+        GameManager.singleton.currentMathsType = GameManagerMathsType.multiplicationTest;
+        ModeMenuPanel.SetActive(true);
+        TopMenuPanel.SetActive(false);
+        ReAnnounceText.SetActive(true);
+        // ここに必要な処理を追加する
+        // 例：SceneManager.LoadScene("Game");
+        DOTween.KillAll();
+        SceneManager.LoadScene("Game");
     }
     public void SelectRecord()//成績パネル表示
     {
-      
         SoundManager.instance.PlaySEButton();//SoundManagerからPlaySE0を実行
         studyPanel.SetActive(true);
          EasySaveManager.singleton.Load();

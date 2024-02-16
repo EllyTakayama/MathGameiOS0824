@@ -5,6 +5,8 @@ using DG.Tweening;
 using UniRx;
 using UnityEngine.Serialization;
 using System.Text;
+using TMPro;//TextMeshProを使う場合
+using UniRx.Triggers;
 
 /*かけ算アプリで解答ボタンを押したときに正誤判定スクリプト0628
 *マルばつ画像表示
@@ -12,7 +14,9 @@ using System.Text;
 */
 
 public class GCheckButton : MonoBehaviour {
-    ReactiveProperty<int> currentCount = new ReactiveProperty<int>(0);
+    // 以下のように、currentCoinCountの初期化をAwake()メソッドで行う
+    private ReactiveProperty<int> currentCoinCount = new ReactiveProperty<int>();
+    // GameManagerのcoinNumを初期値とする
     private Button thisButton;
     //正誤チェックと共にスコア、問題表示回数、正解数の表示を行うために宣言です
     private int hiScore;
@@ -32,11 +36,11 @@ public class GCheckButton : MonoBehaviour {
     public GameObject scoreMove;
     [SerializeField] private GameObject[] maruImage;  
     [SerializeField] private GameObject[] batsuImage;
-    //public GameObject piyo;
+    [SerializeField] private GameObject piyo;
     public bool canAnswer;//Buttonの不具合を解消するため連続してボタンを押せなないよう制御
     public Button[] AnsButtons;
     public int Index;//marubatuImageのインデックス取得のため
-
+    [SerializeField] private Collider2D[] ansButtonCollider;//回答Buttonのコライダーの話
     float time=0.0f;
     public bool isPressed;//マルバツ画像の表示を調整する為のbool、ボタンが押されると時間の測定を開始
     [SerializeField] private DORenshuButtonAnim doRenshuButtonAnim;//ボタンアニメーションスクリプトを取得
@@ -45,8 +49,18 @@ public class GCheckButton : MonoBehaviour {
     [SerializeField] private Text _valueB;//かける数のテキスト
     [SerializeField] private GameObject ansImage;//クエスチョンのイメージ
     [SerializeField] private DOAnsTextRotate _doAnsTextRotate;//クエスチョンを回転させる
-    [SerializeField] private DOTweenPanel doTweenPanel;//GradePanelを表示させるTween
-    
+    [SerializeField] private DOGTweenPanel doTweenPanel;//GradePanelを表示させるTween
+    [SerializeField] private DoGameResultPanel _doGameResultPanel;//gameClearの最初の画面を表示させる
+    [SerializeField] private DoCoinAnim coinAnimScript; // DoCoinAnim.csのインスタンスをインスペクターから参照するための変数
+    [SerializeField] private ParticleManager particleManager; // ParticleManagerをインスペクターから参照するための変数
+    [SerializeField] private TextMeshProUGUI coinText;//取得したコインの枚数を表示するText
+
+    void Awake()
+    {
+        currentCoinCount.Value = GameManager.singleton.coinNum;
+        coinText.text = GameManager.singleton.coinNum.ToString();
+    }
+
     void Start()
     {
         //Startですること
@@ -78,6 +92,13 @@ public class GCheckButton : MonoBehaviour {
         wrongAnswer.text = "まちがえたもんだい\n";
         print($"GameManager.singleton.currentScore,{GameManager.singleton.currentScore}");
         print($"GameManager.singleton.currenCount,{GameManager.singleton.currentCount}");
+        coinText.text = GameManager.singleton.coinNum.ToString();
+// currentCoinCountの変更を購読してcoinTextを更新
+        currentCoinCount.Subscribe(newCoinCount =>
+        {
+            coinText.text = newCoinCount.ToString();
+            Debug.Log("coinCount updated: " + newCoinCount);
+        }).AddTo(this);
     }
 
     public void ResetButtonScore()
@@ -128,14 +149,15 @@ public class GCheckButton : MonoBehaviour {
         CalculateMultiplication();
         Index = buttonIndex;
         count++;
+        for(int i = 0; i < AnsButtons.Length; i++)
+        {
+            AnsButtons[i].enabled = false;
+            ansButtonCollider[i].enabled = false;
+        }
         yield return new WaitForSeconds(0.2f);
         //markText.text = $"{score}";
         //AnimateOtherButtons(AnsButtons[Index]);
         doRenshuButtonAnim.AnimateOtherButtons(buttonIndex);
-        for(int i = 0; i < AnsButtons.Length; i++)
-        {
-            AnsButtons[i].enabled = false;
-        }
         yield return new WaitForSeconds(0.4f);
         _doAnsTextRotate.RotatePanel();
         
@@ -149,11 +171,13 @@ public class GCheckButton : MonoBehaviour {
             //正解ならマル画像表示、正解数score,問題出題数countが1ずつ増えます
             //countが9超えたらGameOver画面に切り替え出題を終了予定です
             //isPressed = true;
-            maruImage[buttonIndex].SetActive(true);
+            
             //piyo.GetComponent<piyoPlayer>().Happy();//正解ならpiyoPlayer.csのHappy（）を実行
             SoundManager.instance.PlaySE0();//SoundManagerからPlaySE0を実行
             //UniRxのvalueの変化
-            currentCount.Value ++;
+            
+            //maruImage[buttonIndex].SetActive(true);
+            
             score++;
             GameManager.singleton.currentScore = score;
             GameManager.singleton.currentCount = count;
@@ -164,18 +188,37 @@ public class GCheckButton : MonoBehaviour {
             markText.text = $"{score}";
             countText.GetComponent<CountText>().CountMove();
             markText.GetComponent<ScoreText>().ScoreMove();
+            // 正解のボタンが押されたらDoCoinAnim.csのSpawnCoinOnButtonメソッドを実行してcoinを生成する
+            if (coinAnimScript != null)
+            {
+                coinAnimScript.SpawnCoinOnButton(AnsButtons[buttonIndex]);
+            }
+            // 正解時にパーティクルを再生
+            if (particleManager != null)
+            {
+                particleManager.PlayParticle(Random.Range(4, 7), AnsButtons[buttonIndex].transform.position);
+            }
+            currentCoinCount.Value += 10;
+            GameManager.singleton.coinNum += 10;
+            GameManager.singleton.CoinSave();
         }   
         else   
         {
             //不正解ならバツ画像表示、問題出題数countが1増えます
             //isPressed = true;
             //piyo.GetComponent<piyoPlayer>().Damage();//正解ならpiyoPlayer.csのHappy（）を実行
-            batsuImage[buttonIndex].SetActive(true);
+            
+            //batsuImage[buttonIndex].SetActive(true);
             SoundManager.instance.PlaySE1();//SoundManagerからPlaySE1を実行
             GameManager.singleton.currentCount = count;
             countText.GetComponent<CountText>().CountMove();
             _wrongAnswerStringBuilder.AppendLine($"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}");
             wrongAnswer.text += $"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}\n";
+            // 不正解時にパーティクルを再生
+            if (particleManager != null)
+            {
+                particleManager.PlayParticle(7, AnsButtons[buttonIndex].transform.position);
+            }
 
         }
         //countText.text = $"{count}/もんめ";
@@ -184,6 +227,15 @@ public class GCheckButton : MonoBehaviour {
         Invoke("DelayMathAnswer", 1.5f);
         //MathAndAnswer.instance.MathsProblem();
         
+    }
+
+    //範囲外で出題をリセットしたい場合
+    public void ChangeQues()
+    {
+        count++;
+        GameManager.singleton.currentCount = count;
+        Invoke("DelayImageOff", 0f);
+        Invoke("DelayMathAnswer", 0.5f);
     }
 
     void DelayImageOff()
@@ -195,26 +247,20 @@ public class GCheckButton : MonoBehaviour {
     }
     void DelayMathAnswer()
     {
-        if (GameManager.singleton.currentCount >= 9 && GameManager.singleton.isRenshu)
+        if (GameManager.singleton.currentCount >= 9)
         {
             ToStringAnswer();
-            doTweenPanel.DoGradeCall();
+            //doTweenPanel.DoGameGradeCall();
+            _doGameResultPanel.SetResult();
             print("count9isRenshu");
             return;
-        }else if 
-            (GameManager.singleton.currentCount > 9 && !GameManager.singleton.isRenshu)
-        {
-            print($"testQues-1Test{TestToggle.testQuestion - 1}");
-            ToStringAnswer();
-            doTweenPanel.DoGradeCall();
-            return;
         }
-
         _doAnsTextRotate.ResetAnswerText();
         GameMath.instance.MathsProblem();
         for (int i = 0; i < AnsButtons.Length; i++)
         {
             AnsButtons[i].enabled = true;
+            ansButtonCollider[i].enabled = true;
         }
     }
 

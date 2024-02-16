@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour {
         //print("Admob初期化");
         LoadSceneCount();
         LoadOrderJun();
-        LoadMathsType();//MathTypeをダウンロード
+        //LoadMathsType();//MathTypeをダウンロード
         LoadCoin();//coinの枚数をロード
        //RequestReview();
        //Debug.Log("Sceneカウント"+SceneCount);

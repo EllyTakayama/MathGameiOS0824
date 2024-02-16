@@ -49,15 +49,40 @@ public class GUIManager1 : MonoBehaviour {
         {
             currentMode = GameManager.singleton.currentMode;
         }
-        if(GameManager.singleton.currentMode>10){//ちから試し問題
-            quesCountText.text = TestToggle.testQuestion.ToString();
+
+         switch (GameManager.singleton.currentMathsType)
+         {
+             case GameManagerMathsType.multiplicationRenshuu:
+                 // multiplicationRenshuu の処理をここに書く
+                 quesCountText.text = TestToggle.testQuestion.ToString();
+                 tableButton.SetActive(true);
+                 break;
+
+             case GameManagerMathsType.multiplicationTest:
+                 // multiplicationTest の処理をここに書く
+                 quesCountText.text = "9";
+                 tableButton.SetActive(false);
+                 break;
+
+             case GameManagerMathsType.multiplicationMusikui:
+                 // multiplicationTest の処理をここに書く
+                 tableButton.SetActive(false);
+                 break;
+         }
+         /*
+         if(GameManager.singleton.currentMode>10){//ちから試し問題
+            //quesCountText.text = TestToggle.testQuestion.ToString();
             tableButton.SetActive(false);
 
         }
-        else{//練習問題
-            quesCountText.text = "9" ;
-             tableButton.SetActive(true);
+        else　if(GameManager.singleton.currentMode<10) {//練習問題
+            //quesCountText.text = "9" ;
+            tableButton.SetActive(true);
         }
+        else
+        {
+            
+        }*/
 
         InitializeImageTables();
            messageText.enabled = true;
