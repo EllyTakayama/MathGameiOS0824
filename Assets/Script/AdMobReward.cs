@@ -6,7 +6,8 @@ using GoogleMobileAds.Api;
 using UnityEngine.UI;//1020
 
 public class AdMobReward : MonoBehaviour
-{//やること
+{
+    //やること
     //1.リワード広告IDの入力
     //2.Update関数のif文内に報酬内容を入力
     //3.リワード起動設定　ShowAdMobReward()を使う
