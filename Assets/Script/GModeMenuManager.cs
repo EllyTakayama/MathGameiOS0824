@@ -23,6 +23,8 @@ public class GModeMenuManager : MonoBehaviour
      [SerializeField] private DoGStartPanelRotate _doGStartPanelRotate;//スタート時のImage表示
 
      [SerializeField] private TextMeshProUGUI coinText;
+
+     [SerializeField] private PiyoSetPosition _piyoSetPosition;//ピヨの位置変更 
     //tagの位置で正誤判定している
     public static string tagOfButtons;
     // Start　トップメニュー以外は非表示
@@ -153,7 +155,9 @@ public class GModeMenuManager : MonoBehaviour
         yield return new WaitForSeconds(0.4f); // 0.3秒待機
         gameMenuPanel.SetActive(false);
         gameQuesPanel.SetActive(true);
+        _piyoSetPosition.SetGamePosition();
         coinText.text = GameManager.singleton.coinNum.ToString();
+        
         yield return null; // コルーチンを終了する
         _doGStartPanelRotate.DeleyRotetePanel();//スタートパネルからの出題
     }

@@ -9,10 +9,6 @@ public class DOFade : MonoBehaviour
 {
     public CanvasGroup canvasGroup;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     IEnumerator FadeTiPanel(){
         yield return canvasGroup.DOFade(1f,0.8f).WaitForCompletion();

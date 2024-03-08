@@ -18,7 +18,7 @@ public class GachaManager : MonoBehaviour
 	Dictionary<int, int> itemResultDict;
 
 	// 抽選回数
-	//int rollNum = 100;
+	int rollNum = 1000;
 	public GameObject GachaObject;
 	public GameObject GachaObject1;
 	public GameObject GachaMana;
@@ -104,14 +104,15 @@ public class GachaManager : MonoBehaviour
 		setumeis = GachaObject.GetComponent<GachaItem>().setumeiText;
 		DebugNames();
 		
-		GetDropItem();
-		*/
+		GetDropItem();*/
+		
 		/*
 		 //現段階ではGameManagerにレビュー機能はない
 		if(GameManager.singleton.SceneCount==5||GameManager.singleton.SceneCount==30||
         GameManager.singleton.SceneCount==800||GameManager.singleton.SceneCount==150){
             GameManager.singleton.RequestReview();
         }*/
+		//GetDropItem();Debug用スタート時に抽選を開始する
 		PanelParent.GetComponent<PanelChange>().enabled = true;
 	}
 	void DebugNames()
@@ -132,11 +133,6 @@ public class GachaManager : MonoBehaviour
 		SoundManager.instance.PlaySE3();
 	}
 	public void GachaReward(){
-		DOTween.TweensById("idBigScale2").ForEach((tween) =>
-        {
-            tween.Kill();
-            Debug.Log("IDKill");
-            });
 		afterAdPanel.SetActive(true);
 		GachaAdReward.ShowAdMobReward();
 		//PanelAd.SetActive(false);
@@ -145,15 +141,11 @@ public class GachaManager : MonoBehaviour
 	//アイテムPanel,GetPanel共通のOkButton
 	public void CloseAdPanelManager(){
 		SoundManager.instance.PlaySE3();
-		DOTween.TweensById("idBigScale2").ForEach((tween) =>
-        {
-            tween.Kill();
-            Debug.Log("IDKill");
-            });
+		
 		PanelAd.SetActive(false);
 		RightButton.SetActive(true);
 		LeftButton.SetActive(true);
-		PanelParent.GetComponent<GPanelChange>().enabled = true;
+		PanelParent.GetComponent<PanelChange>().enabled = true;
 	}
 
     //ガチャのGetNekoPanelないのガチャ終了後のOKボタン
@@ -163,35 +155,32 @@ public class GachaManager : MonoBehaviour
 			}
 		RightButton.SetActive(true);
 		LeftButton.SetActive(true);
-		PanelParent.GetComponent<GPanelChange>().enabled = true;
+		PanelParent.GetComponent<PanelChange>().enabled = true;
+		
 		closeButton.SetActive(false);
 		SoundManager.instance.PlaySE3();
 		NekoitemPanel.SetActive(false);
-		if(getNekoPanel.activeSelf){
-			DOTween.TweensById("idFlash18").ForEach((tween) =>
-        {
-            tween.Kill();
-            Debug.Log("Kill,idFlash18");
-            });
-			DOTween.TweensById("idBigScale3").ForEach((tween) =>
-        {
-
-            tween.Kill();
-            Debug.Log("IDKill");
-            });
-		}
+	
 		flashImage.SetActive(false);
 		getNekoPanel.SetActive(false);
-		if(PanelAd.activeSelf){
-			DOTween.TweensById("idBigScale3").ForEach((tween) =>
-        {
 
-            tween.Kill();
-            Debug.Log("IDKill");
-            });
-		}
 		rewardText0.SetActive(true);
 		PanelAd.SetActive(false);
+	}
+
+	public void OpenPanel()
+	{
+		RightButton.SetActive(false);
+		LeftButton.SetActive(false);
+		PanelParent.GetComponent<PanelChange>().enabled = false;
+	}
+	public void CloseItemPanel()
+	{
+		NekoitemPanel.SetActive(false);
+		RightButton.SetActive(true);
+		LeftButton.SetActive(true);
+		PanelParent.GetComponent<PanelChange>().enabled = true;
+		SoundManager.instance.PlaySE3();
 	}
 	//コインボタンを押すとAdPanelが出てくる
 	public void GetCoin(){
@@ -201,12 +190,16 @@ public class GachaManager : MonoBehaviour
 		SoundManager.instance.PlaySE3();
 		RightButton.SetActive(false);
 		LeftButton.SetActive(false);
-		PanelParent.GetComponent<GPanelChange>().enabled = false;
+		PanelParent.GetComponent<PanelChange>().enabled = false;
 	}
 
 	public void GetDropItem(){	
-		//Debug時はオフ 
+		//画面遷移までガチャボタン押せなくなる
+		gachaButton.enabled = false;
+		//画面遷移までスワイプできなくなる
+		PanelParent.GetComponent<PanelChange>().enabled = false;
 		/*coinが150枚以下ならガチャはできない*/
+		
 		if(GameManager.singleton.coinNum < 150){
 			GachaAdReward.CreateAndLoadRewardedAd();
 			PanelAd.SetActive(true);
@@ -215,10 +208,7 @@ public class GachaManager : MonoBehaviour
 			SoundManager.instance.PlaySE3();
 			return;
 		}
-		//画面遷移までガチャボタン押せなくなる
-		gachaButton.enabled = false;
-		//画面遷移までスワイプできなくなる
-		PanelParent.GetComponent<GPanelChange>().enabled = false;
+		
 		//コインから保存する
 		GameManager.singleton.coinNum -= 150;
 		GameManager.singleton.CoinSave();
@@ -228,17 +218,12 @@ public class GachaManager : MonoBehaviour
 		SoundManager.instance.PlaySE3();
 		RightButton.SetActive(false);
 		LeftButton.SetActive(false);
-
-		// 各種辞書の初期化
-		//InitializeDicts();
-        
-        //* ドロップアイテムの抽選の時
-        int itemId = Choose();//*
-
-		
+	
+        //ドロップアイテムの抽選の時
+        int itemId = Choose();
 
 		// アイテムIDに応じたメッセージ出力
-		nekoNum = itemId;//＊
+		nekoNum = itemId;
 	
 		  //nekoNum = itemID;//Debug
 		  string itemName = itemInfo[itemId];
@@ -247,6 +232,7 @@ public class GachaManager : MonoBehaviour
 			Debug.Log("nekoNum"+nekoNum);
 		
 		int ringiNum = GachaNum[nekoNum];
+		
 		//Debug表示用
 		/*itemID++;//DEbug
 		if(itemID>GachaNum.Count){
@@ -264,7 +250,10 @@ public class GachaManager : MonoBehaviour
 		Debug.Log(GachaNum[nekoNum]);
 
         // Debugで確率を確認したい時のスクリプトここから確認用
-		/*for (int i = 0 ; i < rollNum; i++){
+        
+         //rollNum回数分だけ発注を実績できる
+         /*
+		for (int i = 0 ; i < rollNum; i++){
 			int itemId = Choose();
 			if (itemResultDict.ContainsKey(itemId)){
 				itemResultDict[itemId]++;
@@ -277,6 +266,8 @@ public class GachaManager : MonoBehaviour
 			Debug.Log(itemName + " は " + pair.Value + " 回でした。");
 		}*/
 		//DebugNames();
+		
+		//デバッグのため一時削除
 		StartCoroutine(ItemGet());
 	}
 	public void SetChara(){
@@ -291,25 +282,28 @@ public class GachaManager : MonoBehaviour
 		}
 	}
 
+	//ガチャでアイテムを排出する
 	IEnumerator ItemGet(){
-        yield return new WaitForSeconds(1.0f);
 		gachaButton.enabled = true;
 		getNekoPanel.SetActive(true);
 		closeButton.SetActive(false);
+		yield return fadePanel.DOFade(0.9f,0.8f).WaitForCompletion();
+		fadePanel.DOFade(0,0.6f);
+        yield return new WaitForSeconds(0.6f);
+        
 		nameText.text = "なにがでるかな？";
 		SoundManager.instance.PlaySE3();
-		openBallImage.SetActive(true);
+		//openBallImage.SetActive(true);
 		
 		nekoImage.SetActive(false);
 		yield return new WaitForSeconds(1.0f);
 		openBallImage.SetActive(false);
-		pOpenBallImage.SetActive(true);
+		//pOpenBallImage.SetActive(true);
 		
 		yield return new WaitForSeconds(1.0f);
-		pOpenBallImage.SetActive(false);
+		//pOpenBallImage.SetActive(false);
 		//FadePanel
-		yield return fadePanel.DOFade(0.9f,0.8f).WaitForCompletion();
-		fadePanel.DOFade(0,0.6f);
+		
 		yield return new WaitForSeconds(0.2f);
 		string name = GetComponent<GachaItem>().GachaChara[nekoNum];//nameで取得した"."を改行に置き換える
 		nameText.text = name.Replace(".",System.Environment.NewLine);
@@ -323,9 +317,10 @@ public class GachaManager : MonoBehaviour
 		//nameText.text = itemName + "\nをゲットした"
 		yield return new WaitForSeconds(0.4f);
 		closeButton.SetActive(true);
-
+		yield break;
 	}
 
+	//読み込む内容を辞書に格納する
 	void InitializeDicts(){
 		names = GachaObject.GetComponent<GachaItem>().GachaChara;
 		itemInfo = new Dictionary<int, string>();
@@ -342,6 +337,7 @@ public class GachaManager : MonoBehaviour
         itemResultDict = new Dictionary<int, int>();
 	}
 
+	//ガチャを行う
 	int Choose(){
 		// 確率の合計値を格納
 		float total = 0;

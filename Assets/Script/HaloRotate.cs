@@ -14,11 +14,11 @@ public class HaloRotate : MonoBehaviour
     public void Flash18()
     {
         //transform.eulerAngles = new Vector3(0, 0, 0);
-        transform.DOLocalRotate(new Vector3(0, 0, 360f), 4f,
+        transform.DOLocalRotate(new Vector3(0, 0, 360f), 6f,
         RotateMode.FastBeyond360)
             .SetEase(Ease.Linear)//途切れのない回転のため
-        .SetLoops(-1)
-        .SetLink(gameObject);
+            .SetLoops(-1)
+            .SetLink(gameObject);
     }
 
     public void ChangeAlphaTo1()

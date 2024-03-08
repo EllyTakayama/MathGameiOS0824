@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 using UnityEngine.UI;
 //DoTweenでgradePanelのアニメーションを実行するスクリプト0901
 public class DOGTweenPanel : MonoBehaviour
@@ -13,7 +14,7 @@ public class DOGTweenPanel : MonoBehaviour
     //[SerializeField] private GameObject gradePiyoSprite;
     [SerializeField] private Image medalImage;
     [SerializeField] private Sprite[] medalGrades; //Grade画像の差し替え用スプライト1,2,3,4,5の5要素
-    //[SerializeField] private Text gradeText;
+    [SerializeField] private TextMeshProUGUI gradeText;
 
     //[SerializeField] private DoGradeImage _doGradeImage;
     //[SerializeField] private DoGradePiyo _doGradePiyo;
@@ -54,13 +55,16 @@ public class DOGTweenPanel : MonoBehaviour
     {
         gameQuesPanel.SetActive(false);
         gradePanel.SetActive(true);
+        gradeText.text = GameManager.singleton.coinNum.ToString();
         GradeImage();
         SoundManager.instance.PlaySE12GradePanel();
+        /*
         yield return new WaitForSeconds(0.3f); // 0.3秒待機
+        
         if (GameManager.singleton.currentScore > 0)
         {
             _doCoinAnim.SpawnRewardCoin();
-        }
+        }*/
         yield return new WaitForSeconds(0.3f); // 0.3秒待機
         medalImage.enabled = true;
         //medalImage.GetComponent<DoGradeImage>().DoImageChange();

@@ -9,8 +9,10 @@ public class DORenshuButtonAnim : MonoBehaviour
     public Button[] AnsButtons;
     public GameObject effectPrefab; // エフェクトのプレハブ
     [SerializeField] private int ansButtonIndex;
-    //AnsButtonsの位置を登録するためButtonのキーとVector3の値を持つ連装配列　intialPositionという名前のDictionary
-    private Dictionary<Button, Vector3> initialPositions = new Dictionary<Button, Vector3>();
+    
+    private Vector3 parentStartPosition;//親の初期値
+    public RectTransform AnsButtonParent;
+    public Transform piyoObject; // 移動の目標となるオブジェクト
     //スタート時にボタンのAddListernerを登録する
     void Start()
     {
@@ -20,12 +22,12 @@ public class DORenshuButtonAnim : MonoBehaviour
             AnsButtons[i].onClick.AddListener(() =>
             {
                 AnimateOtherButtons(index);
-                CreateEffectAtButton(index);
+                //CreateEffectAtButton(index);
                 ResetButton();
             });
-            // AnsButtonsの初期位置を保存
-            initialPositions[AnsButtons[i]] = AnsButtons[i].transform.position;
         }
+        parentStartPosition = AnsButtonParent.localPosition;
+        
     } 
     //押されたButtonのIndexを取得しそれ以外のButtonのサイズを0にして見えなくする
     public void AnimateOtherButtons(int clickedButtonIndex)
@@ -84,13 +86,10 @@ public class DORenshuButtonAnim : MonoBehaviour
         }
     }
 
+    //AnsButtonをスタート時の位置に移動させる
     public void GResetButton()
     {
-        foreach (var button in initialPositions.Keys)
-        {
-            button.transform.position = initialPositions[button];
-            button.transform.localRotation = Quaternion.identity;
-        }
+        AnsButtonParent.localPosition = parentStartPosition;
         ShowButtonsWithRotation();
     }
     //出題時にButtonを再表示させる

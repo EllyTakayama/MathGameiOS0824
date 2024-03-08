@@ -10,6 +10,7 @@ public class DoGameResultPanel : MonoBehaviour
     [SerializeField] private GameObject piyo;//プレイヤーのひよこSprite
     [SerializeField] private GameObject[] starsOn;//星のオンオブジェクト
     [SerializeField] private DOGTweenPanel _dogTweenPanel;//2枚目のリザルトパネルを呼び出す
+    [SerializeField] private RectTransform gradePreParent;//ピヨの移動先の位置
     public void SetResult()
     {
         Debug.Log("setResult");
@@ -55,7 +56,8 @@ public class DoGameResultPanel : MonoBehaviour
         }
         yield return new WaitForSeconds(0.4f);
         // piyoをY軸で1000移動
-        piyo.transform.DOMoveY(piyo.transform.position.y + 1000f, 0.6f);
+        //piyo.transform.DOMoveY(piyo.transform.position.y + 1000f, 0.6f);
+        piyo.transform.DOMove(gradePreParent.position, 0.6f);
         yield return new WaitForSeconds(0.3f);
         resultPanel1.SetActive(false);
         _dogTweenPanel.DoGameGradeCall();

@@ -54,6 +54,7 @@ public class GCheckButton : MonoBehaviour {
     [SerializeField] private DoCoinAnim coinAnimScript; // DoCoinAnim.csのインスタンスをインスペクターから参照するための変数
     [SerializeField] private ParticleManager particleManager; // ParticleManagerをインスペクターから参照するための変数
     [SerializeField] private TextMeshProUGUI coinText;//取得したコインの枚数を表示するText
+    [SerializeField] private DOAnsButtonMove _doAnsButtonMove;//AnsButtonを移動させるアニメーション
 
     void Awake()
     {
@@ -146,6 +147,7 @@ public class GCheckButton : MonoBehaviour {
     }
     IEnumerator CheckButtonCoroutine(int buttonIndex)
     {
+        _doAnsButtonMove.PauseButtonMovement();//AnsButtonの動きを止める
         CalculateMultiplication();
         Index = buttonIndex;
         count++;
@@ -250,7 +252,7 @@ public class GCheckButton : MonoBehaviour {
         if (GameManager.singleton.currentCount >= 9)
         {
             ToStringAnswer();
-            //doTweenPanel.DoGameGradeCall();
+            
             _doGameResultPanel.SetResult();
             print("count9isRenshu");
             return;

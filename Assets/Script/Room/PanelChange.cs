@@ -119,7 +119,7 @@ public class PanelChange : MonoBehaviour
         switch(panel){
             case Panel.gachaPanel:
             if(LeftMuki==true){
-                transform.localPosition = new Vector2(600, 0);
+                transform.localPosition = new Vector2(600, 0);//回転ができるよう初期位置を設定している
                 transform.DOLocalMove(new Vector3(0, 0, 0), 0.4f);  
             }
             else{
@@ -163,6 +163,7 @@ public class PanelChange : MonoBehaviour
                 transform.DOLocalMove(new Vector3(-3000,0, 0), 0.6f);
             }
             else{
+                    transform.localPosition = new Vector2(-3600, 0);
                 transform.DOLocalMove(new Vector3(-3000, 0, 0), 0.6f);
             }
                 
@@ -203,13 +204,14 @@ public class PanelChange : MonoBehaviour
         //Debug.Log("3");
         }
     else if(currentPanel == Panel.Panel3item ){
-        ShowGachaPanel(Panel.Panel4item);
-        //Debug.Log("3");
-        }
-    else if(currentPanel == Panel.Panel4item ){
         ShowGachaPanel(Panel.gachaPanel);
         //Debug.Log("3");
         }
+    /*
+    else if(currentPanel == Panel.Panel4item ){
+        ShowGachaPanel(Panel.gachaPanel);
+        //Debug.Log("3");
+        }*/
     }
     //左へスワイプスする右へ移動する　LeftMuki=true
     public void SwipeLeft(){ 
@@ -229,23 +231,24 @@ public class PanelChange : MonoBehaviour
         //Debug.Log("3");
         }
     else if(currentPanel == Panel.Panel3item ){
-        ShowGachaPanel1(Panel.Panel4item);
-        //Debug.Log("3");
-        }
-    else if(currentPanel == Panel.Panel4item ){
         ShowGachaPanel1(Panel.gachaPanel);
         //Debug.Log("3");
         }
+    /*
+    else if(currentPanel == Panel.Panel4item ){
+        ShowGachaPanel1(Panel.gachaPanel);
+        //Debug.Log("3");
+        }*/
         SoundManager.instance.PlaySE3();
     }
 
     public void OnLeftButton(){
         
-        if(currentPanel == Panel.Panel4item ){
+        /*if(currentPanel == Panel.Panel4item ){
         ShowGachaPanel(Panel.Panel3item);
         //Debug.Log("2");
-    }
-    else if(currentPanel == Panel.Panel3item){
+    }*/
+    if(currentPanel == Panel.Panel3item){
         ShowGachaPanel(Panel.Panel2chara);
         //Debug.Log("1");
         }
@@ -259,7 +262,7 @@ public class PanelChange : MonoBehaviour
         //Debug.Log("5");
         }
     else if(currentPanel == Panel.gachaPanel){
-        ShowGachaPanel(Panel.Panel4item);
+        ShowGachaPanel(Panel.Panel3item);
         //Debug.Log("5");
         }
     }
@@ -267,11 +270,11 @@ public class PanelChange : MonoBehaviour
     public void SwipeRight(){
         SoundManager.instance.StopSE(); 
         //Debug.Log("右スワイプで左移動"+LeftMuki);
-        if(currentPanel == Panel.Panel4item ){
+        /*if(currentPanel == Panel.Panel4item ){
         ShowGachaPanel1(Panel.Panel3item);
         //Debug.Log("2");
-    }
-    else if(currentPanel == Panel.Panel3item){
+    }*/
+    if(currentPanel == Panel.Panel3item){
         ShowGachaPanel1(Panel.Panel2chara);
         //Debug.Log("1");
         }
@@ -285,7 +288,7 @@ public class PanelChange : MonoBehaviour
         //Debug.Log("5");
         }
     else if(currentPanel == Panel.gachaPanel){
-        ShowGachaPanel1(Panel.Panel4item);
+        ShowGachaPanel1(Panel.Panel3item);
         //Debug.Log("5");
         }
         SoundManager.instance.PlaySE3();

@@ -15,18 +15,18 @@ public class AdmobGReward : MonoBehaviour
     private bool SpinnerFlag = false;//Spinnerパネル表示用　初期値はfalse
     private bool OpenRewardFlag = false;//リワード広告全面表示　初期値はfalse
     private bool NoShowFlag = false;//リワード広告が読み込めていなかった場合　初期値はfals
-
+    public Text coinAddText;//coinを表示するtext
     private RewardedAd rewardedAd;//RewardedAd型の変数 rewardedAdを宣言 この中にリワード広告の情報が入る
     public GameObject afterAdPanel;
     public GameObject SpinnerPanel;
     public Text rewardText;//広告読み込めなかった時にテキスト差し替え
 #if UNITY_ANDROID
-    //string adUnitId = "ca-app-pub-3940256099942544/5224354917";//TestAndroidのリワード広告ID
-    string adUnitId = "ca-app-pub-7439888210247528/4069893017";//ここにAndroidのリワード広告IDを入力
+    string adUnitId = "ca-app-pub-3940256099942544/5224354917";//TestAndroidのリワード広告ID
+    //string adUnitId = "ca-app-pub-7439888210247528/4069893017";//ここにAndroidのリワード広告IDを入力
         
 #elif UNITY_IPHONE
-    //string adUnitId = "ca-app-pub-3940256099942544/1712485313";//TestiOSのリワード広告ID
-    string adUnitId = "ca-app-pub-7439888210247528/7409830625";//ここにiOSのリワード広告IDを入力
+    string adUnitId = "ca-app-pub-3940256099942544/1712485313";//TestiOSのリワード広告ID
+    //string adUnitId = "ca-app-pub-7439888210247528/7409830625";//ここにiOSのリワード広告IDを入力
         
 #else
         adUnitId = "unexpected_platform";
@@ -80,7 +80,7 @@ public class AdmobGReward : MonoBehaviour
             //Debug.Log("リワードcoinGet" + GameManager.instance.totalCoin + "枚");
             GameManager.singleton.CoinSave();
             //SpinnerPanel.SetActive(false);
-
+            afterAdPanel.GetComponent<DOafterRewardPanel>().coinAddText.text = GameManager.singleton.coinNum.ToString();
             afterAdPanel.GetComponent<DOafterRewardPanel>().AfterReward();
             SpinnerPanel.SetActive(false);
             //Debug.Log("リワード報酬後SpinPanel," + SpinnerPanel.activeSelf);

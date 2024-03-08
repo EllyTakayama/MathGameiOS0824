@@ -109,7 +109,12 @@ public class ModeMenuManager : MonoBehaviour
         SoundManager.instance.PlaySEButton();
         DOTween.KillAll();
         SceneManager.LoadScene("Kuku");
-        
+    }
+    public void SelectGachaScene()//ガチャシーンへの移動
+    {
+        SoundManager.instance.PlaySEButton();
+        DOTween.KillAll();
+        SceneManager.LoadScene("GachaScene");
     }
 
     public void SelectSetting()

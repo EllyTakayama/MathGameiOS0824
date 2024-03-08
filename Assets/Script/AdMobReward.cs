@@ -22,8 +22,18 @@ public class AdMobReward : MonoBehaviour
 
     private RewardedAd rewardedAd;//RewardedAd型の変数 rewardedAdを宣言 この中にリワード広告の情報が入る
 
-    private string adUnitId;
-
+    //private string adUnitId;
+#if UNITY_ANDROID
+    //string adUnitId = "ca-app-pub-3940256099942544/5224354917";//TestAndroidのリワード広告ID
+    string adUnitId = "ca-app-pub-7439888210247528/4069893017";//ここにAndroidのリワード広告IDを入力
+        
+#elif UNITY_IPHONE
+    //string adUnitId = "ca-app-pub-3940256099942544/1712485313";//TestiOSのリワード広告ID
+    string adUnitId = "ca-app-pub-7439888210247528/7409830625";//ここにiOSのリワード広告IDを入力
+        
+#else
+        string adUnitId = "unexpected_platform";
+#endif
     //リワード広告を表示する関数
     //ボタンに割付けして使用
     public void ShowAdMobReward()
@@ -74,17 +84,7 @@ public class AdMobReward : MonoBehaviour
         //【Unity】AndroidとiOSで処理を分ける方法
         // https://marumaro7.hatenablog.com/entry/platformsyoriwakeru
 
-#if UNITY_ANDROID
-    //adUnitId = "ca-app-pub-3940256099942544/5224354917";//TestAndroidのリワード広告ID
-    adUnitId = "ca-app-pub-7439888210247528/4069893017";//ここにAndroidのリワード広告IDを入力
-        
-#elif UNITY_IPHONE
-    //adUnitId = "ca-app-pub-3940256099942544/1712485313";//TestiOSのリワード広告ID
-    adUnitId = "ca-app-pub-7439888210247528/7409830625";//ここにiOSのリワード広告IDを入力
-        
-#else
-        adUnitId = "unexpected_platform";
-#endif
+
 
         CreateAndLoadRewardedAd();//リワード広告読み込み
         MobileAds.SetiOSAppPauseOnBackground(true);

@@ -42,7 +42,6 @@ public class SpawnUnko : MonoBehaviour
     {
         // デフォルト値の設定
             currentFoodType = FoodType.Basic;
-
         // ロード処理
         LoadCurrentFoodType();
         // birdObjectsにEventTriggerを追加し、OnClickメソッドをアタッチ
@@ -59,36 +58,13 @@ public class SpawnUnko : MonoBehaviour
             trigger.triggers.Add(entry);
         }
     }
-    public void SpawnUnkoByFoodType(int birdIndex,FoodType foodType)
+    public void SpawnUnkoByFoodType(Vector3 spawnPosition)
     {
-        Debug.Log("Spawn1");
-        // birdIndexが配列の範囲内にあることを確認
-        if (birdIndex < 0 || birdIndex >= birdObjects.Length)
-        {
-            Debug.LogWarning("Invalid birdIndex specified for SpawnUnkoByFoodType method.");
-            return;
-        }
-
-        // 指定されたbirdObjectとunkoSliderを取得
-        GameObject selectedBirdObject = birdObjects[birdIndex];
-        Slider selectedUnkoSlider = unkoSliders[birdIndex];
-        Debug.Log($"birdIndex_{birdIndex}");
-        
-        // selectedUnkoSliderのvalueが1未満の場合はうんこを生成しない
-        if (selectedUnkoSlider.value < 1f)
-        {
-            Debug.Log("selectedUnkoSlider.valueが1未満");
-            return;
-        }
         // FoodTypeに応じてSpawnするUnkoの種類を選択
         GameObject unkoPrefab = GetUnkoPrefabByFoodType(currentFoodType);
 
         // birdObjectの位置にUnkoをSpawnする
-        Instantiate(unkoPrefab, selectedBirdObject.transform.position, Quaternion.identity);
-
-        // unkoSliderのvalueを0に設定
-        selectedUnkoSlider.value = 0f;
-        selectedUnkoSlider.gameObject.GetComponent<BirdSlider>().FullSlider();
+        Instantiate(unkoPrefab, spawnPosition, Quaternion.identity);
 
     }
     
@@ -128,6 +104,7 @@ public class SpawnUnko : MonoBehaviour
             slider.value += Time.deltaTime * 0.1f; // 増加率は適宜調整
             yield return null;
         }
+        yield break;
     }
     // birdObjectsのOnClickイベントで呼ばれるメソッド
     public void OnBirdClick(GameObject selectedBirdObject)
@@ -135,13 +112,12 @@ public class SpawnUnko : MonoBehaviour
         // birdObjectsの配列内でのインデックスを取得
         int birdIndex = System.Array.IndexOf(birdObjects, selectedBirdObject);
         // 選択された鳥に対する処理を実行
-        SpawnUnkoByFoodType(birdIndex,currentFoodType);
+        //SpawnUnkoByFoodType(birdIndex,currentFoodType);
         Debug.Log("Selected bird index: " + birdIndex);
     }
     //Foodアイコンを選択することでcurrentFoodTypeを変更する
     public void SetFoodType(int foodI)
     {
-        FoodType currentFoodType;
         switch (foodI)
         {
             case 0://普通の茶色のうんこ
@@ -180,9 +156,10 @@ public class SpawnUnko : MonoBehaviour
         // 有効時間の取得
         foodValidityTime = foodTypeToTime[currentFoodType];
         Debug.Log("Selected FoodType: " + currentFoodType + ", foodValidityTime: " + foodValidityTime);
+        SaveCurrentFoodType();//セットしたfoodTypeの取得
     }
 
-    GameObject GetUnkoPrefabByFoodType(FoodType foodType)
+    public GameObject GetUnkoPrefabByFoodType(FoodType foodType)
     {
         switch (foodType)
         {

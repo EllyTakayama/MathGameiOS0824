@@ -11,6 +11,8 @@ public class GameMath : MonoBehaviour
     [SerializeField] private DOGTweenPanel doTweenPanel;//DoTweenPanel.csを直接参照
     [SerializeField] private DORenshuButtonAnim _doRenshuButtonAnim;//AnsButtonのアニメーション
     [SerializeField] private DOQuesPanelRotate _doQuesPanelRotate;//QuesPanelを回転させる
+
+    [SerializeField] private DOAnsButtonMove _doAnsButtonMove;//AnsButtonを動かすアニメーション
     //MathTypeをれんしゅうボタンmultiplication1-9
     //テストボタンmultiplication11-19で設定します
 
@@ -226,6 +228,7 @@ public class GameMath : MonoBehaviour
     void DelayRenshuButton()
     {
         _doRenshuButtonAnim.GResetButton();
+        _doAnsButtonMove.DoMoveAnsButton();
     }
     /*
     public void Mul1Toggle(){

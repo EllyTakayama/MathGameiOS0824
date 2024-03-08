@@ -22,7 +22,10 @@ public class GachaItem : MonoBehaviour
     [SerializeField] private Image NnekoItemImage;//アイテムPanelの猫の説明
     [SerializeField] private GameObject LeftButton;//ひだりボタン
     [SerializeField] private GameObject RightButton;//みぎボタン
-
+    [SerializeField] private BirdOnItemManager _birdOnItemManager;//birdOnItemManagerの取得　perch設定
+    public int ItemButtonIndex;//Buttonの引数をIndexとして取得する
+    [SerializeField] private GachaManager _gachaManager;//gachaManager.csを取得する
+    [SerializeField] private SpawnUnko _spawnUnko;//SpawnUnko.csを取得する
      //テキストデータを読み込む
     [SerializeField] TextAsset GcharaName;
     [SerializeField] TextAsset GcharaSetumei;
@@ -31,11 +34,11 @@ public class GachaItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //SetGachaText();
-        //DebugChara();
-        //DebugSetumei();
-        //DebugKKakuritu();
-        //DebugKakuritu();
+        SetGachaText();
+        DebugChara();
+        DebugSetumei();
+        DebugKKakuritu();
+        DebugKakuritu();
        
     }
     public void SetGachaText(){
@@ -45,12 +48,14 @@ public class GachaItem : MonoBehaviour
         charaKakuritu = new int[kakuritu.Length];
         for(int i = 0; i < kakuritu.Length;i++){
             charaKakuritu[i] = int.Parse(kakuritu[i]); 
-            }
+        }
+
     }
 
      //Gachaでゲットしたアイテムの説明Panel表示
 	public void ChoiceItem(int ButtonNum){
         int i = GetComponent<GachaManager>().GachaNum[ButtonNum];
+        ItemButtonIndex = ButtonNum;
         print("i,"+i);
         if(i>0){
             NekoitemPanel.SetActive(true);
@@ -60,14 +65,31 @@ public class GachaItem : MonoBehaviour
             NsetumeiText.text = ItemName.Replace(".",System.Environment.NewLine);
             NnekoItemImage.sprite = ItemNeko[ButtonNum];
             SoundManager.instance.PlaySE3();
-            RightButton.SetActive(false);
-            LeftButton.SetActive(false);
+            _gachaManager.OpenPanel();//スワイプを止める
+            //RightButton.SetActive(false);
+            //LeftButton.SetActive(false);
         }
         else{
             return;
         }
-        
 	}
+
+    public void SetItem()
+    {
+        if (ItemButtonIndex < 10)
+        {
+            // BirdOnItemManagerにperchNumを設定してShowRandomPerchメソッドを呼び出す
+            _birdOnItemManager.perchIndex = ItemButtonIndex; // perchNumを設定
+            _birdOnItemManager.ShowRandomPerch(); // ShowRandomPerchメソッドを呼び出す
+        }
+        else
+        {
+            int foodIndex = ItemButtonIndex - 9;
+            _spawnUnko.SetFoodType(foodIndex);
+        }
+
+        _gachaManager.CloseItemPanel();
+    }
 
     void DebugChara()
     {
