@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Shapes2D;
 using TMPro;
 using UnityEngine.UI;
 //DoTweenでgradePanelのアニメーションを実行するスクリプト0901
@@ -10,6 +11,7 @@ public class DOGTweenPanel : MonoBehaviour
     [SerializeField] private GameObject resultPanel; //リザルト画面1枚目
     [SerializeField] private GameObject gameQuesPanel;//ゲーム回答画面
     [SerializeField] private GameObject gradePanel;//リザルト2枚目
+    [SerializeField] private GameObject gameMenuPanel;
 
     //[SerializeField] private GameObject gradePiyoSprite;
     [SerializeField] private Image medalImage;
@@ -23,11 +25,14 @@ public class DOGTweenPanel : MonoBehaviour
     private Vector3[] particlePositions; //パーティクルを生成する位置
     [SerializeField] private DoGResultAnswerPanel _doResultAnswerPanel; //AnswerPanelのDOTween
     [SerializeField] private DoCoinAnim _doCoinAnim;//coinプレファブを生成するスクリプト
+    [SerializeField] private GameObject[] Buttons;//OkとリワードButtonをオンオフさせるための参照
+    [SerializeField] private PiyoSetPosition _piyoSetPosition;//ピヨの位置変更のスクリプト参照
+    [SerializeField] private GCheckButton _gCheckButton;//GCheckButton参照
 
     void Start()
     {
         gradePanel.SetActive(false);
-        medalImage.enabled = false;
+        medalImage.gameObject.SetActive(false);
         particlePositions = new Vector3[]
         {
             new Vector3(200, 1120, 0),
@@ -56,17 +61,12 @@ public class DOGTweenPanel : MonoBehaviour
         gameQuesPanel.SetActive(false);
         gradePanel.SetActive(true);
         gradeText.text = GameManager.singleton.coinNum.ToString();
+        medalImage.gameObject.SetActive(true);
         GradeImage();
         SoundManager.instance.PlaySE12GradePanel();
-        /*
+
         yield return new WaitForSeconds(0.3f); // 0.3秒待機
-        
-        if (GameManager.singleton.currentScore > 0)
-        {
-            _doCoinAnim.SpawnRewardCoin();
-        }*/
-        yield return new WaitForSeconds(0.3f); // 0.3秒待機
-        medalImage.enabled = true;
+        //medalImage.enabled = true;
         //medalImage.GetComponent<DoGradeImage>().DoImageChange();
         
         //パーティクルの紙吹雪を再生        
@@ -79,9 +79,28 @@ public class DOGTweenPanel : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f); // 0.3秒待機
         _doResultAnswerPanel.SetAnsResultPanel();
+        
+        yield return new WaitForSeconds(1.5f); // 0.3秒待機
+        Buttons[0].SetActive(true);
+        yield return new WaitForSeconds(0.2f); // 0.1秒待機
+        Buttons[1].SetActive(true);
         yield return null; // コルーチンを終了する
     }
 
+    //Gameのメニュー画面にもどるスクリプト
+    public void RetryGame()
+    {
+        for (int i = 0; i < Buttons.Length; i++)
+        {
+            Buttons[i].SetActive(false);
+        }
+
+        _gCheckButton.ResetButtonScore();
+        _doResultAnswerPanel.ResetAnsResultPanel();
+        gradePanel.SetActive(false);
+        gameMenuPanel.SetActive(true);
+        _piyoSetPosition.ResetPosition();
+    }
 
 void GradeImage()
     {

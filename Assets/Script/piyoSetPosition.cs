@@ -7,13 +7,19 @@ using DG.Tweening;
 public class PiyoSetPosition : MonoBehaviour
 {
     private Vector2 defaultPosition; // 初期位置を保存する変数
-    [SerializeField] private RectTransform preParentRect;
+    [SerializeField] private RectTransform preParentRect;//Gameポジション
+    [SerializeField] private RectTransform startPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         // 初期位置を保存
-        defaultPosition = transform.position;
+        defaultPosition = startPosition.position;
+        // スタート時にstartPositionの位置に移動
+        if (startPosition != null)
+        {
+            transform.position = startPosition.position;
+        }
     }
 
     // piyoの位置を指定した位置に設定するメソッド

@@ -6,22 +6,20 @@ using UnityEngine.UI;//TopPanelのCloudをDOTweenで動かす0908
 
 public class CloudMove : MonoBehaviour
 {
-      [SerializeField] private Image cloud1Image;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float moveDistance = 120f; // 移動距離
+    [SerializeField] private float moveDuration = 2f; // 移動時間
+      void Start()
+      {
+          CloudUpDown();
+      }
+    public void CloudUpDown()
     {
         DOTween.Sequence()
-        .Append(transform.DOLocalMoveY(-120f, 2f))
-        .Append(transform.DOLocalMoveY(120f, 2f))
-        .SetRelative()
-        .SetLink(gameObject)
-        .SetLoops(-1, LoopType.Restart)
-        ;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+            .Append(transform.DOLocalMoveY(-moveDistance, moveDuration))
+            .Append(transform.DOLocalMoveY(moveDistance, moveDuration))
+            .SetRelative()
+            .SetLink(gameObject)
+            .SetLoops(-1, LoopType.Restart)
+            ;
     }
 }

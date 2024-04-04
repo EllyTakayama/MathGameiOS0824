@@ -31,7 +31,9 @@ using Sirenix.OdinInspector; //Odin
         [Button("QuesPanel非表示")]　//←[Button("ラベル名")]
         public void InVisibleQuesPanel()
         {
-            transform.DORotate(_initialRotation, 0.3f);
+            // 初期位置に戻す
+            transform.DORotate(_initialRotation, 0.1f);
+            Debug.Log("QuesPanelInvisible");
         }
 
     }

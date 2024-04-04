@@ -67,13 +67,13 @@ public class MathAndAnswer : MonoBehaviour
         {
             multi1 = true;
             b = 0;
-            //Debug.Log("Startmulti1"+multi1);
+            Debug.Log("Startmulti1"+multi1);
         }
         else
         {
             multi1 = false;
             b = 10;
-            //Debug.Log("Startmulti1"+multi1);
+            Debug.Log("Startmulti1"+multi1);
         }
 
         //トップメニューのれんしゅうORテストボタンからかけ算の段のボタンを押すと
@@ -84,6 +84,7 @@ public class MathAndAnswer : MonoBehaviour
         {
 
             currentMode = GameManager.singleton.currentMode;
+            Debug.Log($"currentMode_{currentMode}");
         }
 
         //we call the methods
@@ -95,7 +96,7 @@ public class MathAndAnswer : MonoBehaviour
     }
     //this method keeps the track of mode 
     void CurrentMode()
-    {
+    {/*
         if (currentMode < 10)
         {
             //depending on the currentmode value we assign the mode
@@ -107,7 +108,7 @@ public class MathAndAnswer : MonoBehaviour
             //depending on the currentmode value we assign the mode
             mathsType = MathsType.multiplicationTest;
 
-        }
+        }*/
 
         //乱数を生成
         System.Random randomNum = new System.Random();
@@ -179,9 +180,10 @@ public class MathAndAnswer : MonoBehaviour
             return;
         }
         countText++;
-        _guiManager1.countText.text = $"{countText} 問目";
+        _guiManager1.countText.text = $"{countText} もんめ";
         //Gameシーンデバッグ用
-        a = currentMode % 10; // 10で割ったあまりなのでcurrentModeが2なら2, 12なら2が出る
+        a = GameManager.singleton.currentMode;
+        Debug.Log($"a_{a}");
         //Gameシーンデバッグ用
         //a = 3;
         if (multi1 == true)
@@ -213,8 +215,8 @@ public class MathAndAnswer : MonoBehaviour
             b=1;
         }
         */
-
-
+        
+        Debug.Log($"b_{b}");
         valueA.text = a.ToString();//段の数を表示
         valueB.text = b.ToString();//かける数を表示
 
@@ -258,12 +260,12 @@ public class MathAndAnswer : MonoBehaviour
             n = 0;
         }
         countText++;
-        _guiManager1.countText.text = $"{countText} 問目";
+        _guiManager1.countText.text = $"{countText} もんめ";
         //n++;
         print("n_" + n);
         Invoke("PiyoSE", 0.6f);
         int b = ary[n];//かける数にランダムに取得した配列データを代入
-        int a = currentMode % 10;//1の段
+        int a = currentMode;//1の段
 
 
         valueA.text = a.ToString();//段の数を表示

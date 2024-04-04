@@ -22,9 +22,11 @@ public class SpawnUnko : MonoBehaviour
     [SerializeField] private GameObject[] birdObjects; // ピヨちゃんのGameObjectの配列
     [SerializeField] private Slider[] unkoSliders; // ピヨちゃんに対応するSliderの配列
     [SerializeField] private GameObject[] unkoPrefabs;//unkoPrefab
-    private int foodIndex;//foodのインデックス
+    public int foodIndex;//foodのインデックス
     public FoodType currentFoodType;
     public float foodValidityTime = 300f;//Foodの有効時間の取得と参照のため
+    [SerializeField] private GameObject gachaPanel0;//親の設定のため
+    [SerializeField] private GameObject[] foodChoiceFrame;//選択されたPerchを示すImage
     private Dictionary<FoodType, float> foodTypeToTime = new Dictionary<FoodType, float>()
     {
         { FoodType.Basic, 5f * 60f }, // 5分を秒に変換
@@ -43,7 +45,8 @@ public class SpawnUnko : MonoBehaviour
         // デフォルト値の設定
             currentFoodType = FoodType.Basic;
         // ロード処理
-        LoadCurrentFoodType();
+        LoadCurrentFoodType();//foodIndexをロード
+        SetFoodFrame();//フレームを設定
         // birdObjectsにEventTriggerを追加し、OnClickメソッドをアタッチ
         foreach (GameObject birdObject in birdObjects)
         {
@@ -61,11 +64,11 @@ public class SpawnUnko : MonoBehaviour
     public void SpawnUnkoByFoodType(Vector3 spawnPosition)
     {
         // FoodTypeに応じてSpawnするUnkoの種類を選択
-        GameObject unkoPrefab = GetUnkoPrefabByFoodType(currentFoodType);
-
-        // birdObjectの位置にUnkoをSpawnする
-        Instantiate(unkoPrefab, spawnPosition, Quaternion.identity);
-
+        GameObject unkoPrefab = GetUnkoPrefabByFoodType(currentFoodType); 
+        // UnkoをSpawnして親を設定する
+        GameObject unkoInstance = Instantiate(unkoPrefab, spawnPosition, Quaternion.identity);
+        unkoInstance.transform.SetParent(gachaPanel0.transform);
+        SoundManager.instance.PlaySE2();//Unkoのサウンド音
     }
     
     //FoodTypeのセーブ
@@ -80,9 +83,10 @@ public class SpawnUnko : MonoBehaviour
     void LoadCurrentFoodType()
     {
         // セーブデータからintをロードし、FoodTypeに変換
-        if (ES3.KeyExists("CurrentFoodType"))
+        if (ES3.KeyExists("CurrentFoodType","CurrentFoodType.es3"))
         {
             int foodTypeValue = ES3.Load<int>("CurrentFoodType", "CurrentFoodType.es3");
+            foodIndex = foodTypeValue;//foodIndexにロードする
             currentFoodType = (FoodType)foodTypeValue;
         }
         else
@@ -118,6 +122,7 @@ public class SpawnUnko : MonoBehaviour
     //Foodアイコンを選択することでcurrentFoodTypeを変更する
     public void SetFoodType(int foodI)
     {
+        foodIndex = foodI;
         switch (foodI)
         {
             case 0://普通の茶色のうんこ
@@ -157,6 +162,15 @@ public class SpawnUnko : MonoBehaviour
         foodValidityTime = foodTypeToTime[currentFoodType];
         Debug.Log("Selected FoodType: " + currentFoodType + ", foodValidityTime: " + foodValidityTime);
         SaveCurrentFoodType();//セットしたfoodTypeの取得
+        SetFoodFrame();
+    }
+    public void SetFoodFrame()
+    {
+        for (int i = 0; i < foodChoiceFrame.Length; i++)
+        {
+            foodChoiceFrame[i].SetActive(false);
+        }
+        foodChoiceFrame[foodIndex].SetActive(true);
     }
 
     public GameObject GetUnkoPrefabByFoodType(FoodType foodType)

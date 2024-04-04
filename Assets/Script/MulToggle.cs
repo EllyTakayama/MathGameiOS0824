@@ -9,18 +9,18 @@ public class MulToggle : MonoBehaviour
     // Start is called before the first frame update
     public Toggle mul1Toggle;//かける1からのスタート
     public Toggle mul9Toggle;
-
-
-    void Start()
+    
+    public void SetToggle()
     {
-        GameManager.singleton.LoadOrderJun();//isAsendingOrderかける数のロード
         if (GameManager.singleton.isAsendingOrder)
         {
             mul1Toggle.isOn = true;
+            //Debug.Log("1toggle_isOn");
         }
         else
         {
             mul9Toggle.isOn = true;
+            //Debug.Log("9toggle_isOn");
         }
     }
     public void OnClickToggle1(){

@@ -146,4 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60bf7f91447e741a29601fc9fdf72433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unkoValidityTime: 120
+  unkoValidityTime: 30

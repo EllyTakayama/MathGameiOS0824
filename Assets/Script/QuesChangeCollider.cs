@@ -8,7 +8,7 @@ public class QuesChangeCollider : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         // 衝突したオブジェクトがTagが"Player"であるか確認
-        if (collider.CompareTag("answer"))
+        if (collider.CompareTag("Player"))
         {
             _gCheckButton.ChangeQues();
             print("queschange");

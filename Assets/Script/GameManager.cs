@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour {
     public int TestMondaiCount;//Mondai数
     public int coinNum;//コインの数
     public int beforeCoin;//コインが増える前の数
+    public int beforeTotalCoin;//TopLoging.csで使う
+    public int totalCoin;//TopLoging.csで使う
     
     //public bool canAnswer;//Buttonの不具合を解消するため連続してボタンを押せなないよう制御
     

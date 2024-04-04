@@ -27,7 +27,9 @@ public class PanelChange : MonoBehaviour
     private float FingerPosX1;//タップし、指が画面から離れた瞬間のx座標
     private float FingerPosNow;///現在の指のx座標
     private float PosDiff=20.0f;////x座標の差のいき値
-
+    private Vector2 fingerPosStart;
+    private Vector2 fingerPosEnd;
+    private const float swipeThreshold = 20.0f;
 
     // 矢印の表示/非表示
     
@@ -37,47 +39,61 @@ public class PanelChange : MonoBehaviour
         currentPanel = Panel.gachaPanel;
         
     }
-  void Update()
-    {
-    if (Input.GetMouseButtonDown(0))
-    {
-        FingerPosX0 = Input.mousePosition.x;
-        Debug.Log("タップ");
+    public void ShowGachaPanel0() {
+        ShowGachaPanel(Panel.gachaPanel);
     }
-    
-    if (Input.GetMouseButtonUp(0))
-    {
-        FingerPosX1 = Input.mousePosition.x;
-        Debug.Log("はなす");
-        //横移動の判断基準
-    if (FingerPosX1-FingerPosX0 >= PosDiff)
-    {
-       LeftMuki=false;//右向き　パネルは左方法へ移動する
-       SwipeRight(); //みぎ方向移動のメソッドを実行
-        
-        Debug.Log("みぎ");
-    }
-    else if (FingerPosX1-FingerPosX0 <= -PosDiff)
-    {
-        
-        LeftMuki=true;
-        SwipeLeft(); //ひだり方向　パネルはみぎ方向へ移動する
-        
-        Debug.Log("ひだり");
-    }
-    FingerPosX1=0;
-    FingerPosX0=0;
-    }
-    /*
-    if (Input.GetMouseButton(0))
-    {
-        FingerPosNow = Input.mousePosition.x;
-        //Debug.Log("Xnow");
-    }*/
 
+    public void ShowGachaPanel1() {
+        ShowGachaPanel(Panel.Panel1chara);
     }
+
+    public void ShowGachaPanel2() {
+        ShowGachaPanel(Panel.Panel2chara);
+    }
+
+    public void ShowGachaPanel3() {
+        ShowGachaPanel(Panel.Panel3item);
+    }
+  void Update(){
+// タッチ入力を取得する
+      if (Input.touchCount > 0)
+      {
+          Touch touch = Input.GetTouch(0);
+
+          if (touch.phase == TouchPhase.Began)
+          {
+              fingerPosStart = touch.position;
+          }
+
+          if (touch.phase == TouchPhase.Ended)
+          {
+              fingerPosEnd = touch.position;
+              CheckSwipeDirection();
+          }
+      }
+  }
+  void CheckSwipeDirection()
+  {
+      float swipeDistance = fingerPosEnd.x - fingerPosStart.x;
+
+      if (Mathf.Abs(swipeDistance) >= swipeThreshold)
+      {
+          if (swipeDistance > 0)
+          {
+              LeftMuki = false;
+              SwipeRight();
+             
+          }
+          else
+          {
+              LeftMuki = true;
+              SwipeLeft();
+          }
+      }
+  }
     
     void ShowGachaPanel(Panel panel){
+        SoundManager.instance.PlaySE3();
         currentPanel = panel;
         switch(panel){
             case Panel.gachaPanel:
@@ -114,7 +130,6 @@ public class PanelChange : MonoBehaviour
     }
     //スイプ用のGachaPanel移動について
     void ShowGachaPanel1(Panel panel){
-        
         currentPanel = panel;
         switch(panel){
             case Panel.gachaPanel:

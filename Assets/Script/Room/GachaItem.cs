@@ -57,35 +57,30 @@ public class GachaItem : MonoBehaviour
         int i = GetComponent<GachaManager>().GachaNum[ButtonNum];
         ItemButtonIndex = ButtonNum;
         print("i,"+i);
-        if(i>0){
-            NekoitemPanel.SetActive(true);
-            string NekoName = GachaChara[ButtonNum];
-            NnameText.text = NekoName.Replace(".",System.Environment.NewLine);
-            string ItemName = setumeiText[ButtonNum];
-            NsetumeiText.text = ItemName.Replace(".",System.Environment.NewLine);
-            NnekoItemImage.sprite = ItemNeko[ButtonNum];
-            SoundManager.instance.PlaySE3();
-            _gachaManager.OpenPanel();//スワイプを止める
-            //RightButton.SetActive(false);
-            //LeftButton.SetActive(false);
-        }
-        else{
-            return;
-        }
+        NekoitemPanel.SetActive(true);
+        string NekoName = GachaChara[ButtonNum];
+        NnameText.text = NekoName.Replace(".",System.Environment.NewLine);
+        string ItemName = setumeiText[ButtonNum];
+        NsetumeiText.text = ItemName.Replace(".",System.Environment.NewLine);
+        NnekoItemImage.sprite = ItemNeko[ButtonNum];
+        SoundManager.instance.PlaySE3();
+        _gachaManager.OpenPanel();//スワイプを止める
+        //RightButton.SetActive(false);
+        //LeftButton.SetActive(false);
 	}
 
     public void SetItem()
     {
-        if (ItemButtonIndex < 10)
+        if (ItemButtonIndex < 9)
         {
             // BirdOnItemManagerにperchNumを設定してShowRandomPerchメソッドを呼び出す
             _birdOnItemManager.perchIndex = ItemButtonIndex; // perchNumを設定
-            _birdOnItemManager.ShowRandomPerch(); // ShowRandomPerchメソッドを呼び出す
+            _birdOnItemManager.ShowRandomPerch(); // ShowRandomPerchメソッドとフレームセット
         }
         else
         {
             int foodIndex = ItemButtonIndex - 9;
-            _spawnUnko.SetFoodType(foodIndex);
+            _spawnUnko.SetFoodType(foodIndex);//Indexをセーブまでできる
         }
 
         _gachaManager.CloseItemPanel();

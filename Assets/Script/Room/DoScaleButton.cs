@@ -48,4 +48,5 @@ public class DoScaleButton : MonoBehaviour
         // gameObject と Tween をリンク
         sequence.SetLink(gameObject);
     }
+    
 }

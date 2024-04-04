@@ -16,7 +16,7 @@ public class BirdSlider : MonoBehaviour
     void Start()
     {
         this.gameObject.GetComponent<BirdSlider>();
-
+        FullSlider();//Unkoスライダーの回復
     }
     // SetSpawnUnkoReferenceメソッドを追加
     public void SetSpawnUnkoReference(SpawnUnko spawnUnko)
@@ -58,7 +58,7 @@ public class BirdSlider : MonoBehaviour
         } 
         increaseCoroutine = StartCoroutine(IncreaseSliderValue()); // 新しいコルーチンを開始
     }
-    // Sliderの値を減少させるコルーチン
+    // Sliderの値を増やすコルーチン
     IEnumerator IncreaseSliderValue()
     {
         currentTime = 0f;

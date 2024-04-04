@@ -77,7 +77,13 @@ public class SoundManager : MonoBehaviour
         }
         audioSourseBGM.Play();
     }
-
+/*
+ * SE効果音 0正解 1不正解　2落下音ひよひよ 3ひよこの鳴き声ピヨピヨ 4ボタン操作音
+ * 5移動音プーい 6成長音ぷるるる 7プイ効果音 8プぅーい効果音 9endがっかりチーン
+ * 10小さいボタン操作 11すごく小さいボタン操作音　12歓声
+ * 13ファンファーレ 14風船が割れる音 15ガチャを回す音 16コインをゲットする音ちょい長い
+ * 17 コインを1かいゲットする音 18ジャン 19jingleパッ 20爆発音
+ */
     public void PlaySE0()
     {
         audioSourceSE.PlayOneShot(audioClipSE[0]);
@@ -95,6 +101,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySE3()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[3]);
         //ピヨがおやつを食べるとなる
     }
@@ -118,6 +125,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySE7End3()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[7]);
         //点数
     }
@@ -160,6 +168,32 @@ public class SoundManager : MonoBehaviour
     {
         audioSourceSE.PlayOneShot(audioClipSE[15]);
         
+    }
+    public void PlaySE16GetCoin()
+    {
+        audioSourceSE.PlayOneShot(audioClipSE[16]);
+        
+    }
+    public void PlaySE17CoinOneceGet()
+    {
+        audioSourceSE.PlayOneShot(audioClipSE[17]);
+        
+    }
+    public void PlaySE18()
+    {
+        audioSourceSE.Stop();
+        audioSourceSE.PlayOneShot(audioClipSE[18]);
+        Debug.Log("PlaySE18");
+    }
+    public void PlaySE19()
+    {
+        audioSourceSE.Stop();
+        audioSourceSE.PlayOneShot(audioClipSE[19]);
+    }
+    public void PlaySE20()
+    {//爆発音
+        audioSourceSE.Stop();
+        audioSourceSE.PlayOneShot(audioClipSE[20]);
     }
     
 

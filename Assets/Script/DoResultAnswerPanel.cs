@@ -10,23 +10,23 @@ public class DoResultAnswerPanel : MonoBehaviour
     [SerializeField] private Text correctAnswer;
     [SerializeField] private Text wrongAnswer;
     [SerializeField] private CheckButton _checkButton;//CheckButton.csの参照
-    // Start is called before the first frame update
+    [SerializeField] private GameObject gradeOkButton;
 
     public void SetAnsResultPanel()
     {
         DOTween.Sequence()
             .Append(answerBackImage.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutSine))
-            //.AppendInterval(0.2f)
             .AppendCallback(() => 
             {
-                print("correctAnswer");
-                // correctAnswerのDOTextアニメーション
                 correctAnswer.DOText(_checkButton.correctAnswerString, _checkButton.correctAnswerString.Length * 0.01f)
                     .OnComplete(() => 
                     {
-                        // wrongAnswerのDOTextアニメーション
-                        print("wrongAnswer");
-                        wrongAnswer.DOText(_checkButton.wrongAnswerString, _checkButton.wrongAnswerString.Length * 0.01f);
+                        wrongAnswer.DOText(_checkButton.wrongAnswerString, _checkButton.wrongAnswerString.Length * 0.01f)
+                            .OnComplete(() =>
+                            {
+                                // wrongAnswerのDOTextアニメーションが完了したらgradeOkButtonを表示する
+                                gradeOkButton.SetActive(true);
+                            });
                     });
             })
             .SetLink(gameObject);

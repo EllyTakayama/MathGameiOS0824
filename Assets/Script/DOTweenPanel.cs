@@ -19,7 +19,12 @@ public class DOTweenPanel : MonoBehaviour
     [SerializeField] private ParticleManager _particleManager;//パーティクル呼び出し
     private Vector3[] particlePositions;//パーティクルを生成する位置
     [SerializeField] private DoResultAnswerPanel _doResultAnswerPanel;//AnswerPanelのDOTween
-
+    [SerializeField] private GameObject[] Buttons;//OkとリワードButtonをオンオフさせるための参照
+    [SerializeField] private CheckButton _CheckButton;//GCheckButton参照
+    [SerializeField] private GameObject gameMenuPanel;
+    [SerializeField] private GameObject renshuuPanel;
+    [SerializeField] private EndImage _endImage;//EndImage.csの参照
+    [SerializeField] private GameOverPanel _gameOverPanel;//GameOverPanel.csの参照
     void Start()
     {
         gradePanel.SetActive(false);
@@ -82,6 +87,26 @@ public class DOTweenPanel : MonoBehaviour
         gradeImage.GetComponent<DoGradeImage>().DoImageChange();
         _doResultAnswerPanel.SetAnsResultPanel();
         yield return null; // コルーチンを終了する
+    }
+    
+    //Gameのメニュー画面にもどるスクリプト
+    public void RetryGame()
+    {
+        /*
+        for (int i = 0; i < Buttons.Length; i++)
+        {
+            Buttons[i].SetActive(false);
+        }*/
+
+        _CheckButton.ResetButtonScore();
+        _doResultAnswerPanel.ResetAnsResultPanel();
+        gradePanel.SetActive(false);
+        gameMenuPanel.SetActive(true);
+        renshuuPanel.SetActive(false);
+        _gameOverPanel.ResetGameOverPanel();//GameOverPanelの処理
+        gameOverPanel.SetActive(false);
+        SoundManager.instance.PlayBGM("ModeMenuPanel");
+        //_piyoSetPosition.ResetPosition();
     }
 
     void GradeImage()

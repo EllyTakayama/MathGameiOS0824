@@ -12,17 +12,17 @@ using TMPro;
 
 public class GUIManager1 : MonoBehaviour {
     //ref to score text in game over panel
-    public Text scoreOverText;
+    //public Text scoreOverText;
     //ref to hiscore text in game over panel
-    public Text hiScoreOverText;
-    public Text wrongAnswerText;
+    //public Text hiScoreOverText;
+    //public Text wrongAnswerText;
     //ref to game over panel
     public GameObject gameOverPanel;
     //ref to game over panel animator
-    public Animator gameOverAnim;
+    //public Animator gameOverAnim;
     public Text markText;
     public Text gameOverMarkText;
-    public TextMeshProUGUI fruitCountText;
+    //public TextMeshProUGUI fruitCountText;
     public Text countText;
     private int currentMode;
     public Text quesCountText;
@@ -40,6 +40,7 @@ public class GUIManager1 : MonoBehaviour {
     public Text messageText;
     public GameObject AdMobManager;
     public GameObject[] imageTables;
+    [SerializeField] private GameObject playerFlyPiyo;//ピヨのオンオフ
 
 
 	// Use this for initialization
@@ -96,64 +97,66 @@ public class GUIManager1 : MonoBehaviour {
             imageTable.SetActive(false);
         }
     }
-
+    //九九パネルを表示させる
     public void ImageTable()
     {
+        playerFlyPiyo.SetActive(false);
         int index = GameManager.singleton.currentMode;
         SoundManager.instance.PlaySE10Button2();
         imageTables[index -1].SetActive(true);
-        
     }
         public void CloseTablePre(){
             int index = GameManager.singleton.currentMode;
             SoundManager.instance.PlaySE10Button2();
             imageTables[index -1].SetActive(false);
+            playerFlyPiyo.SetActive(true);
     }
 
-    public void SetFruitText()
-    {
-        if (GameManager.singleton.currentMode > 10)
+        public void SetFruitText()
         {
-            gameOverMarkText.text = "おやつ " + GameManager.singleton.currentScore.ToString() + "こ ゲット！";
-        }//力試し問題は正解数おやつゲット
-        else
-        {
-            gameOverMarkText.text = "おやつ 3こ ゲット！";//練習問題
+            if (GameManager.singleton.currentMode > 10)
+            {
+                gameOverMarkText.text = "おやつ " + GameManager.singleton.currentScore.ToString() + "こ ゲット！";
+            } //力試し問題は正解数おやつゲット
+            else
+            {
+                gameOverMarkText.text = "おやつ 3こ ゲット！"; //練習問題
+            }
         }
-    }
 
-
-public void ResetCounts()
+        public void ResetCounts()
 {
     GameManager.singleton.currentScore = 0;
     GameManager.singleton.currentCount = 1;
   
 }
 
-
-    //ref method to retry button
+    //RenshuuシーンのリトライButton
     public void RetryButton()
     {
         ResetCounts();
-        if(GameManager.singleton.currentMode>10)
-        {
-            EasySaveManager.singleton.Save();
-            SceneManager.LoadScene("Renshuu");
-            MathAndAnswer.instance.MultiplicationMethodTest();
+        DOTween.KillAll();
+        GameManager.singleton.SceneCount++;
+        GameManager.singleton.SaveSceneCount();
+        Debug.Log("SceneCount"+GameManager.singleton.SceneCount);
+        int IScount = GameManager.singleton.SceneCount;
+        if(GameManager.singleton.SceneCount > 0 && GameManager.singleton.SceneCount % 3 ==0){
+
+            AdMobManager.GetComponent<AdMobInterstitial>().ShowAdMobInterstitial();
+            return;
         }
-        if(GameManager.singleton.currentMode<10)
+        if(GameManager.singleton.currentMathsType == GameManagerMathsType.multiplicationRenshuu)
         {
             EasySaveManager.singleton.Save();
             SceneManager.LoadScene("Renshuu");
-            MathAndAnswer.instance.MultiplicationMethodRenshuu();
+
+        }else if (GameManager.singleton.currentMathsType == GameManagerMathsType.multiplicationTest)
+        {
+            SceneManager.LoadScene("Game");
         }
 
-        //MathAndAnswer.instance.MathsProblem();
-        //SceneManager.LoadScene("Renshuu");//use this for 5.3 version
-       GameManager.singleton.isGameOver = false;
     }
 
-    
     public void MenuBackButton()
     {
         ResetCounts();
@@ -173,6 +176,7 @@ public void ResetCounts()
             AdMobManager.GetComponent<AdMobInterstitial>().ShowAdMobInterstitial();
             return;
         }
+        SoundManager.instance.PlayBGM("ModeMenuPanel");
         SceneManager.LoadScene("Menu");
     }
     

@@ -60,15 +60,13 @@ public class GachaManager : MonoBehaviour
 	//public int itemID =1;
 	
 
-	void Start(){
-		
-		//coinText.text = GachaGameManager.totalCoin.ToString();
-
-			if(GameManager.singleton.coinNum < 150){
+	void Start(){ 
+		if(GameManager.singleton.coinNum < 150){
 			GachaAdReward.CreateAndLoadRewardedAd();
 			//AdMobManager.GetComponent<AdMobReward>().CreateAndLoadRewardedAd();
-			}
+		}
 		Invoke("StartInvoke",1f);
+		coinText.text = GameManager.singleton.coinNum.ToString();
 	}
 
 	void StartInvoke(){
@@ -79,7 +77,7 @@ public class GachaManager : MonoBehaviour
 		GameManager.singleton.LoadCoin();
 		GachaMana.GetComponent<GachaItem>().SetGachaText();
 		//Debug.Log("coinGoukei"+GameManager.instance.totalCoin);
-		coinText.text = GameManager.singleton.coinNum.ToString();
+		
 		//gachaButton.enabled = true;
 		//初回時の取得キャラ反映用defaltの作成 Debugにも使える
 		int a = GetComponent<GachaItem>().GachaChara.Length;

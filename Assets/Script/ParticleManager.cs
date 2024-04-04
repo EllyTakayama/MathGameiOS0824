@@ -5,12 +5,18 @@ using UnityEngine;
 public class ParticleManager : MonoBehaviour
 {
   public GameObject[] particlePrefabs; // パーティクルのプレハブをアサイン
-    public int poolSizePerPrefab = 5; // 各プレハブごとのプールのサイズ
+    public int poolSizePerPrefab = 3; // 各プレハブごとのプールのサイズ
     private GameObject[][] particlePools; // パーティクルのプール
     /*
      * 0~3インデックスはConfetti
+     * 
+     * GameSceneでは
      * 4~6は正解時のButtonへのエフェクト
      * 7は不正解時のButtonへのエフェクト
+     *
+     * RenshuSceneでは
+     * 4~9は正解時のエフェクト
+     * 10は不正解のエフェクト
      */
     void Start()
     {

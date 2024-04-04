@@ -6,22 +6,25 @@ using Sirenix.OdinInspector; //Odin
 
 public class DOStartPanelRotate : MonoBehaviour
 {
-    Vector3 initialPosition;  // 追加: 初期位置を保存する変数
+    [SerializeField] private BackgroundControll _backgroundControll; //背景スクリプトのオンオフ参照のため
+    Vector3 initialPosition; // 追加: 初期位置を保存する変数
     private Vector3 finalRotation;
     private Sequence resetRotation;
+
     void Start()
     {
         initialPosition = transform.localPosition;
-        
+
         Debug.Log($"初期時の取得{initialPosition}");
         //スタートから0.2秒後にRotatePanelを呼び出す
-        DeleyRotetePanel();
+        //DeleyRotetePanel();
     }
 
     public void DeleyRotetePanel()
     {
-        Invoke("RotatePanel",0.2f);
+        Invoke("RotatePanel", 0.2f);
     }
+
     [Button("StartPanelIn実行")]　//←[Button("ラベル名")]
     void RotatePanel()
     {
@@ -60,11 +63,13 @@ public class DOStartPanelRotate : MonoBehaviour
         // アニメーションの設定
         transform.DOLocalMoveX(-1500f, 0.4f).SetLink(gameObject).OnComplete(() => RotatePanelComplete(initialRotation));
     }
+
     private void RotatePanelComplete(Vector3 finalRotation)
     {
+        _backgroundControll.SetBackGroundMove();
         MathAndAnswer.instance.MathsProblem();
         // アニメーション完了後の処理
-        transform.DORotate(finalRotation,0);
-        
+        transform.DORotate(finalRotation, 0);
+
     }
 }

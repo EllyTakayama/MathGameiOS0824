@@ -22,7 +22,7 @@ public class DoGameResultPanel : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         resultPanel1.SetActive(true);
         yield return new WaitForSeconds(0.2f);
-
+        SoundManager.instance.PlaySE13rewardButton();
         // glowTextをX軸で0に移動
         glowText.DOAnchorPosX(0f, 0.8f);
 

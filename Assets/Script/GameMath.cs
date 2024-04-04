@@ -13,8 +13,6 @@ public class GameMath : MonoBehaviour
     [SerializeField] private DOQuesPanelRotate _doQuesPanelRotate;//QuesPanelを回転させる
 
     [SerializeField] private DOAnsButtonMove _doAnsButtonMove;//AnsButtonを動かすアニメーション
-    //MathTypeをれんしゅうボタンmultiplication1-9
-    //テストボタンmultiplication11-19で設定します
 
     public GameManagerMathsType mathsType;
     //2 private floats this are the question values a and b
@@ -35,7 +33,8 @@ public class GameMath : MonoBehaviour
     public bool multi1;//練習画面でのかける数の順番を制御するbool
     //public GameObject tableButton;
     private int n;//配列のスクリプトでiについてcs0103エラーが出たため宣言してます
-    int[] ary = new int[9];
+    //int[] ary = new int[9];
+    private int[] ary;//CurrentModeメソッドでシステム言語によって要素数を変更する
     [SerializeField] private int countText;//出題数を表記する
     [SerializeField] private GUIManager1 _guiManager1;
 
@@ -98,62 +97,32 @@ public class GameMath : MonoBehaviour
     //this method keeps the track of mode 
     void CurrentMode()
     {
-        /*
-        switch (GameManager.singleton.currentMathsType)
-        {
-            case GameManagerMathsType.multiplicationRenshuu:
-                // multiplicationRenshuu の処理をここに書く
-                mathsType = GameManagerMathsType.multiplicationRenshuu;
-                break;
-            
-            case GameManagerMathsType.multiplicationTest:
-                // multiplicationTest の処理をここに書く
-                mathsType = GameManagerMathsType.multiplicationTest;
-                break;
-            
-            case GameManagerMathsType.multiplicationMusikui:
-                // multiplicationTest の処理をここに書く
-                mathsType = GameManagerMathsType.multiplicationMusikui;
-                break;
-
-            // 他のケースも追加可能
-
-            default:
-                // 未知のケースに対するデフォルトの処理を書く
-                mathsType = GameManagerMathsType.multiplicationRenshuu;
-                break;
-        }*/
-        /*
-        if (currentMode < 10)
-        {
-            //depending on the currentmode value we assign the mode
-            mathsType = MathsType.multiplicationRenshuu;
-
-        }
-        if (currentMode >= 11)
-        {
-            //depending on the currentmode value we assign the mode
-            mathsType = MathsType.multiplicationTest;
-
-        }*/
-        /*
-                if (currentMode < 10)
-           {
-           //depending on the currentmode value we assign the mode
-           mathsType = MathsType.multiplicationRenshuu;
-           
-           }
-           if (currentMode >= 11)
-           {
-           //depending on the currentmode value we assign the mode
-           mathsType = MathsType.multiplicationTest;
-           
-           }
-         */
-
         //乱数を生成
         System.Random randomNum = new System.Random();
-
+        //システム言語で要素数を切り分けシャッフルする
+        if (Application.systemLanguage == SystemLanguage.English)
+        {
+            ary = new int[12];
+            for (int i = 0; i < ary.Length; i++)
+            {
+                ary[i] = i + 1;
+            }
+        }
+        else//英語以外の言語の場合
+        {
+            ary = new int[9];
+            for (int i = 0; i < ary.Length; i++)
+            {
+                ary[i] = i + 1;
+            }
+        }
+        //シャッフルする
+        for (int i = ary.Length - 1; i >= 0; i--)
+        {
+            int j = randomNum.Next(i + 1);
+            (ary[i], ary[j]) = (ary[j], ary[i]);
+        }
+        /*
         //配列内1~9の値を格納
         for (int i = 0; i < ary.Length; i++)
         {
@@ -167,12 +136,9 @@ public class GameMath : MonoBehaviour
             //tmpは配列間でやりとりする値を一時的に格納する変数
             (ary[i], ary[j]) = (ary[j], ary[i]);
             //ログに乱数を表
-        }
+        }*/
 
     }
-    // 回答は3つのボタンから選択します
-    // 正解ボタンの場所（値）を回答ボタンのタグに代入し正誤判定に使用します
-
     void PiyoSE()
     {
         SoundManager.instance.PlaySE3();
@@ -180,7 +146,6 @@ public class GameMath : MonoBehaviour
 
     public void MathsProblem()
     {
-        //SoundManager.instance.PlaySE3();
         currentMode = GameManager.singleton.currentMode;
         switch (mathsType)
         {
@@ -230,16 +195,6 @@ public class GameMath : MonoBehaviour
         _doRenshuButtonAnim.GResetButton();
         _doAnsButtonMove.DoMoveAnsButton();
     }
-    /*
-    public void Mul1Toggle(){
-    multi9 = true;
-    }
-
-    public void Mul9Toggle(){
-         multi9 = false;
-    }
-    */
-
     public void MultiplicationMethodRenshuu()//練習
     {
         if (GameManager.singleton.currentCount >= 9)
@@ -330,12 +285,13 @@ public class GameMath : MonoBehaviour
         Invoke("PiyoSE", 0.6f);
         int b = ary[n];//かける数にランダムに取得した配列データを代入
         int a = currentMode;//1の段
-
-
+        
         valueA.text = a.ToString();//段の数を表示
         valueB.text = b.ToString();//かける数を表示
-
+        Debug.Log($"a_{a}");
+        Debug.Log($"b_{b}");
         answer = a * b;//かけ算の答えを求める
+        Debug.Log($"answer_{answer}");
 
         locationOfAnswer = UnityEngine.Random.Range(0, 3);//正解のボタンの場所をランダムに代入
                                                           //AnsButtons.Lengthでも良かったかもしれません

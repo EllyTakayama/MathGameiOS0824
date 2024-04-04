@@ -12,20 +12,25 @@ public class ModeMenuManager : MonoBehaviour
 {
    public  Button renshuu;
    public  Button test;
-   [SerializeField] private GameObject ModeMenuPanel;
+   //[SerializeField] private GameObject ModeMenuPanel;
    [SerializeField] private GameObject TopMenuPanel;
    [SerializeField] GameObject[] Buttons;
    [SerializeField] private GameObject studyPanel;
    [SerializeField] private Text studyRecord;
-   [SerializeField] private GameObject ReAnnounceText;
-   [SerializeField] private GameObject TestAnnounceText;
-   [SerializeField] private GameObject MulToggle;
+   //[SerializeField] private GameObject ReAnnounceText;
+   //[SerializeField] private GameObject TestAnnounceText;
+   //[SerializeField] private GameObject MulToggle;
    [SerializeField] private GameObject settingPanel;
+   [SerializeField] private GameObject infoPanel;//プライバシーポリシーや情報をまとめたPanel
+   [SerializeField] private GameObject loginBonusPanel;//ログインボーナス出現時に出るパネル
    [SerializeField] private GameObject playExPanel;
+   [SerializeField] private GameObject piyoPlayer;//ピヨのオンオフ
      public GameObject cloud1Image;
      public GameObject cloud1Image2;
      public GameObject AdMobManager;
-
+     [SerializeField] private MulToggle _mulToggle;//トグルのオンオフの操作
+     [SerializeField] private TopLogin _topLogin;//ログインボーナスのスクリプトの取得
+    
 
     //tagの位置で正誤判定している
     public static string tagOfButtons;
@@ -33,13 +38,13 @@ public class ModeMenuManager : MonoBehaviour
     
     //public bool isPressedでれんしゅうボタン、テストボタンを押した場合の分岐を行う
     //renshuuButtonを押した場合をtrue testButtonを押した場合はfalseになる
-    //currentMode<10が練習、>10が力だめし問題
+
     // Start　トップメニュー以外は非表示
     void Start()
     {
-        ModeMenuPanel.SetActive(false);
-        ReAnnounceText.SetActive(false);
-        TestAnnounceText.SetActive(false);
+        //ModeMenuPanel.SetActive(false);
+        //ReAnnounceText.SetActive(false);
+        //TestAnnounceText.SetActive(false);
         studyPanel.SetActive(false);
         settingPanel.SetActive(false);
         playExPanel.SetActive(false);
@@ -52,34 +57,19 @@ public class ModeMenuManager : MonoBehaviour
         }
         
     }
-
-    //れんしゅうボタンかテストボタンかで分岐します
-    //どちらのボタンでもModeMenuPanelは表示されます、案内テキストがれんしゅうとテストとわかれています
     
-    public void SelectRenshuu()//れんしゅうボタンを押した場合
+    //Renshuuシーンへ移動してから段を選ばせる
+    public void RenshuuPlayButtonClicked()
     {
-        SoundManager.instance.PlaySEButton();//SoundManagerからPlaySE0を実行
-        GameManager.singleton.isRenshu = true;//練習モードの時の分岐
-        //renshuuButtonでisPressedをtrueにする
-        ModeMenuPanel.SetActive(true);
-        TopMenuPanel.SetActive(false);
-        ReAnnounceText.SetActive(true);
-        isPressed =true;
-        SoundManager.instance.PlayBGM("ModeMenuPanel");
-
-      
-    }
-    public void SelectTest()//テストボタンを押した場合
-    {
-        SoundManager.instance.PlaySEButton();//SoundManagerからPlaySE0を実行
-        //testButtonだとisPressedをfalseにする
-        GameManager.singleton.isRenshu = false;//テストモードの時の分岐
-        ModeMenuPanel.SetActive(true);
-        TopMenuPanel.SetActive(false);
-        MulToggle.SetActive(false);
-        TestAnnounceText.SetActive(true);
-         SoundManager.instance.PlayBGM("ModeMenuPanel");
-        isPressed =false;
+        SoundManager.instance.PlaySEButton();
+        // GameManagerのmathsTypeを設定
+        GameManager.singleton.currentMathsType = GameManagerMathsType.multiplicationRenshuu;
+ 
+        // ここに必要な処理を追加する
+        // 例：SceneManager.LoadScene("Game");
+        DOTween.KillAll();
+        SoundManager.instance.PlayBGM("Renshuu");
+        SceneManager.LoadScene("Renshuu");
     }
     //Gameシーンを選択したい場合（）
     public void GamePlayButtonClicked()
@@ -87,12 +77,11 @@ public class ModeMenuManager : MonoBehaviour
         SoundManager.instance.PlaySEButton();
         // GameManagerのmathsTypeを設定
         GameManager.singleton.currentMathsType = GameManagerMathsType.multiplicationTest;
-        ModeMenuPanel.SetActive(true);
-        TopMenuPanel.SetActive(false);
-        ReAnnounceText.SetActive(true);
+ 
         // ここに必要な処理を追加する
         // 例：SceneManager.LoadScene("Game");
         DOTween.KillAll();
+        SoundManager.instance.PlayBGM("ModeMenuPanel");
         SceneManager.LoadScene("Game");
     }
     public void SelectRecord()//成績パネル表示
@@ -119,19 +108,33 @@ public class ModeMenuManager : MonoBehaviour
 
     public void SelectSetting()
     {
-      
+      piyoPlayer.SetActive(false);
       Debug.Log("SceneCount"+GameManager.singleton.SceneCount);
     SoundManager.instance.PlaySEButton();
         settingPanel.SetActive(true);
-         
+        _mulToggle.SetToggle();//トグルの表示反映
+    }
+    public void InfoPanel()//遊び方説明パネル表示
+    {
+        piyoPlayer.SetActive(false);
+        SoundManager.instance.PlaySEButton();
+        infoPanel.SetActive(true);
     }
 
+    public void LoginBonusPanelOn()
+    {
+        loginBonusPanel.SetActive(true);
+    }
+    public void LoginBonusPanelOff()
+    {
+        _topLogin.SetPiyoTop();//ピヨの移動
+        SoundManager.instance.PlaySEButton();
+        loginBonusPanel.SetActive(false);
+    }
     public void ExPlayPanel()//遊び方説明パネル表示
     {
-      
         SoundManager.instance.PlaySEButton();
          playExPanel.SetActive(true);
-         
     }
     public void TopPanelMove()
     {
@@ -139,10 +142,13 @@ public class ModeMenuManager : MonoBehaviour
       GameManager.singleton.SaveSceneCount();
       Debug.Log("SceneCount"+GameManager.singleton.SceneCount);
       int IScount = GameManager.singleton.SceneCount;
-
+      piyoPlayer.SetActive(true);
         SoundManager.instance.PlaySEButton();//SoundManagerからSEButtonを実行
         if(settingPanel == true){
             settingPanel.SetActive(false);
+        }
+        if(infoPanel == true){
+            infoPanel.SetActive(false);
         }
         if(playExPanel == true){
             playExPanel.SetActive(false);
@@ -150,11 +156,7 @@ public class ModeMenuManager : MonoBehaviour
         if(studyPanel == true){
             studyPanel.SetActive(false);
         }
-        if(ModeMenuPanel == true){
-            ModeMenuPanel.SetActive(false);
-            TopMenuPanel.SetActive(true);
-
-        }
+  
         if(IScount>0 && IScount%3 ==0){
             DOTween.KillAll();
             AdMobManager.GetComponent<AdMobInterstitial>().ShowAdMobInterstitial();

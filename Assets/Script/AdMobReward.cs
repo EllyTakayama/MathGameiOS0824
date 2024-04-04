@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using GoogleMobileAds.Api;
+using TMPro;
 using UnityEngine.UI;//1020
-
+//Renshuuシーンで実行されるAdMobリワードのスクリプト
 public class AdMobReward : MonoBehaviour
 {
     //やること
@@ -12,16 +13,11 @@ public class AdMobReward : MonoBehaviour
     //2.Update関数のif文内に報酬内容を入力
     //3.リワード起動設定　ShowAdMobReward()を使う
     public GameObject RewardButton;
-    public bool oyatsuReward = false;
     public GameObject endImage;
-     public GameObject endHaloImage;
      public Text gameOverMarkText;
-    public Text messageText;
-
     private bool rewardeFlag=false;//リワード広告の報酬付与用　初期値はfalse
-
     private RewardedAd rewardedAd;//RewardedAd型の変数 rewardedAdを宣言 この中にリワード広告の情報が入る
-
+    [SerializeField] private TextMeshProUGUI TextValue;//coin枚数を表示させる
     //private string adUnitId;
 #if UNITY_ANDROID
     //string adUnitId = "ca-app-pub-3940256099942544/5224354917";//TestAndroidのリワード広告ID
@@ -50,7 +46,6 @@ public class AdMobReward : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
         //広告を見た後にrewardeFlagをtrueにしている
@@ -58,34 +53,20 @@ public class AdMobReward : MonoBehaviour
         if (rewardeFlag == true)
         {
             rewardeFlag = false;//報酬付与用のフラグをfalseへ戻す
-
             //ここに報酬の処理を書く
-            oyatsuReward = true;
-            endImage.SetActive(false);
-            endHaloImage.SetActive(true);
-            SoundManager.instance.PlaySE13rewardButton();//SoundManagerからPlaySE0を実行
-            FoodGenerator.instance.foodCount = 0;
-            FoodGenerator.instance.foodScore =0;
-            FoodGenerator.instance.endCount = 0;
-            gameOverMarkText.text = "おやつ 5こ ゲット！";
-            messageText.enabled = false;
-            FoodGenerator.instance.Spawn();
-            Debug.Log("oyatsuReward"+oyatsuReward);
+            GameManager.singleton.coinNum += 100;
+            //Debug.Log("リワードcoinGet" + GameManager.instance.totalCoin + "枚");
+            GameManager.singleton.CoinSave();
+            TextValue.text = GameManager.singleton.coinNum.ToString();
+            endImage.SetActive(true);
+            endImage.GetComponent<DOTextBounceAnim>();
+            gameOverMarkText.gameObject.SetActive(true);
+            gameOverMarkText.text = "コインはガチャでつかえるよ";
             
         }
-
     }
-
-
     private void Start()
     {      
-        //AndroidとiOSで広告IDが違うのでプラットフォームで処理を分けます。
-        // 参考
-        //【Unity】AndroidとiOSで処理を分ける方法
-        // https://marumaro7.hatenablog.com/entry/platformsyoriwakeru
-
-
-
         CreateAndLoadRewardedAd();//リワード広告読み込み
         MobileAds.SetiOSAppPauseOnBackground(true);
     }
@@ -140,6 +121,5 @@ public class AdMobReward : MonoBehaviour
         //具体的な処理はUpdate関数内で行う。
         rewardeFlag = true;
     }
-
 
 }

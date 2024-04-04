@@ -24,7 +24,7 @@ public class GModeMenuManager : MonoBehaviour
 
      [SerializeField] private TextMeshProUGUI coinText;
 
-     [SerializeField] private PiyoSetPosition _piyoSetPosition;//ピヨの位置変更 
+     [SerializeField] private PiyoSetPosition _piyoSetPosition;//ピヨのGamePanelの位置変更のスクリプト 
     //tagの位置で正誤判定している
     public static string tagOfButtons;
     // Start　トップメニュー以外は非表示
@@ -159,6 +159,7 @@ public class GModeMenuManager : MonoBehaviour
         coinText.text = GameManager.singleton.coinNum.ToString();
         
         yield return null; // コルーチンを終了する
+        SoundManager.instance.PlayBGM("Test");
         _doGStartPanelRotate.DeleyRotetePanel();//スタートパネルからの出題
     }
 

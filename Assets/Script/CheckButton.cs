@@ -46,7 +46,8 @@ public class CheckButton : MonoBehaviour {
     [SerializeField] private GameObject ansImage;//クエスチョンのイメージ
     [SerializeField] private DOAnsTextRotate _doAnsTextRotate;//クエスチョンを回転させる
     [SerializeField] private DOTweenPanel doTweenPanel;//GradePanelを表示させるTween
-    
+    [SerializeField] private ParticleManager _particleManager; // ParticleManagerをインスペクターから参照するための変数
+    [SerializeField] private BackgroundControll _backgroundControll;//背景Spriteの取得のため
     void Start()
     {
         //Startですること
@@ -80,6 +81,8 @@ public class CheckButton : MonoBehaviour {
     {
         score = 0;
         count = 0;
+        GameManager.singleton.currentCount = 0;
+        GameManager.singleton.currentScore = 0;
         correctAnswer.text = "";
         wrongAnswer.text = "";
         _correctAnswerStringBuilder.Clear();
@@ -178,8 +181,13 @@ public class CheckButton : MonoBehaviour {
             //correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
             //UpdateScore(scoreToAdd);
             markText.text = $"{score}";
-            countText.GetComponent<CountText>().CountMove();
-            markText.GetComponent<ScoreText>().ScoreMove();
+            //countText.GetComponent<CountText>().CountMove();
+            //markText.GetComponent<ScoreText>().ScoreMove();
+            // 正解時にパーティクルを再生
+            if (_particleManager != null)
+            {//パーティクルマネージャーの範囲で正解ようエフェクトは4~10
+                _particleManager.PlayParticle(Random.Range(4, 11), piyo.transform.position);
+            }
         }   
         else   
         {
@@ -189,10 +197,14 @@ public class CheckButton : MonoBehaviour {
             batsuImage[buttonIndex].SetActive(true);
             SoundManager.instance.PlaySE1();//SoundManagerからPlaySE1を実行
             GameManager.singleton.currentCount = count;
-            countText.GetComponent<CountText>().CountMove();
+            //countText.GetComponent<CountText>().CountMove();
             _wrongAnswerStringBuilder.AppendLine($"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}");
             //wrongAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
-
+            //不正解時にパーティクルを再生
+            if (_particleManager != null)
+            {
+                _particleManager.PlayParticle(11, piyo.transform.position);
+            }
         }
         //countText.text = $"{count}/もんめ";
         markText.text = $"せいかい{score}コ";
@@ -211,19 +223,15 @@ public class CheckButton : MonoBehaviour {
     }
     void DelayMathAnswer()
     {
-        if (GameManager.singleton.currentCount >= 9 && GameManager.singleton.isRenshu)
+        if (GameManager.singleton.currentCount >= 9)
         {
+            _backgroundControll.StopBackGroundMove();
+            _backgroundControll.NotActiveBackground();
             ToStringAnswer();
             doTweenPanel.DoGradeCall();
-            return;
-        }else if 
-            (GameManager.singleton.currentCount > TestToggle.testQuestion - 1 && !GameManager.singleton.isRenshu)
-        {
-            ToStringAnswer();
-            doTweenPanel.DoGradeCall();
+            Debug.Log("GameManager.singleton.currentCount >= 9 && GameManager.singleton.isRenshu");
             return;
         }
-
         _doAnsTextRotate.ResetAnswerText();
         MathAndAnswer.instance.MathsProblem();
         for (int i = 0; i < AnsButtons.Length; i++)

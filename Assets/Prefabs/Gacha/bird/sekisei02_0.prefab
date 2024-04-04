@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1322753418997966515}
-  birdTime: 40
+  birdTime: 8
   _spawnUnko: {fileID: 0}
   index: 0
 --- !u!114 &1322753418205471908
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

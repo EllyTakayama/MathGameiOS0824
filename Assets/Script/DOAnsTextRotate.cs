@@ -79,7 +79,7 @@ public class DOAnsTextRotate : MonoBehaviour
     public void ResetAnswerText()
     {
         questionImage.SetActive(true);
-        questionImage.transform.rotation = Quaternion.Euler(initialRotation);
+        //questionImage.transform.rotation = Quaternion.Euler(initialRotation);
         quesAnswer.SetActive(false);
     }
     
@@ -87,7 +87,7 @@ public class DOAnsTextRotate : MonoBehaviour
     public void ResetValueBAnswerText()
     {
         valueBQuestionImage.SetActive(true);
-        valueBQuestionImage.transform.rotation = Quaternion.Euler(initialRotation);
+        //valueBQuestionImage.transform.rotation = Quaternion.Euler(initialRotation);
         valueBText.SetActive(false);
     }
 
@@ -100,7 +100,6 @@ public class DOAnsTextRotate : MonoBehaviour
     [Button("StartPanelOut実行")]　//←[Button("ラベル名")]
     void MovePanel()
     {
-
         // アニメーションの設定
         transform.DOLocalMoveX(-1500f, 0.4f).SetLink(gameObject).OnComplete(() => RotatePanelComplete(initialRotation));
     }

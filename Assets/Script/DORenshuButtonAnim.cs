@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Sirenix.OdinInspector; // Odin Inspectorを追加
 
 public class DORenshuButtonAnim : MonoBehaviour
 {
@@ -63,7 +64,7 @@ public class DORenshuButtonAnim : MonoBehaviour
             Destroy(effect, 2.0f);
         }
     }
-    
+    [Button("Invisible")]
     //出題変更時にButtonを非表示させる
     public void InvisibleButton()
     {

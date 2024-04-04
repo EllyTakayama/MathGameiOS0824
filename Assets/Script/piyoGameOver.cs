@@ -44,10 +44,6 @@ public class piyoGameOver : MonoBehaviour
         }
 
     }
-
-
-
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if ((GameManager.singleton.currentScore < 10) && (GameManager.singleton.currentScore > 0))

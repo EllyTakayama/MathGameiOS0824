@@ -65,13 +65,23 @@ public class KuKuSpawn : MonoBehaviour
        public void PlayKukuSE(int digit, int number)
        {
            audioSourceKuku.Stop();
-           int index = (digit - 1) * 9 + (number - 1); // インデックスの計算
-           print($"index_{index}");
-           if (index >= 0 && index < audioClipKuku.Length)
+           if(Application.systemLanguage == SystemLanguage.Japanese)
            {
-               // 適切なAudioClipを再生
-               audioSourceKuku.PlayOneShot(audioClipKuku[index]);
+               // システム言語が日本語の場合の処理
+               int index = (digit - 1) * 9 + (number - 1); // インデックスの計算
+               print($"index_{index}");
+               if (index >= 0 && index < audioClipKuku.Length)
+               {
+                   // 適切なAudioClipを再生
+                   audioSourceKuku.PlayOneShot(audioClipKuku[index]);
+               }
            }
+           else
+           {
+               // それ以外の場合の処理
+               SoundManager.instance.PlaySEButton();
+           }
+     
        }
        // 風船を生成してククボタンの答えを表示
        public void GenerateBalloon(int result)

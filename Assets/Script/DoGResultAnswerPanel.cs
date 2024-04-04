@@ -36,5 +36,7 @@ public class DoGResultAnswerPanel : MonoBehaviour
     {
         correctAnswer.text = "";
         wrongAnswer.text = "";
+        // answerBackImageのスケールをゼロにする
+        answerBackImage.transform.localScale = Vector3.zero;
     }
 }

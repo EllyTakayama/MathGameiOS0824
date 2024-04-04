@@ -14,7 +14,7 @@ private List<int> birdIndexList = new List<int>(); // 生成したbirdObjectPref
 [SerializeField] private int numBirds;//鳥の出現できる数
 [SerializeField] private int percheNum;//選択する止まり木のインデックス
 // 各perchesに対応した表示位置を表す整数のリスト
-private int[] perchePositions = new int[] {5,4,4,5,4,3,5,1,4};
+private int[] perchePositions = new int[] {1,4,4,5,4,3,5,1,4};//止まり木に応じたとまれる鳥の数
 public Slider[] unkoSliders; // ピヨちゃんに対応するSliderの配列
 private int birdIndex;//鳥をランダムに選ぶint
 public int perchIndex;//perchのIndex
@@ -30,14 +30,41 @@ private int[] birdIndexSave = new int[] {0,0,0,0,0,0,0,0,0,0,0};//表示され�
 [SerializeField] private List<GameObject> birdInstance= new List<GameObject>(); // 生成したbirdPrefabのインスタンスを格納するリスト
 [SerializeField] private GameObject fingerImage;//餌やりを促すゆび
 [SerializeField] private GameObject foodAnnounceText;//foodのセットを促すテキスト
+[SerializeField] private GameObject[] perchChoiceFrame;//選択されたPerchを示すImage
+[SerializeField] private ParticleSystem[] foodParticle; //foodImageのオンオフのパーティクル
+private ParticleSystem instantiatedFoodParticle; //foodParticleのインスタンス用パーティクルシステム
+[SerializeField] private GameObject GachaPanel0;//foodParticleの親
 void Start()
 {
     LoadPerchIndex();
-    NumBirdsLoad();
-    numBirds = 3;
-    ShowRandomPerch();
+    //NumBirdsLoad();
+    //numBirds = 3;
+    ShowRandomPerch();//ロードされたIndexの止まり木を表示する
+    SetPerchFrame();//ロードされたIndezの止まり木がわかるようにする
     //SetBirdsOnPerches(); // セーブデータに基づいてピヨちゃんを止まり木に配置する
+   // foodParticle[0]をfoodImageの位置にInstantiate
+    if (foodParticle.Length > 0 && foodImage != null)
+    {
+        /*
+        instantiatedFoodParticle = Instantiate(foodParticle[0], foodImage.transform.localPosition, Quaternion.identity);
+        */
+        // foodImageのRectTransformから位置情報を取得
+        Vector3 foodImagePosition = foodImage.transform.position;
 
+        // foodImageの親オブジェクトがCanvasなどの場合は、worldPositionStaysをtrueにして、ローカル座標をワールド座標に変換する
+        instantiatedFoodParticle = Instantiate(foodParticle[0], foodImage.transform.position, Quaternion.identity);
+        instantiatedFoodParticle.transform.SetParent(GachaPanel0.transform);
+        Debug.Log("foodParticle_Instantiate");
+    }
+}
+
+public void SetPerchFrame()
+{
+    for (int i = 0; i < perchChoiceFrame.Length; i++)
+    {
+        perchChoiceFrame[i].SetActive(false);
+    }
+    perchChoiceFrame[perchIndex].SetActive(true);
 }
 
 public void SetFood()
@@ -47,6 +74,13 @@ public void SetFood()
 //foodをセットするコルーチン
 IEnumerator SetFoodBird()
 {
+    SoundManager.instance.PlaySE3();
+    // インスタンス化されたfoodParticleが存在し、かつ再生中であれば停止
+    if (instantiatedFoodParticle != null && instantiatedFoodParticle.isPlaying)
+    {
+        instantiatedFoodParticle.Stop();
+        Debug.Log("foodParticle_Stop");
+    }
     // 食べ物のイメージを設定
     foodImage.sprite = foodSprite[0];
     //ゆびでのえさやりアピールもオフ
@@ -56,6 +90,22 @@ IEnumerator SetFoodBird()
     // 1秒待ってからSetFood()を呼び出す
     yield return new WaitForSeconds(0.2f);
     _doFade.FadeOutToIn();
+ 
+    if (birdInstance != null)
+    {
+        foreach (GameObject bird in birdInstance)
+        {
+            Destroy(bird);
+        }
+        birdInstance.Clear();
+    }
+    // foodParticle[1]をfoodImageの位置にInstantiate
+    if (foodParticle.Length > 1 && foodImage != null)
+    {
+        instantiatedFoodParticle =Instantiate(foodParticle[1], foodImage.transform.position, Quaternion.Euler(-90f, 0f, 0f));
+        instantiatedFoodParticle.transform.SetParent(GachaPanel0.transform);
+        Debug.Log("foodParticle_Instantiate");
+    }
     // delayBetweenPerches秒待ってからSetBirdsOnPerches()を呼び出す
     yield return new WaitForSeconds(3.0f);
     SetBirdsOnPerches();
@@ -80,10 +130,20 @@ public void NumBirdsLoad()
         // foodValidityTimeが0以下になったら、表示されているbirdObjectとunkoSliderを非表示にする
             if (foodValidityTime <= 0f)
             {
-                foreach (GameObject birdInstance in birdInstance)
+                // インスタンス化されたfoodParticleが存在し、かつ再生中であれば停止
+                if (instantiatedFoodParticle != null && instantiatedFoodParticle.isPlaying)
                 {
-                    Destroy(birdInstance);
+                    instantiatedFoodParticle.Stop();
+                    Debug.Log("foodParticle_Stop");
                 }
+                if (birdInstance != null)
+                {
+                    foreach (GameObject birdInstance in birdInstance)
+                    {
+                        Destroy(birdInstance);
+                    }
+                }
+
                 birdInstance.Clear(); // birdInstanceリストをクリアする
                 birdInstance = null;
                 foodImage.sprite = foodSprite[1];
@@ -105,6 +165,7 @@ public void NumBirdsLoad()
         GameObject selectedPerch = perches[perchIndex];
         numBirds = perchePositions[perchIndex];
         selectedPerch.SetActive(true); // 選択された止まり木オブジェクトをアクティブにする
+        SetPerchFrame();//選択された止まり木がわかるようFrame表示を更新する
         SavePerchIndex();
     }
     // perchIndexをセーブするメソッド
@@ -119,10 +180,12 @@ public void NumBirdsLoad()
     {
         // ファイル名を指定してperchIndexをロードし、ロードに失敗した場合はデフォルト値として0を設定
         perchIndex = ES3.Load<int>("perchIndex", "perchIndexSave.es3", 0);
+        Debug.Log($"perchIndex_{perchIndex}");
     }
 
     void SetBirdsOnPerches()
     {
+
         StartCoroutine((SetBirdOnPerchesCoroutine()));
 
     }
@@ -130,6 +193,7 @@ public void NumBirdsLoad()
     // ReSharper disable Unity.PerformanceAnalysis
     IEnumerator SetBirdOnPerchesCoroutine()
     {
+        int NumBirds = Random.Range(1, numBirds + 1);
         int[] tempArray = new int[numBirds];
         for (int j = 0; j < numBirds; j++)
         {
@@ -138,8 +202,9 @@ public void NumBirdsLoad()
         //birdObjectを配置する位置をシャッフルする
         ShuffleArray(tempArray);
 
-        for (int i = 0; i < numBirds; i++)
+        for (int i = 0; i < NumBirds; i++)
         {
+            SoundManager.instance.PlaySE7End3();//ピヨ生成の効果音
             // ピヨちゃんのオブジェクトをランダムに選択
             birdIndex = Random.Range(0, birdObjects.Length);
             birdIndexList.Add(birdIndex);//birdIndexListにbirdPrefabのIndexを追加する
