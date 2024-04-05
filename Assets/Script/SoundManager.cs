@@ -91,11 +91,13 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySE1()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[1]);
     }//まちがいだとなる
 
     public void PlaySE2()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[2]);
     }//おやつをあげる時になる
 
@@ -108,17 +110,20 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySEButton()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[4]);
         //Buttonの操作音
     }
     public void PlaySE5End1()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[5]);
         //点数
     }
 
     public void PlaySE6End2()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[6]);
         //点数
     }
@@ -131,51 +136,61 @@ public class SoundManager : MonoBehaviour
     }
     public void PlaySE8End4()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[8]);
         //点数
     }
     public void PlaySE9End5()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[9]);
         //点数
     }
     public void PlaySE10Button2()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[10]);
         //
     }
     public void PlaySE11Button3()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[11]);
         //
     }
     public void PlaySE12GradePanel()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[12]);
         //GradePanelが出てきた時の効果音
     }
     public void PlaySE13rewardButton()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[13]);
         //
     }
     public void PlaySE14BreakBalloon()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[14]);
         
     }
     public void PlaySE15Gacha()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[15]);
         
     }
     public void PlaySE16GetCoin()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[16]);
         
     }
     public void PlaySE17CoinOneceGet()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[17]);
         
     }
@@ -194,6 +209,11 @@ public class SoundManager : MonoBehaviour
     {//爆発音
         audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[20]);
+    }
+    public void PlaySE21()
+    {//子供の歓声
+        audioSourceSE.Stop();
+        audioSourceSE.PlayOneShot(audioClipSE[21]);
     }
     
 

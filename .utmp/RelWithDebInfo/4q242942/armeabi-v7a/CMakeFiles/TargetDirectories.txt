@@ -1,0 +1,5 @@
+/Users/rietakayama/MathGameiOS0828/.utmp/RelWithDebInfo/4q242942/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/rietakayama/MathGameiOS0828/.utmp/RelWithDebInfo/4q242942/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/rietakayama/MathGameiOS0828/.utmp/RelWithDebInfo/4q242942/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+/Users/rietakayama/MathGameiOS0828/.utmp/RelWithDebInfo/4q242942/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+/Users/rietakayama/MathGameiOS0828/.utmp/RelWithDebInfo/4q242942/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir

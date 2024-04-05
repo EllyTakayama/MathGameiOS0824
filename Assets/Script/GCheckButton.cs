@@ -54,7 +54,10 @@ public class GCheckButton : MonoBehaviour {
     [SerializeField] private DOAnsButtonMove _doAnsButtonMove;//AnsButtonを移動させるアニメーション
     [SerializeField] private DOQuesPanelRotate _doQuesPanelRotate;//QuesPanelを非表示にする
     [SerializeField] private PiyoDamage _piyoDamage;//不正解時にpiyoを点滅させる
-
+    [SerializeField] private QuesChangeCollider _quesChangeCollider;//AnsButtonParentのコライダーのスクリプトをfalseにする
+    [SerializeField] private GameObject damageParticlePrefab;
+    [SerializeField] private ParticleManager _particleManager1;
+    [SerializeField] private BoxCollider2D _ansButtonCollider;//衝突感知のコライダーをオフする
     void Awake()
     {
         coinText.text = GameManager.singleton.coinNum.ToString();
@@ -165,6 +168,8 @@ public class GCheckButton : MonoBehaviour {
             if (particleManager != null)
             {
                 particleManager.PlayParticle(Random.Range(4, 7), AnsButtons[buttonIndex].transform.position);
+                // piyoの位置にパーティクルを再生する
+                particleManager.PlayParticle(Random.Range(0, 4), piyo.transform.position);
             }
             //currentCoinCount.Value += 10;
             GameManager.singleton.coinNum += 10;
@@ -183,6 +188,8 @@ public class GCheckButton : MonoBehaviour {
             {
                 particleManager.PlayParticle(7, AnsButtons[buttonIndex].transform.position);
                 SoundManager.instance.PlaySE20();//爆発音
+                // piyoの位置にパーティクルを再生する
+                particleManager.PlayParticle(Random.Range(8, 12), piyo.transform.position);
             }
             _piyoDamage.DamageCall();//ピヨをダメージを受けさせる
 
@@ -213,14 +220,24 @@ public class GCheckButton : MonoBehaviour {
         // パーティクルを再生
          for (int i = 0; i < AnsButtons.Length; i++)
          {
-         particleManager.PlayParticle(7, AnsButtons[i].transform.position);
+         //particleManager.PlayParticle(7, AnsButtons[i].transform.position);
+         InstantiateParticle(AnsButtons[i].transform.position);
          SoundManager.instance.PlaySE20();//爆発音
          }
+         _piyoDamage.DamageCall();//ピヨをダメージを受けさせる
         yield return new WaitForSeconds(0.4f);
         _doAnsTextRotate.RotatePanel();
         yield return new WaitForSeconds(0.5f);
         DelayImageOff();
         DelayMathAnswer();
+    }
+    private void InstantiateParticle(Vector3 position)
+    {
+        // パーティクルを指定位置にインスタンス化する
+        GameObject particleInstance = Instantiate(damageParticlePrefab, position, Quaternion.identity);
+        
+        // 必要に応じてパーティクルの設定を行う
+        // 例: インスタンス化後にパーティクルの速度や色を設定する処理など
     }
     void DelayImageOff()
     {
@@ -238,7 +255,8 @@ public class GCheckButton : MonoBehaviour {
         if (GameManager.singleton.currentCount >= 9)
         {
             ToStringAnswer();
-            
+            _ansButtonCollider.enabled = false;
+            _quesChangeCollider.enabled = false;//コライダーを管理するスクリプトをオフする
             _doGameResultPanel.SetResult();
             print("count9isRenshu");
             return;

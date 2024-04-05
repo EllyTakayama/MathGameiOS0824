@@ -19,7 +19,7 @@ public class PiyoDamage : MonoBehaviour
 
     public IEnumerator PiyoD(){
         //時間、強さ、回数、手ぶれ値、スナップフラグ、dフェードアウト
-        transform.DOShakePosition(0.5f, 20f, 8, 1, false, true)
+        transform.DOShakePosition(1.0f, 30f, 10, 1, false, true)
             .SetLink(gameObject);
 
         // 無敵時間中の点滅
@@ -30,6 +30,7 @@ public class PiyoDamage : MonoBehaviour
             SetPiyoObjectColor(1f); // 元の色に戻す
             yield return new WaitForSeconds(0.06f);
         }
+        Debug.Log("piyoDamage");
     }
     // GameObjectの色を設定するメソッド
     private void SetPiyoObjectColor(float alpha)

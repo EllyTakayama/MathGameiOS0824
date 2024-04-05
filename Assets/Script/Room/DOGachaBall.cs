@@ -17,6 +17,10 @@ public class DOGachaBall : MonoBehaviour
         .SetLink(gameObject)
         .SetDelay(0.1f);  
     }
-
-
+    [Button("BallShakeLoop実行")]
+    public void BallShakeLoop(){
+        transform.DOPunchPosition(new Vector3(0f, 30f, 0), 1f, 2, 0.4f)
+            .SetLink(gameObject)
+            .SetLoops(-1);  
+    }
 }

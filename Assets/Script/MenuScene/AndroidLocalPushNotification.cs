@@ -79,8 +79,8 @@ public static class AndroidLocalPushNotification
 
             //付属情報の設定
             Number = badgeCount,                  //アイコンのバッジ数　対応端末にドットマークが付く(端末の種類によってはユーザーが端末本体の設定を変更することで数の表示にすることが可能))
-            SmallIcon = "notification_small_icon",//プッシュ通知発火の際、タスクバーに表示されるアイコン どの画像を使用するかアイコンのIdentifierを指定　指定したIdentifierが見つからない場合アプリアイコンになる。
-            LargeIcon = "notification_large_icon",//プッシュ通知発火の際、通知欄に表示されるアイコン    どの画像を使用するかアイコンのIdentifierを指定　指定したIdentifierが見つからない場合アプリアイコンになる。
+            SmallIcon = "icon_0",//プッシュ通知発火の際、タスクバーに表示されるアイコン どの画像を使用するかアイコンのIdentifierを指定　指定したIdentifierが見つからない場合アプリアイコンになる。
+            LargeIcon = "icon_1",//プッシュ通知発火の際、通知欄に表示されるアイコン    どの画像を使用するかアイコンのIdentifierを指定　指定したIdentifierが見つからない場合アプリアイコンになる。
                                                   //注意！アイコンの文字列は 小文字のa~z,0~9,_(アンダーバー) のみ使用可能。満たさないとビルドエラーとなります。
 
             Style = NotificationStyle.None,       //表示スタイルの設定  NotificationStyle.BigTextStyleでテキスト表示数を増やす設定  https://docs.unity3d.com/Packages/com.unity.mobile.notifications@1.3/api/Unity.Notifications.Android.NotificationStyle.html#fields

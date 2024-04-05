@@ -1,0 +1,39 @@
+{
+  "buildFiles": [
+    "/Users/rietakayama/MathGameiOS0828/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp/CMakeLists.txt",
+    "/Users/rietakayama/MathGameiOS0828/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/src/main/cpp/FramePacing/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Applications/Unity/Hub/Editor/2023.2.16f1/PlaybackEngines/AndroidPlayer/SDK/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/rietakayama/MathGameiOS0828/.utmp/RelWithDebInfo/4q242942/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Applications/Unity/Hub/Editor/2023.2.16f1/PlaybackEngines/AndroidPlayer/SDK/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/rietakayama/MathGameiOS0828/.utmp/RelWithDebInfo/4q242942/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "swappywrapper::@7e25bd1f32ce224db4e9": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "swappywrapper",
+      "output": "/Users/rietakayama/MathGameiOS0828/Library/Bee/Android/Prj/Mono2x/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4q242942/obj/armeabi-v7a/libswappywrapper.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Applications/Unity/Hub/Editor/2023.2.16f1/PlaybackEngines/AndroidPlayer/NDK/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Applications/Unity/Hub/Editor/2023.2.16f1/PlaybackEngines/AndroidPlayer/NDK/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

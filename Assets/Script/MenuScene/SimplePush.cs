@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.Notifications.Android;//Androidのプッシュ通知を使用する際に必要
+#if UNITY_ANDROID
+using Unity.Notifications.Android;
+#endif
 
 public class SimplePush : MonoBehaviour
 {
@@ -28,6 +30,7 @@ public class SimplePush : MonoBehaviour
 #if UNITY_ANDROID
         //プッシュ通知用のチャンネルを作成・登録
         AndroidLocalPushNotification.RegisterChannel(channelId, "テスト用の通知", "テストを通知します");
+  
 #endif
 
         //通知の削除
@@ -46,9 +49,8 @@ public class SimplePush : MonoBehaviour
     {
         Debug.Log("simplePush");
 #if UNITY_ANDROID
-       
-        var request = new AndroidJavaObject("com.unity.androidnotifications.UnityNotificationManager");
-        yield return new WaitUntil(() => request.Call<int>("permissionStatus") != 0);
+            PermissionRequest request = new PermissionRequest();
+            while (request.Status == PermissionStatus.RequestPending)
 #endif
             yield return null;
     }

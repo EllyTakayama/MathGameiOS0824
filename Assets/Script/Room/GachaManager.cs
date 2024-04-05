@@ -160,6 +160,7 @@ public class GachaManager : MonoBehaviour
 		NekoitemPanel.SetActive(false);
 	
 		flashImage.SetActive(false);
+		openBallImage.SetActive(true);
 		getNekoPanel.SetActive(false);
 
 		rewardText0.SetActive(true);
@@ -213,7 +214,6 @@ public class GachaManager : MonoBehaviour
 		coinText.text = GameManager.singleton.coinNum.ToString();
 		//Debug時はオフ
 		
-		SoundManager.instance.PlaySE3();
 		RightButton.SetActive(false);
 		LeftButton.SetActive(false);
 	
@@ -280,38 +280,35 @@ public class GachaManager : MonoBehaviour
 		}
 	}
 
-	//ガチャでアイテムを排出する
-	IEnumerator ItemGet(){
-		gachaButton.enabled = true;
+	//ガチャでアイテムを表示させる
+	IEnumerator ItemGet()
+	{
+		SoundManager.instance.PlaySE15Gacha();//ガチャ音
+		yield return new WaitForSeconds(0.4f);
 		getNekoPanel.SetActive(true);
-		closeButton.SetActive(false);
-		yield return fadePanel.DOFade(0.9f,0.8f).WaitForCompletion();
-		fadePanel.DOFade(0,0.6f);
-        yield return new WaitForSeconds(0.6f);
-        
+		gachaButton.enabled = true;
 		nameText.text = "なにがでるかな？";
-		SoundManager.instance.PlaySE3();
-		//openBallImage.SetActive(true);
-		
 		nekoImage.SetActive(false);
-		yield return new WaitForSeconds(1.0f);
+		closeButton.SetActive(false);
+		openBallImage.SetActive(true);
+		openBallImage.GetComponent<DOGachaBall>().BallShake();//アニメーション
+		
+		yield return new WaitForSeconds(0.8f);
+		yield return fadePanel.DOFade(0.9f,0.4f).WaitForCompletion();
+		fadePanel.DOFade(0,0.4f);
 		openBallImage.SetActive(false);
-		//pOpenBallImage.SetActive(true);
-		
-		yield return new WaitForSeconds(1.0f);
-		//pOpenBallImage.SetActive(false);
-		//FadePanel
-		
-		yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
+		//yield return new WaitForSeconds(0.2f);
 		string name = GetComponent<GachaItem>().GachaChara[nekoNum];//nameで取得した"."を改行に置き換える
 		nameText.text = name.Replace(".",System.Environment.NewLine);
 		//nameText.text = GetComponent<GachaItem>().GachaChara[nekoNum];
-		
 		nekoImage.SetActive(true);
 		nekochanImage.sprite = GetComponent<GachaItem>().ItemNeko[nekoNum];
-		SoundManager.instance.PlaySE3();
+		nekoImage.GetComponent<DOGachaBall>().BallShakeLoop();
+		//SoundManager.instance.PlaySE3();
 		flashImage.SetActive(true);
 		flashImage.GetComponent<DOflash>().Flash18();
+		SoundManager.instance.PlaySE18();//ジャン音
 		//nameText.text = itemName + "\nをゲットした"
 		yield return new WaitForSeconds(0.4f);
 		closeButton.SetActive(true);

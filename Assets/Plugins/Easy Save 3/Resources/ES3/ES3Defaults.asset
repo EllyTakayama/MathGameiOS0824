@@ -29,24 +29,25 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - SimpleScrollSnap
+    - Assembly-CSharp-firstpass
     - Assembly-CSharp
     - UniRx
-    - Assembly-CSharp-firstpass
     - CW.Common
-    - LeanCommonPlus
-    - LeanTouch
-    - LeanTouchPlus
-    - LeanCommon
-    - UniRx.Examples
-    - SimpleInspectorAttributes
-    - Utilities
-    - SimpleScrollSnapEditor
     - PsdPlugin
+    - LeanCommonPlus
+    - SimpleScrollSnap
+    - LeanCommon
+    - LeanTouchPlus
+    - ScriptablePacker
+    - SimpleScrollSnapEditor
+    - UniRx.Examples
+    - LeanTouch
     - GoogleMobileAds.Editor
-    - CopyrightNoticeEditor
-    - UtilitiesEditor
     - SimpleInspectorAttributesEditor
+    - Utilities
+    - CopyrightNoticeEditor
+    - SimpleInspectorAttributes
+    - UtilitiesEditor
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 1
   addMgrToSceneAutomatically: 0

@@ -17,7 +17,7 @@ public class GUIManager1 : MonoBehaviour {
     //public Text hiScoreOverText;
     //public Text wrongAnswerText;
     //ref to game over panel
-    public GameObject gameOverPanel;
+    //public GameObject gameOverPanel;
     //ref to game over panel animator
     //public Animator gameOverAnim;
     public Text markText;
@@ -37,7 +37,7 @@ public class GUIManager1 : MonoBehaviour {
     public GameObject imageTable7;
     public GameObject imageTable8;
     public GameObject imageTable9;
-    public Text messageText;
+    //public Text messageText;
     public GameObject AdMobManager;
     public GameObject[] imageTables;
     [SerializeField] private GameObject playerFlyPiyo;//ピヨのオンオフ
@@ -86,7 +86,7 @@ public class GUIManager1 : MonoBehaviour {
         }*/
 
         InitializeImageTables();
-           messageText.enabled = true;
+           //messageText.enabled = true;
 
 	}
     

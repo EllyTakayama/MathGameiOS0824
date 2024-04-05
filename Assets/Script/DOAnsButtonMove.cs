@@ -8,8 +8,7 @@ public class DOAnsButtonMove : MonoBehaviour
     [SerializeField] private GameObject[] AnsButtons; // 移動させるButtonの配列
     public RectTransform AnsButtonParent;
     public Transform targetObject; // 移動の目標となるオブジェクト
-    public float initialMoveSpeed = 8.0f; // DOTweenによる移動スピードの初期値
-
+    public float initialMoveSpeed = 8.0f; // DOTweenによる移動スピード値が大きくなるほどゆっくり移動する
     // DOTweenによる移動スピードの増加量
     public float moveSpeedIncrease = 0.2f;
 

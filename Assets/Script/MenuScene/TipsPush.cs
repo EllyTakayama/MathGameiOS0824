@@ -125,9 +125,12 @@ public class TipsPush : MonoBehaviour
         // (int)targetTimeSpans[0].TotalSeconds
         //  TotalSecondsで全部で何秒かに変換
         //  この値はdouble型なので(int)をつけることでint型に変換する
-        LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, (int)targetTimeSpans[0].TotalSeconds, channelId, notificationIds[0]);
-        LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, (int)targetTimeSpans[1].TotalSeconds, channelId, notificationIds[1]);
-        LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, (int)targetTimeSpans[2].TotalSeconds, channelId, notificationIds[2]);
+        LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, 45, channelId, notificationIds[0]);
+        LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, 60, channelId, notificationIds[1]);
+        LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, 200, channelId, notificationIds[2]);
+        //LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, (int)targetTimeSpans[0].TotalSeconds, channelId, notificationIds[0]);
+        //LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, (int)targetTimeSpans[1].TotalSeconds, channelId, notificationIds[1]);
+        //LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, (int)targetTimeSpans[2].TotalSeconds, channelId, notificationIds[2]);
         LocalPushNotification.AddNotification(pushTitle, tipsTexts[3], 4, (int)targetTimeSpans[3].TotalSeconds, channelId, notificationIds[3]);
         LocalPushNotification.AddNotification(pushTitle, tipsTexts[4], 5, (int)targetTimeSpans[4].TotalSeconds, channelId, notificationIds[4]);
         //LocalPushNotification.AddNotification(pushTitle, pushTextList[5].ToString(), 6, (int)targetTimeSpans[5].TotalSeconds, channelId, notificationIds[5]);
@@ -154,7 +157,7 @@ public class TipsPush : MonoBehaviour
 
         //通知を送りたい時間を設定
         //今回は18時 0分 0秒
-        int targetPushHour = 18;
+        int targetPushHour = 15;
         int targetPushMinute = 0;
         int targetPushSecond = 0;
 
