@@ -29771,6 +29771,9 @@ MonoBehaviour:
   - {fileID: 7590027109710142145, guid: 8be3a105bbc0e4c21a7fc4012db04abc, type: 3}
   - {fileID: 8153809182805242090, guid: c662606bc47f9430ea5f0110517eeade, type: 3}
   - {fileID: 6667865049353907254, guid: f86de5df2963f4a72b1d2f199d40dabd, type: 3}
+  - {fileID: 7231371636490789093, guid: 6bd736e39b00c44ba95b1d088a6743fb, type: 3}
+  - {fileID: 1112926968711735622, guid: d336a16f94c6147189c66572ea3e51c6, type: 3}
+  - {fileID: 2096668453506205020, guid: 0d33335d472a1456ab790fc9d2a7cc78, type: 3}
   poolSizePerPrefab: 2
 --- !u!4 &1644493093
 Transform:

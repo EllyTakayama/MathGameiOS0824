@@ -27,7 +27,9 @@ public class TopLogin : MonoBehaviour
     [SerializeField] private DoCoinAnim _doCoinAnim;//coinを生成するスクリプト
     [SerializeField] private GameObject flash;
     [SerializeField] private DOflash _doFlash;//flashをアニメーションさせるスクリプト
-    
+    [SerializeField] private TextMeshProUGUI coinAddText;
+    [SerializeField] private DOGachaBall _gachaBall;
+    [SerializeField] private DoButton _doButton;//coinImageのアニメーション
     private LOGIN_TYPE judge_type;
 
     public void SetPiyoTop()
@@ -40,13 +42,16 @@ public class TopLogin : MonoBehaviour
     // Startメソッドの中で実行するコルーチン
     IEnumerator ActivateLoginBonusPanel()
     {
-        yield return new WaitForSeconds(0.4f); // 0.4秒待機する
+        yield return new WaitForSeconds(0.8f); // 0.8秒待機する
         piyo.GetComponent<PiyoMove>().StopPiyoAnimation();//ピヨのアニメーションを停止
         piyo.SetActive(false);
         loginBonusPanel.SetActive(true);
+        coinAddText.text = $"{GameManager.singleton.beforeTotalCoin}";
         SoundManager.instance.PlaySE13rewardButton();
+        _gachaBall.BallShakeLoop();//ピヨのアニメーション
         yield return new WaitForSeconds(0.4f); //待機する
         flash.SetActive(true);
+        _doButton.OnScale();//スケールを拡大アニメーション
         _doFlash.Flash18();//回転させる
         _doCoinAnim.SpawnRewardCoin();
         SoundManager.instance.PlaySE16GetCoin();
@@ -86,9 +91,11 @@ public class TopLogin : MonoBehaviour
                 {
                     print("初回ログイン");
                 }else{
-                    GameManager.singleton.LoadCoin();
-                    GameManager.singleton.beforeTotalCoin = GameManager.singleton.totalCoin;
-                    GameManager.singleton.totalCoin += 150;
+                    //GameManager.singleton.LoadCoin();
+                    GameManager.singleton.beforeTotalCoin = GameManager.singleton.coinNum;
+                    Debug.Log($"beforeTotalCoin_{GameManager.singleton.beforeTotalCoin}");
+                    GameManager.singleton.coinNum += 150;
+                    coinAddText.text = GameManager.singleton.beforeTotalCoin.ToString();
                     GameManager.singleton.CoinSave();
                     StartCoroutine(ActivateLoginBonusPanel()); // コルーチンを実行
                     print("今日のログボ"+todayDate);

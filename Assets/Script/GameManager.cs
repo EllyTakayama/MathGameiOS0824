@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
     public bool isAsendingOrder;//１から順に出題されるかどうか
     public int TestMondaiCount;//Mondai数
     public int coinNum;//コインの数
-    public int beforeCoin;//コインが増える前の数
+    public int beforeCoin;//LoginBonusでコインが増える前の数
     public int beforeTotalCoin;//TopLoging.csで使う
     public int totalCoin;//TopLoging.csで使う
     
@@ -70,8 +70,8 @@ public class GameManager : MonoBehaviour {
         //print("Admob初期化");
         LoadSceneCount();
         LoadOrderJun();
-        //LoadMathsType();//MathTypeをダウンロード
-        LoadCoin();//coinの枚数をロード
+        //LoadMathsType();//MathTypeをダウンロードButtonで分岐させるからやらない
+        LoadCoin();//coinの枚数をロードLoginManagerの方でやる
        //RequestReview();
        //Debug.Log("Sceneカウント"+SceneCount);
     }
@@ -127,6 +127,44 @@ public class GameManager : MonoBehaviour {
          SceneCount = ES3.Load<int>("SceneCount","SceneCount.es3",0);
          Debug.Log("ロードSceneCount"+SceneCount);
     }
+    /*
+    public void RequestReview()
+    {
+       
+#if UNITY_IOS && !UNITY_EDITOR
+        UnityEngine.iOS.Device.RequestStoreReview();
+#elif UNITY_ANDROID && !UNITY_EDITOR
+        StartCoroutine(RequestReviewAndroid());
+#else
+        Debug.LogWarning("This platform is not support RequestReview.");
+#endif
+        Debug.Log("レビューリクエスト呼び出し");
+    }
 
+#if UNITY_ANDROID
+
+    private IEnumerator RequestReviewAndroid()
+    {
+        var reviewManager = new Google.Play.Review.ReviewManager();
+        var requestFlowOperation = reviewManager.RequestReviewFlow();
+        yield return requestFlowOperation;
+        if (requestFlowOperation.Error != Google.Play.Review.ReviewErrorCode.NoError)
+        {
+            // Log error. For example, using requestFlowOperation.Error.ToString().
+            yield break;
+        }
+        var playReviewInfo = requestFlowOperation.GetResult();
+        var launchFlowOperation = reviewManager.LaunchReviewFlow(playReviewInfo);
+        yield return launchFlowOperation;
+        playReviewInfo = null; // Reset the object
+        if (launchFlowOperation.Error != Google.Play.Review.ReviewErrorCode.NoError)
+        {
+            // Log error. For example, using requestFlowOperation.Error.ToString().
+            yield break;
+        }
+    }
+    
+#endif
+*/
 
 }

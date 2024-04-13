@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class BirdOnItemManager : MonoBehaviour
 {
 public GameObject[] perches; // 止まり木オブジェクトの配列
-public GameObject[] birdObjects; // ピヨちゃんのGameObjectの配列
+//public GameObject[] birdObjects; // ピヨちゃんのGameObjectの配列
 public GameObject[] birdPrefabs;//バードプレファブ
-public Slider[] sliderPrefabs;//sliderのプレファブ
+//public Slider[] sliderPrefabs;//sliderのプレファブ
 private List<int> birdIndexList = new List<int>(); // 生成したbirdObjectPrefabのインデックスを格納するリスト
 [SerializeField] private GameObject _BirdOnItemPoint;//選択する親のアイテム
 [SerializeField] private int numBirds;//鳥の出現できる数
@@ -34,6 +34,7 @@ private int[] birdIndexSave = new int[] {0,0,0,0,0,0,0,0,0,0,0};//表示され�
 [SerializeField] private ParticleSystem[] foodParticle; //foodImageのオンオフのパーティクル
 private ParticleSystem instantiatedFoodParticle; //foodParticleのインスタンス用パーティクルシステム
 [SerializeField] private GameObject GachaPanel0;//foodParticleの親
+[SerializeField] private Sprite[] unkoImages;
 void Start()
 {
     LoadPerchIndex();
@@ -107,7 +108,7 @@ IEnumerator SetFoodBird()
         Debug.Log("foodParticle_Instantiate");
     }
     // delayBetweenPerches秒待ってからSetBirdsOnPerches()を呼び出す
-    yield return new WaitForSeconds(3.0f);
+    yield return new WaitForSeconds(2.6f);
     SetBirdsOnPerches();
     yield break;
 }
@@ -185,9 +186,7 @@ public void NumBirdsLoad()
 
     void SetBirdsOnPerches()
     {
-
         StartCoroutine((SetBirdOnPerchesCoroutine()));
-
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -206,14 +205,14 @@ public void NumBirdsLoad()
         {
             SoundManager.instance.PlaySE7End3();//ピヨ生成の効果音
             // ピヨちゃんのオブジェクトをランダムに選択
-            birdIndex = Random.Range(0, birdObjects.Length);
+            birdIndex = Random.Range(0, birdPrefabs.Length);
             birdIndexList.Add(birdIndex);//birdIndexListにbirdPrefabのIndexを追加する
             Debug.Log($"bridIndexList{i}_{birdIndexList[i]}");
             GameObject birdObject = Instantiate(birdPrefabs[birdIndex],_BirdOnItemPoint.transform); // ランダムなbirdObjectPrefabをInstantiate
             birdInstance.Add(birdObject); // 生成したbirdPrefabをリストbirdInstanceに追加
             // BirdSlider.csへの参照を渡す
             BirdSlider birdSlider = birdObject.GetComponent<BirdSlider>();
-            birdSlider.GetComponent<BirdSlider>().SetSliderReference();
+            //birdSlider.GetComponent<BirdSlider>().SetSliderReference();
             // 表示位置の設定
             float xPos = 0f;
             // numBirdsによって分岐

@@ -159,9 +159,7 @@ public class GameOverPanel : MonoBehaviour
         StartCoroutine(ChoiceGiftCoroutine(ButtonNum));
         RandomResult();//抽選でcoinの枚数を取得する
     }
-
-
-
+    
     IEnumerator ChoiceGiftCoroutine(int Button)
     {
         // Tweenアニメーションを停止する
@@ -180,13 +178,14 @@ public class GameOverPanel : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.4f);
-        _flyPiyo.SetActive(false);//ピヨを非表示にする
+        
         for (int i = 0; i < clouds.Length; i++)
         {
             clouds[i].SetActive(false);
             
         }
         SoundManager.instance.PlaySE19();//Panel出現の効果音パッ
+        _flyPiyo.SetActive(false);//ピヨを非表示にする
         _rewardPanel.SetActive(true);
         _rewardGiftBoxImage.sprite = _rewardGiftSprites[GiftImageIndex[Button]];
         _flashImage.SetActive(true);

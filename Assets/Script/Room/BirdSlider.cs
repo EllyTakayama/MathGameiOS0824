@@ -11,7 +11,7 @@ public class BirdSlider : MonoBehaviour
     private Coroutine increaseCoroutine; // Sliderの値を増加させるコルーチン
     [SerializeField] private SpawnUnko _spawnUnko;//SpawnUnko.cs参照
     [SerializeField] private int index;//何番目のインデックスか
-
+    [SerializeField] private DOBirdAnim _doBirdAnim;//Birdをアニメーションさせるスクリプト
 
     void Start()
     {
@@ -32,7 +32,7 @@ public class BirdSlider : MonoBehaviour
     public void OnBirdSpawnUnko()
     {
         // Sliderを取得する
-        slider = GetComponentInChildren<Slider>();;
+        //slider = GetComponentInChildren<Slider>();;
         
         // Sliderがnullでないことを確認する
         if (slider == null)
@@ -42,6 +42,8 @@ public class BirdSlider : MonoBehaviour
         // Sliderの値が1未満の場合は処理を終了
         if (slider.value < 1f)
         {
+            _doBirdAnim.BirdAnims();
+            SoundManager.instance.PlaySE3();//Unkoのサウンド音
             return;
         }
         _spawnUnko.SpawnUnkoByFoodType(transform.position);

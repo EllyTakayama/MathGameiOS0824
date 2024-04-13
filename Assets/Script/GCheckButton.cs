@@ -150,7 +150,7 @@ public class GCheckButton : MonoBehaviour {
         {
             //正解ならマル画像表示、正解数score,問題出題数countが1ずつ増えます
             //countが9超えたらGameOver画面に切り替え出題を終了予定です
-            SoundManager.instance.PlaySE0();//SoundManagerからPlaySE0を実行
+            SoundManager.instance.PlaySE21();//SoundManagerからPlaySE21子供の歓声を実行
       
             score++;
             GameManager.singleton.currentScore = score;
@@ -169,7 +169,7 @@ public class GCheckButton : MonoBehaviour {
             {
                 particleManager.PlayParticle(Random.Range(4, 7), AnsButtons[buttonIndex].transform.position);
                 // piyoの位置にパーティクルを再生する
-                particleManager.PlayParticle(Random.Range(0, 4), piyo.transform.position);
+                particleManager.PlayParticle(Random.Range(8, 11), piyo.transform.position);
             }
             //currentCoinCount.Value += 10;
             GameManager.singleton.coinNum += 10;
@@ -189,7 +189,7 @@ public class GCheckButton : MonoBehaviour {
                 particleManager.PlayParticle(7, AnsButtons[buttonIndex].transform.position);
                 SoundManager.instance.PlaySE20();//爆発音
                 // piyoの位置にパーティクルを再生する
-                particleManager.PlayParticle(Random.Range(8, 12), piyo.transform.position);
+                particleManager.PlayParticle(Random.Range(12, 15), piyo.transform.position);
             }
             _piyoDamage.DamageCall();//ピヨをダメージを受けさせる
 
@@ -241,6 +241,7 @@ public class GCheckButton : MonoBehaviour {
     }
     void DelayImageOff()
     {
+        
         _doQuesPanelRotate.InVisibleQuesPanel();
         doRenshuButtonAnim.InvisibleButton();
     }
@@ -261,6 +262,7 @@ public class GCheckButton : MonoBehaviour {
             print("count9isRenshu");
             return;
         }
+        //SoundManager.instance.StopPlaySE();//SEの効果音を停止
         GameMath.instance.MathsProblem();
     }
 

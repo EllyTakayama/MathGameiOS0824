@@ -2,14 +2,23 @@ using UnityEngine;
 using GoogleMobileAds.Api;
 using System;
 using UnityEngine.SceneManagement;
-
+//GoogleMobileAds v8.70
 public class AdMobInterstitial : MonoBehaviour
 {
-    //やること
-    //1.インタースティシャル広告IDの入力
-    //2.インタースティシャル起動設定　ShowAdMobInterstitial()を使う
+    //public GameObject AdLoadedStatus;//
+#if UNITY_ANDROID
+    //string _adUnitId = "ca-app-pub-3940256099942544/1033173712";//TestAndroidのインタースティシャル広告ID
+    string _adUnitId = "ca-app-pub-7439888210247528/3791046630";//ここにAndroidのインタースティシャル広告IDを入力
 
-    private InterstitialAd interstitial;//InterstitialAd型の変数interstitialを宣言　この中にインタースティシャル広告の情報が入る
+#elif UNITY_IPHONE
+    //string _adUnitId = "ca-app-pub-3940256099942544/4411468910";//TestiOSのインタースティシャル広告ID
+    string _adUnitId = "ca-app-pub-7439888210247528/9652850584";//ここにiOSのインタースティシャル広告IDを入力
+
+#else
+        string _adUnitId = "unexpected_platform";
+#endif
+
+    private InterstitialAd _interstitialAd;//InterstitialAd型の変数interstitialを宣言　この中にインタースティシャル広告の情報が入る
 
     private void Start()
     {
@@ -21,11 +30,10 @@ public class AdMobInterstitial : MonoBehaviour
     //ボタンなどに割付けして使用
     public void ShowAdMobInterstitial()
     {
-        //広告の読み込みが完了していたら広告表示
-        if (interstitial.IsLoaded() == true)
+        if (_interstitialAd != null && _interstitialAd.CanShowAd())
         {
-            interstitial.Show();
-            Debug.Log("広告表示");
+            _interstitialAd.Show();
+            //Debug.Log("インタースティシャル広告表示");
         }
         else
         {
@@ -33,69 +41,111 @@ public class AdMobInterstitial : MonoBehaviour
             Debug.Log("広告読み込み未完了");
         }
     }
+    public void DestroyAd()
+    {
+        if (_interstitialAd != null)
+        {
+            Debug.Log("Destroying interstitial ad.");
+            _interstitialAd.Destroy();
+            _interstitialAd = null;
+        }
 
+        // Inform the UI that the ad is not ready.
+        //AdLoadedStatus?.SetActive(false);
+    }
 
+    /// <summary>
+    /// Logs the ResponseInfo.
+    /// </summary>
+    public void LogResponseInfo()
+    {
+        if (_interstitialAd != null)
+        {
+            var responseInfo = _interstitialAd.GetResponseInfo();
+            UnityEngine.Debug.Log(responseInfo);
+        }
+    }
+    
     //インタースティシャル広告を読み込む関数
     private void RequestInterstitial()
-    {
-        //AndroidとiOSで広告IDが違うのでプラットフォームで処理を分けます。
-        // 参考
-        //【Unity】AndroidとiOSで処理を分ける方法
-        // https://marumaro7.hatenablog.com/entry/platformsyoriwakeru
+    { //インタースティシャル広告初期化
+        if (_interstitialAd != null)
+        {
+            DestroyAd();
+        }
+        Debug.Log("Loading interstitial ad.");
+        var adRequest = new AdRequest();
 
-#if UNITY_ANDROID
-    //string adUnitId = "ca-app-pub-3940256099942544/1033173712";//TestAndroidのインタースティシャル広告ID
-    string adUnitId = "ca-app-pub-7439888210247528/3791046630";//ここにAndroidのインタースティシャル広告IDを入力
+        // Send the request to load the ad.
+        InterstitialAd.Load(_adUnitId, adRequest, (InterstitialAd ad, LoadAdError error) =>
+        {
+            // If the operation failed with a reason.
+            if (error != null)
+            {
+                Debug.LogError("Interstitial ad failed to load an ad with error : " + error);
+                return;
+            }
+            // If the operation failed for unknown reasons.
+            // This is an unexpected error, please report this bug if it happens.
+            if (ad == null)
+            {
+                Debug.LogError("Unexpected error: Interstitial load event fired with null ad and null error.");
+                return;
+            }
 
-#elif UNITY_IPHONE
-    //string adUnitId = "ca-app-pub-3940256099942544/4411468910";//TestiOSのインタースティシャル広告ID
-    string adUnitId = "ca-app-pub-7439888210247528/9652850584";//ここにiOSのインタースティシャル広告IDを入力
+            // The operation completed successfully.
+            Debug.Log("Interstitial ad loaded with response : " + ad.GetResponseInfo());
+            _interstitialAd = ad;
 
-#else
-        string adUnitId = "unexpected_platform";
-#endif
+            // Register to ad events to extend functionality.
+            RegisterEventHandlers(ad);
 
-        //インタースティシャル広告初期化
-        interstitial = new InterstitialAd(adUnitId);
-
-
-        //InterstitialAd型の変数 interstitialの各種状態 に関数を登録
-        interstitial.OnAdLoaded += HandleOnAdLoaded;//interstitialの状態が　インタースティシャル読み込み完了　となった時に起動する関数(関数名HandleOnAdLoaded)を登録
-        interstitial.OnAdFailedToLoad += HandleOnAdFailedToLoad;//interstitialの状態が　インタースティシャル読み込み失敗 　となった時に起動する関数(関数名HandleOnAdFailedToLoad)を登録
-        interstitial.OnAdClosed += HandleOnAdClosed;//interstitialの状態が  インタースティシャル表示終了　となった時に起動する関数(HandleOnAdClosed)を登録
-
-
-        //リクエストを生成
-        AdRequest request = new AdRequest.Builder().Build();
-        //インタースティシャルにリクエストをロード
-        interstitial.LoadAd(request);
+            // Inform the UI that the ad is ready.
+            //AdLoadedStatus?.SetActive(true);
+            });
     }
 
-    //インタースティシャル読み込み完了 となった時に起動する関数
-    public void HandleOnAdLoaded(object sender, EventArgs args)
-    {        
-        Debug.Log("インタースティシャル読み込み完了");
-    }
-
-    //インタースティシャル読み込み失敗 となった時に起動する関数
-    public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
+    
+    private void RegisterEventHandlers(InterstitialAd ad)
     {
-        Debug.Log("インタースティシャル読み込み失敗" + args.LoadAdError);//args.Message:エラー内容 
-    }
-
-
-    //インタースティシャル表示終了 となった時に起動する関数
-    public void HandleOnAdClosed(object sender, EventArgs args)
-    {
-        Debug.Log("インタースティシャル広告終了");
-
-        //インタースティシャル広告は使い捨てなので一旦破棄
-        interstitial.Destroy();
-
-        //インタースティシャル再読み込み開始
-        RequestInterstitial();
-        Debug.Log("インタースティシャル広告再読み込み");
-        SceneManager.LoadScene("Menu");
+        // Raised when the ad is estimated to have earned money.
+        ad.OnAdPaid += (AdValue adValue) =>
+        {
+            Debug.Log(String.Format("Interstitial ad paid {0} {1}.",
+                adValue.Value,
+                adValue.CurrencyCode));
+        };
+        // Raised when an impression is recorded for an ad.
+        ad.OnAdImpressionRecorded += () =>
+        {
+            Debug.Log("Interstitial ad recorded an impression.");
+        };
+        // Raised when a click is recorded for an ad.
+        ad.OnAdClicked += () =>
+        {
+            Debug.Log("Interstitial ad was clicked.");
+        };
+        // Raised when an ad opened full screen content.
+        ad.OnAdFullScreenContentOpened += () =>
+        {
+            Debug.Log("Interstitial ad full screen content opened.");
+        };
+        // Raised when the ad closed full screen content.
+        ad.OnAdFullScreenContentClosed += () =>
+        {
+            _interstitialAd.Destroy();
+            //インタースティシャル再読み込み開始
+            RequestInterstitial();
+            Debug.Log("インタースティシャル広告再読み込み");
+            Debug.Log("Interstitial ad full screen content closed.");
+        };
+        // Raised when the ad failed to open full screen content.
+        ad.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            Debug.LogError("Interstitial ad failed to open full screen content with error : "
+                           + error);
+            RequestInterstitial();
+        };
     }
 
 }

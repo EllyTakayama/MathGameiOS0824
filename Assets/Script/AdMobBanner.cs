@@ -5,99 +5,173 @@ using System;
 using GoogleMobileAds.Api;
 
 public class AdMobBanner : MonoBehaviour
-{//やること
+{
+    //public GameObject AdLoadedStatus;広告の準備状態を示すUI要素
+#if UNITY_ANDROID
+    //string _adUnitId = "ca-app-pub-3940256099942544/6300978111";//テストAndroidのバナーID
+    string _adUnitId = "ca-app-pub-7439888210247528/5761220963";//ここにAndroidのバナーIDを入力
+        
+
+#elif UNITY_IPHONE
+        //string _adUnitId = "ca-app-pub-3940256099942544/2934735716";//テストiOSのバナーID
+        string _adUnitId = "ca-app-pub-7439888210247528/9106055676";//ここにiOSのバナーIDを入力
+
+#else
+        string _adUnitId = "unexpected_platform";
+#endif//やること
     //1.バナー広告IDを入力
     //2.バナーの表示位置　(現状表示位置は下になっています。)
     //3.バナー表示のタイミング (現状 起動直後になっています。)
 
-    private BannerView bannerView;//BannerView型の変数bannerViewを宣言　この中にバナー広告の情報が入る
+    private BannerView _bannerView;//BannerView型の変数bannerViewを宣言　この中にバナー広告の情報が入る
 
 
     //シーン読み込み時からバナーを表示する
     //最初からバナーを表示したくない場合はこの関数を消してください。
     private void Start()
     {
-        RequestBanner();//アダプティブバナーを表示する関数 呼び出し
+        LoadAd(); //アダプティブバナーを表示する関数 呼び出し
     }
-
-    //ボタン等に割り付けて使用
-    //バナーを表示する関数
-    public void BannerStart()
-    {
-        //RequestBanner();//アダプティブバナーを表示する関数 呼び出し       
-    }
-
-    //ボタン等に割り付けて使用
-    //バナーを削除する関数
-    public void BannerDestroy()
-    {
-        bannerView.Destroy();//バナー削除
-    }
-
-    //アダプティブバナーを表示する関数
-    private void RequestBanner()
-    {
-        //AndroidとiOSで広告IDが違うのでプラットフォームで処理を分けます。
-        // 参考
-        //【Unity】AndroidとiOSで処理を分ける方法
-        // https://marumaro7.hatenablog.com/entry/platformsyoriwakeru
-
-#if UNITY_ANDROID
-    //string adUnitId = "ca-app-pub-3940256099942544/6300978111";//テストAndroidのバナーID
-    string adUnitId = "ca-app-pub-7439888210247528/5761220963";//ここにAndroidのバナーIDを入力
-        
-
-#elif UNITY_IPHONE
-        //string adUnitId = "ca-app-pub-3940256099942544/2934735716";//テストiOSのバナーID
-        string adUnitId = "ca-app-pub-7439888210247528/9106055676";//ここにiOSのバナーIDを入力
-
-#else
-        string adUnitId = "unexpected_platform";
-#endif
-
-        // 新しい広告を表示する前にバナーを削除
-        if (bannerView != null)//もし変数bannerViewの中にバナーの情報が入っていたら
+public void CreateBannerView()
         {
-            bannerView.Destroy();//バナー削除
+            Debug.Log("Creating banner view.");
+
+            // If we already have a banner, destroy the old one.
+            if(_bannerView != null)
+            {
+                DestroyAd();
+            }
+
+            // Create a 320x50 banner at top of the screen.
+            _bannerView = new BannerView(_adUnitId, AdSize.Banner, AdPosition.Bottom);
+
+            // Listen to events the banner may raise.
+            ListenToAdEvents();
+
+            Debug.Log("Banner view created.");
         }
 
-        //現在の画面の向き横幅を取得しバナーサイズを決定
-        AdSize adaptiveSize =
-                AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
+        /// <summary>
+        /// Creates the banner view and loads a banner ad.
+        /// </summary>
+        public void LoadAd()
+        {
+            // Create an instance of a banner view first.
+            if(_bannerView == null)
+            {
+                CreateBannerView();
+            }
 
+            // Create our request used to load the ad.
+            var adRequest = new AdRequest();
 
-        //バナーを生成 new BannerView(バナーID,バナーサイズ,バナー表示位置)
-        bannerView = new BannerView(adUnitId, adaptiveSize, AdPosition.Bottom);//バナー表示位置は
-                                                                               //画面上に表示する場合：AdPosition.Top
-                                                                               //画面下に表示する場合：AdPosition.Bottom
+            // Send the request to load the ad.
+            Debug.Log("Loading banner ad.");
+            _bannerView.LoadAd(adRequest);
+        }
 
+        /// <summary>
+        /// Shows the ad.
+        /// </summary>
+        public void ShowAd()
+        {
+            if (_bannerView != null)
+            {
+                Debug.Log("Showing banner view.");
+                _bannerView.Show();
+            }
+        }
 
-        //BannerView型の変数 bannerViewの各種状態 に関数を登録
-        bannerView.OnAdLoaded += HandleAdLoaded;//bannerViewの状態が バナー表示完了 となった時に起動する関数(関数名HandleAdLoaded)を登録
-        bannerView.OnAdFailedToLoad += HandleAdFailedToLoad;//bannerViewの状態が バナー読み込み失敗 となった時に起動する関数(関数名HandleAdFailedToLoad)を登録
+        /// <summary>
+        /// Hides the ad.
+        /// </summary>
+        public void HideAd()
+        {
+            if (_bannerView != null)
+            {
+                Debug.Log("Hiding banner view.");
+                _bannerView.Hide();
+            }
+        }
 
+        /// <summary>
+        /// Destroys the ad.
+        /// When you are finished with a BannerView, make sure to call
+        /// the Destroy() method before dropping your reference to it.
+        /// </summary>
+        public void DestroyAd()
+        {
+            if (_bannerView != null)
+            {
+                Debug.Log("Destroying banner view.");
+                _bannerView.Destroy();
+                _bannerView = null;
+            }
+            // Inform the UI that the ad is not ready.
+            //AdLoadedStatus?.SetActive(false);
+        }
 
-        //リクエストを生成
-        AdRequest adRequest = new AdRequest.Builder().Build();
+        /// <summary>
+        /// Logs the ResponseInfo.
+        /// </summary>
+        public void LogResponseInfo()
+        {
+            if (_bannerView != null)
+            {
+                var responseInfo = _bannerView.GetResponseInfo();
+                if (responseInfo != null)
+                {
+                    UnityEngine.Debug.Log(responseInfo);
+                }
+            }
+        }
 
-        //広告表示
-        bannerView.LoadAd(adRequest);
+        /// <summary>
+        /// Listen to events the banner may raise.
+        /// </summary>
+        private void ListenToAdEvents()
+        {
+            // Raised when an ad is loaded into the banner view.
+            _bannerView.OnBannerAdLoaded += () =>
+            {
+                Debug.Log("Banner view loaded an ad with response : "
+                    + _bannerView.GetResponseInfo());
+
+                // Inform the UI that the ad is ready.
+                //AdLoadedStatus?.SetActive(true);
+            };
+            // Raised when an ad fails to load into the banner view.
+            _bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>
+            {
+                Debug.LogError("Banner view failed to load an ad with error : " + error);
+            };
+            // Raised when the ad is estimated to have earned money.
+            _bannerView.OnAdPaid += (AdValue adValue) =>
+            {
+                Debug.Log(String.Format("Banner view paid {0} {1}.",
+                    adValue.Value,
+                    adValue.CurrencyCode));
+            };
+            // Raised when an impression is recorded for an ad.
+            _bannerView.OnAdImpressionRecorded += () =>
+            {
+                Debug.Log("Banner view recorded an impression.");
+            };
+            // Raised when a click is recorded for an ad.
+            _bannerView.OnAdClicked += () =>
+            {
+                Debug.Log("Banner view was clicked.");
+            };
+            // Raised when an ad opened full screen content.
+            _bannerView.OnAdFullScreenContentOpened += () =>
+            {
+                Debug.Log("Banner view full screen content opened.");
+            };
+            // Raised when the ad closed full screen content.
+            _bannerView.OnAdFullScreenContentClosed += () =>
+            {
+                Debug.Log("Banner view full screen content closed.");
+            };
+        }
     }
 
-
-    #region Banner callback handlers
-
-    //バナー表示完了 となった時に起動する関数
-    public void HandleAdLoaded(object sender, EventArgs args)
-    {
-        Debug.Log("バナー表示完了");
-    }
-
-    //バナー読み込み失敗 となった時に起動する関数
-    public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
-    {
-        Debug.Log("バナー読み込み失敗" + args.LoadAdError);//:エラー内容        
-    }
-
-    #endregion
-}

@@ -125,9 +125,9 @@ public class TipsPush : MonoBehaviour
         // (int)targetTimeSpans[0].TotalSeconds
         //  TotalSecondsで全部で何秒かに変換
         //  この値はdouble型なので(int)をつけることでint型に変換する
-        LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, 45, channelId, notificationIds[0]);
-        LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, 60, channelId, notificationIds[1]);
-        LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, 200, channelId, notificationIds[2]);
+        LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, 200, channelId, notificationIds[0]);
+        LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, 600, channelId, notificationIds[1]);
+        LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, 3600, channelId, notificationIds[2]);
         //LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, (int)targetTimeSpans[0].TotalSeconds, channelId, notificationIds[0]);
         //LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, (int)targetTimeSpans[1].TotalSeconds, channelId, notificationIds[1]);
         //LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, (int)targetTimeSpans[2].TotalSeconds, channelId, notificationIds[2]);

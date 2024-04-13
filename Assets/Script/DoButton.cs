@@ -7,6 +7,7 @@ using Sirenix.OdinInspector; // Odin Inspectorを追加
 
 public class DoButton : MonoBehaviour
 {
+    //シリアライズできるのでInspectorからGameObjectごとに値を変更できる
     [SerializeField] private Vector3 defaultScale;
     [SerializeField] private RectTransform buttonRectTransform;
     [SerializeField] private float animationDuration = 0.7f;
@@ -19,7 +20,8 @@ public class DoButton : MonoBehaviour
         defaultScale = transform.localScale;
         //StartRewardButtonAnimation();
     } 
-   
+    
+    [Button("OnButtonClick")]
     public void OnButtonClick()
     {
         transform.localScale = defaultScale;
@@ -27,8 +29,17 @@ public class DoButton : MonoBehaviour
             .SetLink(gameObject);
         //Debug.Log("ボタン！");
     }
-
-    [Button("OnButtonClick")]
+    [Button("OnScale")]
+    public void OnScale()
+    {
+        // オブジェクトのスケールをリセット
+        transform.localScale = defaultScale;
+    
+        // Tweenアニメーションでスケール変更し、ループを設定
+        transform.DOScale(scaleFactor, animationDuration)
+            .SetLink(gameObject)
+            .SetLoops(-1,LoopType.Yoyo); // 無限ループヨーヨータイプ
+    }
     //1.4倍、0.8秒かけて、パンチは1回、弾力強め
     public void OnAnswerButtonClick()
     {
@@ -44,9 +55,9 @@ public class DoButton : MonoBehaviour
         Debug.Log("DoButton");
       transform.DOScale(Vector3.one * scaleFactor, animationDuration)
                 .SetLoops(-1, LoopType.Yoyo); // ループして元のサイズに戻る
-     
     }
     //アタッチされたGameObjectを規定のSequenceでアニメーションをさせる
+    [Button("StartRewardButtonAnimation")]
     public void StartRewardButtonAnimation()
     {
         transform.localScale = Vector3.one;

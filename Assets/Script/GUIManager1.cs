@@ -176,7 +176,7 @@ public class GUIManager1 : MonoBehaviour {
             AdMobManager.GetComponent<AdMobInterstitial>().ShowAdMobInterstitial();
             return;
         }
-        SoundManager.instance.PlayBGM("ModeMenuPanel");
+        //SoundManager.instance.PlayBGM("ModeMenuPanel");
         SceneManager.LoadScene("Menu");
     }
     

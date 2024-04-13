@@ -84,8 +84,13 @@ public class SoundManager : MonoBehaviour
  * 13ファンファーレ 14風船が割れる音 15ガチャを回す音 16コインをゲットする音ちょい長い
  * 17 コインを1かいゲットする音 18ジャン 19jingleパッ 20爆発音
  */
+    public void StopPlaySE()
+    {//効果音を止める
+        audioSourceSE.Stop();
+    }
     public void PlaySE0()
     {
+        audioSourceSE.Stop();
         audioSourceSE.PlayOneShot(audioClipSE[0]);
     }//正解だとなる
 

@@ -23,9 +23,30 @@ public class DOflash : MonoBehaviour
         RotateMode.FastBeyond360)
             .SetEase(Ease.Linear)//途切れのない回転のため
         .SetLoops(-1)
-        .SetLink(gameObject)
-        ;  
-        
+        .SetLink(gameObject);  
+    }
+    //練習・テストの初期値をリセットするメソッド
+    [Button("-FlashRotate実行")]　//←[Button("ラベル名")]
+    public void FlashRotate(){
+        //transform.eulerAngles = new Vector3(0, 0, 0);
+        transform.DOLocalRotate(new Vector3(0, 0, -360f), 6f,
+                RotateMode.FastBeyond360)
+            .SetEase(Ease.Linear)//途切れのない回転のため
+            .SetLoops(-1)
+            .SetLink(gameObject);  
+    }
+    
+    // y軸に360度回転するメソッド
+    [Button("RotateY実行")]　//←[Button("ラベル名")]
+    public void FlashRotateY()
+    {
+        transform.DOLocalRotate(new Vector3(0, 360f, 0), 1.8f,
+                RotateMode.FastBeyond360)
+            .SetEase(Ease.Linear) //途切れのない回転のため
+            .SetLink(gameObject)
+            .SetLoops(-1)
+            .SetLink(gameObject);
+        //Debug.Log("y軸に360度回転");
     }
     public void Flash360(){
         transform.DOLocalRotate(new Vector3(0, 0, 360f), 1.8f,
