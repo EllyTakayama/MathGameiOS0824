@@ -9,15 +9,14 @@ public class EndImage : MonoBehaviour
 {
     public GameObject endImage;
     public Text endText;
-    public GameObject foodGeneratorCount;
+    //public GameObject foodGeneratorCount;
     public GameObject RewardButton;
     public GameObject pickSkullEffect; 
     public GameObject gameOverPanel;
     public GameObject AdMobManager;
     public GameObject rainbowImage;
+    public GameObject gameOverText;//coinの文字表示する
     
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +43,8 @@ public class EndImage : MonoBehaviour
         .SetEase(Ease.OutBack)
         .OnComplete(() => {
             rainbowImage.GetComponent<DOTextBounceAnim>().TextBounce();
+            gameOverText.SetActive(true);
+            gameOverText.GetComponent<DOTextBounceAnim>().TextBounce();
             SoundManager.instance.PlaySE17CoinOneceGet();//コインの音をならす
         });
         

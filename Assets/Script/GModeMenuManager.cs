@@ -146,7 +146,7 @@ public class GModeMenuManager : MonoBehaviour
                     GameManager.singleton.currentMode = 12;
                     break;
                }
-
+       Debug.Log($"Button_{buttonname}");
        StartCoroutine(SetGame());
     }
 
@@ -162,6 +162,5 @@ public class GModeMenuManager : MonoBehaviour
         SoundManager.instance.PlayBGM("Test");
         _doGStartPanelRotate.DeleyRotetePanel();//スタートパネルからの出題
     }
-
     }
 

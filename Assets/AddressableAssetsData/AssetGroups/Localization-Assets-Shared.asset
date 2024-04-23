@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-Assets-Shared
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-Assets-Shared
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 9d60af70b8eda4d6ba4169f3c5cd1871
+  m_SerializeEntries:
+  - m_GUID: 479429784737e407ba8a54cb4aee459c
+    m_Address: Assets/Localization/textKey Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78a22f55a3ba04a7fab9d7decb62c061
+    m_Address: Assets/Localization/MenuScene Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95e01a0994a3d4ee081b7f84826912f4
+    m_Address: Assets/Localization/FontAssetTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e188e0aab6393493881b812bf24765e5
+    m_Address: BIZ-UDGothicB SDF
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 37ba2aca8b3c642fc86814c85ed224be
+    m_Address: Assets/Localization/wakuwakuInTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 362fa39bd03cd443c8523ef3a102af13
+    m_Address: mini-wakuwaku SDF
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b2d2c363bf204366844a33bb07604ea
+    m_Address: Assets/Localization/GachaScene Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88e89b9b3b2704d458b4939c5bc8296f
+    m_Address: BIZUDPGothic-Bold
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 46cf73c22ff75425389e66455c897dec
+    m_Address: Assets/Localization/RenshuuScene Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: ba908bd7692554de39b5a442c39b6594, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6cbc3d36e7ab948ce8e476a17b47e9bf, type: 2}
+    - {fileID: 11400000, guid: c061426870e2340dba0faaf6833b054a, type: 2}

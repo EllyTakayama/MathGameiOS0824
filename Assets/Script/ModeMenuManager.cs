@@ -30,6 +30,8 @@ public class ModeMenuManager : MonoBehaviour
      public GameObject AdMobManager;
      [SerializeField] private MulToggle _mulToggle;//トグルのオンオフの操作
      [SerializeField] private TopLogin _topLogin;//ログインボーナスのスクリプトの取得
+     [SerializeField] private AdMobBanner _adMobBanner;//シーン移動時にバナー削除のため
+     [SerializeField] private AdMobInterstitial _adMobInterstitial;//シーン移動時のインタースティシャル削除のため
     
 
     //tagの位置で正誤判定している
@@ -53,9 +55,15 @@ public class ModeMenuManager : MonoBehaviour
         GameManager.singleton.SceneCount==50||GameManager.singleton.SceneCount==70||
         GameManager.singleton.SceneCount==100||GameManager.singleton.SceneCount==130){
         AdMobManager.GetComponent<StoreReviewManager>().RequestReview();
-        Debug.Log("レビュー画面表示");
+        //Debug.Log("レビュー画面表示");
         }
         
+    }
+    //AdMob関連削除のメソッド
+    public void AdMobDestroy()
+    {
+        _adMobBanner.DestroyAd();
+        _adMobInterstitial.DestroyAd();
     }
     
     //Renshuuシーンへ移動してから段を選ばせる
@@ -68,6 +76,7 @@ public class ModeMenuManager : MonoBehaviour
         // ここに必要な処理を追加する
         // 例：SceneManager.LoadScene("Game");
         DOTween.KillAll();
+        AdMobDestroy();//AdMob関連を削除
         SoundManager.instance.PlayBGM("Renshuu");
         SceneManager.LoadScene("Renshuu");
     }
@@ -81,6 +90,7 @@ public class ModeMenuManager : MonoBehaviour
         // ここに必要な処理を追加する
         // 例：SceneManager.LoadScene("Game");
         DOTween.KillAll();
+        AdMobDestroy();//AdMob関連を削除
         SoundManager.instance.PlayBGM("ModeMenuPanel");
         SceneManager.LoadScene("Game");
     }
@@ -96,6 +106,7 @@ public class ModeMenuManager : MonoBehaviour
     public void SelectTable()//九九パネル表示
     {
         SoundManager.instance.PlaySEButton();
+        AdMobDestroy();//AdMob関連を削除
         DOTween.KillAll();
         SceneManager.LoadScene("Kuku");
     }
@@ -103,6 +114,7 @@ public class ModeMenuManager : MonoBehaviour
     {
         SoundManager.instance.PlaySEButton();
         DOTween.KillAll();
+        AdMobDestroy();//AdMob関連を削除
         SceneManager.LoadScene("GachaScene");
     }
 

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4db626ad063b13545924a9839ac5fa83, type: 3}
+  m_Name: wakuwakuInTable
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: 37ba2aca8b3c642fc86814c85ed224be, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: b8363c2da6d424d36a48a50190ace6c3, type: 2}
+  - {fileID: 11400000, guid: 123c0803e9e4c495c9f5b639b3cf6500, type: 2}
+  - {fileID: 11400000, guid: 535f3171fad0d4549a5a456762a31c3e, type: 2}
+  - {fileID: 11400000, guid: fce34f645812041b0850aff62808bd7f, type: 2}
+  m_Extensions: []
+  m_Group: Asset Table
+  references:
+    version: 2
+    RefIds: []

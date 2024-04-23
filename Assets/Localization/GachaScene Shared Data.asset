@@ -1,0 +1,212 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: GachaScene Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: GachaScene
+  m_TableCollectionNameGuidString: 4b2d2c363bf204366844a33bb07604ea
+  m_Entries:
+  - m_Id: 4941035855872
+    m_Key: p1_gachaButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168492728320
+    m_Key: getNekop_nameText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922624
+    m_Key: p2_Panel2Text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922625
+    m_Key: p3_Panel3Text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922626
+    m_Key: NekoName_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922627
+    m_Key: NekoName_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922628
+    m_Key: NekoName_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922629
+    m_Key: NekoName_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922630
+    m_Key: NekoName_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922631
+    m_Key: NekoName_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922632
+    m_Key: NekoName_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116928
+    m_Key: NekoName_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116929
+    m_Key: NekoName_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116930
+    m_Key: NekoName_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116931
+    m_Key: NekoName_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116932
+    m_Key: NekoName_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116933
+    m_Key: NekoName_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116934
+    m_Key: NekoName_13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116935
+    m_Key: NekoName_14
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116936
+    m_Key: NekoName_15
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116937
+    m_Key: NekoName_16
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116938
+    m_Key: NekoName_17
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116939
+    m_Key: ItemName_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116940
+    m_Key: ItemName_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116941
+    m_Key: ItemName_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116942
+    m_Key: ItemName_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116943
+    m_Key: ItemName_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116944
+    m_Key: ItemName_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116945
+    m_Key: ItemName_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116946
+    m_Key: ItemName_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116947
+    m_Key: ItemName_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116948
+    m_Key: ItemName_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116949
+    m_Key: ItemName_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116950
+    m_Key: ItemName_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116951
+    m_Key: ItemName_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116952
+    m_Key: ItemName_13
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116953
+    m_Key: ItemName_14
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116954
+    m_Key: ItemName_15
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116955
+    m_Key: ItemName_16
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116956
+    m_Key: ItemName_17
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116957
+    m_Key: Set
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116958
+    m_Key: noSet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793097020628992
+    m_Key: rewardText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793097024823296
+    m_Key: rewardText0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793097024823297
+    m_Key: AdButtonText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793097024823298
+    m_Key: af_rewardText
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 100948765732765763
+  references:
+    version: 2
+    RefIds:
+    - rid: 100948765732765763
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1713416361474

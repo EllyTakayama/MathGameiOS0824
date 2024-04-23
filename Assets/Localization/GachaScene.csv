@@ -1,0 +1,138 @@
+Key,Id,Chinese (Simplified)(zh-Hans),English(en),Japanese(ja),Korean(ko)
+p1_gachaButton,4941035855872,"150 枚金币
+您可以做一次。","150 coins.
+You can spin it once.","コイン150まいで
+1回まわせるよ","동전 150개
+1회 돌릴 수 있어요"
+getNekop_nameText,0,最坏的情况是什么？,What will it be?,なにが でるかな？,무엇이 나올까?
+p2_Panel2Text,0,吧椅,perch,とまりぎ,멈춤목
+p3_Panel3Text,0,鱼饵,feed,えさ,먹이
+NekoName_0,0,"基础
+停止树","Basic
+Stopping Tree","ベーシックな
+止まり木","기본적인
+받침대"
+NekoName_1,0,"柠檬冰淇淋
+鲈鱼","Lemon Ice Cream
+perch","レモンアイスの
+止まり木","레몬 아이스
+멈춤목"
+NekoName_2,0,"菠萝冰淇淋
+鲈鱼","Pineapple Ice Cream
+perch","パインアイスの
+止まり木","파인애플 아이스
+멈춤목"
+NekoName_3,0,"棒糖
+鲈鱼","Stick candy
+perch","スティックキャンディの
+止まり木","스틱 캔디의
+멈춤목"
+NekoName_4,0,"草莓糖
+鲈鱼","Strawberry candy
+perch","いちごあめの
+止まり木",딸기 사탕
+NekoName_5,0,"冰镇黄瓜
+鲈鱼","chilled cucumber
+perch","ひやしきゅうりの
+止まり木","히야시 오이의
+멈춤목"
+NekoName_6,0,"法兰克福
+栖木","Frankfurt's
+perch","フランクフルトの
+止まり木","프랑크푸르트의
+정거장"
+NekoName_7,0,"巧克力香蕉
+鲈鱼","Chocolate Banana
+perch","チョコバナナの
+止まり木","초코바나나
+멈춤목"
+NekoName_8,0,"食指
+栖木","of a human fingernail
+perch","人さしゆびの
+止まり木","사람 손아귀의
+지렛대"
+NekoName_9,0,饵,plain feed,ふつうのエサ,일반 먹이
+NekoName_10,0,浅蓝饲料,Pale blue feed,みずいろのエサ,미즈이로의 먹이
+NekoName_11,0,粉红色诱饵,Pink feed,ピンクのエサ,핑크 미끼
+NekoName_12,0,绿色饲料,Green feed,みどりのエサ,미도리 미끼
+NekoName_13,0,村上的食物,Purple feed,むらさきのエサ,무라사키의 먹이
+NekoName_14,0,黄色诱饵,Yellow feed,イエローのエサ,옐로우 미끼
+NekoName_15,0,聊天的诱饵,Feed to get chatty,おしゃべりになるエサ,수다쟁이 미끼
+NekoName_16,0,金饵,Golden feed,黄金のエサ,황금 미끼
+NekoName_17,0,彩虹诱饵,Rainbow feed,レインボーのエサ,무지개 먹이
+ItemName_0,0,"简单而平静
+能与朋友沟通","Simple but calm
+be able to communicate with one's neighbors","シンプルだけどおちつく
+1わとまれる","심플하지만 차분한
+1정돈된 느낌"
+ItemName_1,0,"清新可爱
+可栖息四只小鸟。","Fresh and cute
+4 birds can perch","さわやかでかわいい
+4わとまれる","상쾌하고 귀여운
+4마리가 멈춘다"
+ItemName_2,0,"果味栖架
+可栖息四只鸟","Fruity perches
+4 birds can perch","フルーティーな止まり木
+4わとまれる","프루티한 멈춤나무
+4마리의 새가 멈춘다"
+ItemName_3,0,"最多可栖息五只鸟
+长栖木","Can perch up to 5 birds
+Long perch","5わまでとまれる
+長い止まり木","5마리까지 멈출 수 있는
+긴 멈춤목"
+ItemName_4,0,"非常受欢迎的草莓糖果风格
+四只鸟可以栖息","Very popular strawberry candy style
+4 birds can perch","大人気のいちごあめふう
+4わとまれる","인기 만점인 이치고아메카제
+4마리가 멈춘다"
+ItemName_5,0,"新鲜鲈鱼
+可栖息三只鸟","fresh perch
+Three-part harmony","みずみずしい止まり木
+3わとまれる","싱그러운 정거장
+3가닥이 멈춘다"
+ItemName_6,0,"色彩鲜艳的鲈鱼
+可栖息五只鸟","high quality perch
+5 birds can perch","こうばしい止まり木
+5わとまれる","고바야시 멈추는 나무
+5마리의 새가 멈춘다"
+ItemName_7,0,"可爱的巧克力香蕉式栖木
+只能让一只鸟栖息","Cute chocolate banana style perch
+Only one bird can perch.","かわいいチョコバナナふうの止まり木
+1わだけとまれる","귀여운 초코바나나풍의 멈춤나무
+한 마리만 멈출 수 있다"
+ItemName_8,0,"手绘栖架
+可栖息五只鸟","hand-held perch
+5 birds can perch","手のりふうの止まり木
+5わとまれる","손글씨 바람의 쉼터 나무
+5마리의 새가 멈춘다"
+ItemName_9,0,它能排出正常的粪便。,Normal feces comes out.,ふつうのうんこが出ます,보통의 똥이 나옵니다
+ItemName_10,0,它会排出淡蓝色的粪便。,It produces light blue feces.,みずいろのうんこが出ます,물 색깔의 똥이 나옵니다.
+ItemName_11,0,它会排出粉红色的粪便。,It produces pink feces.,ピンクのうんこが出ます,분홍색 똥이 나옵니다
+ItemName_12,0,产生绿色粪便。,It produces green feces.,みどりのうんこが出ます,녹색 똥이 나옵니다
+ItemName_13,0,它会产生紫色粪便。,It produces purple feces.,むらさきのうんこが出ます,보라색 똥이 나옵니다
+ItemName_14,0,鸟粪是黄色的,It produces yellow feces.,イエローのうんこが出ます,노란 똥이 나옵니다
+ItemName_15,0,它会产生会说话的粪便。,It produces feces that looks like it talks.,しゃべりそうなうんこが出ます,말할 것 같은 똥이 나옵니다
+ItemName_16,0,它会排出金黄色的粪便。,It produces feces that look like gold.,黄金ふうのうんこが出ます,황금빛 똥이 나옵니다
+ItemName_17,0,鸟儿拉出彩虹便便, Rainbow poop comes out.,レインボーのうんこが出ます,
+Set,0,镶嵌,set,セットする,설정하기
+noSet,0,未设置,Not set.,セットしない,설정하지 않음
+rewardText,,"观看视频广告
+100 枚金币
+您可以赚取","Watch the video ad.
+100 coins
+You can earn 100 coins","動画広告を見ると
+コインを100枚
+獲得できます","동영상 광고 시청 시
+100 코인을
+획득할 수 있습니다"
+rewardText0,,你的硬币还不够,Your coins are not enough.,コインがたりません,당신의 동전이 부족합니다
+AdButtonText,,"广告中的金币
+获得 100 个金币","Watch the ad and
+ get 100 coins.","広告を見て
+コイン100枚ゲット",광고를 보고 100 코인 받기
+af_rewardText,,"您成功了
+您赢得了 100 枚金币！","You did it!
+You got 100 coins!","やったね！
+コインを100枚
+ゲットしたよ！","성공했어!
+당신은 100개의 코인을 획득했어요!"

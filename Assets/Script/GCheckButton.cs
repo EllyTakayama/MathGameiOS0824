@@ -7,6 +7,9 @@ using UnityEngine.Serialization;
 using System.Text;
 using TMPro;//TextMeshProを使う場合
 using UniRx.Triggers;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 
 /*かけ算アプリで解答ボタンを押したときに正誤判定スクリプト0628
 *マルばつ画像表示
@@ -58,6 +61,10 @@ public class GCheckButton : MonoBehaviour {
     [SerializeField] private GameObject damageParticlePrefab;
     [SerializeField] private ParticleManager _particleManager1;
     [SerializeField] private BoxCollider2D _ansButtonCollider;//衝突感知のコライダーをオフする
+    private string markT;//markTextのローカライズ変数を取得するため
+    private string correctText;//ローカライズを代入
+    private string wrongText;//ローカライズを代入
+
     void Awake()
     {
         coinText.text = GameManager.singleton.coinNum.ToString();
@@ -65,23 +72,29 @@ public class GCheckButton : MonoBehaviour {
 
     void Start()
     {
+        const string tableName = "RenshuuScene";
+        // ローカライズされた文字列を取得
+        correctText = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "correctAnswerString");
+        wrongText  = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "wrongAnswerString");
+        //markT = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "markTextBefore");
+        Debug.Log($"markT_{markT}");
         score = 0;
         count = 0;
         GameManager.singleton.currentScore = 0;
         GameManager.singleton.currentCount = 0;
         time = 0.0f;
-        _correctAnswerStringBuilder = new StringBuilder("せいかいしたもんだい\n");
-        _wrongAnswerStringBuilder = new StringBuilder("まちがえたもんだい\n");
+        _correctAnswerStringBuilder = new StringBuilder(correctText);
+        _wrongAnswerStringBuilder = new StringBuilder(wrongText);
 
         //回答ボタン（3こ）のコンポーネントを取得 
         thisButton = GetComponent<Button>();
         hiScore = GameManager.singleton.hiScore;
         GameManager.singleton.currentScore = score;
         GameManager.singleton.currentCount = count;
-        correctAnswer.text = "せいかいしたもんだい\n";
-        wrongAnswer.text = "まちがえたもんだい\n";
-        print($"GameManager.singleton.currentScore,{GameManager.singleton.currentScore}");
-        print($"GameManager.singleton.currenCount,{GameManager.singleton.currentCount}");
+        correctAnswer.text = "";
+        wrongAnswer.text = "";
+        //print($"GameManager.singleton.currentScore,{GameManager.singleton.currentScore}");
+        //print($"GameManager.singleton.currenCount,{GameManager.singleton.currentCount}");
         coinText.text = GameManager.singleton.coinNum.ToString();
     }
 
@@ -91,16 +104,16 @@ public class GCheckButton : MonoBehaviour {
         count = 0;
         _correctAnswerStringBuilder.Clear();
         _wrongAnswerStringBuilder.Clear();
-        _correctAnswerStringBuilder.Append("せいかいしたもんだい\n");
-        _wrongAnswerStringBuilder.Append("まちがえたもんだい\n");
+        _correctAnswerStringBuilder.Append(correctText);
+        _wrongAnswerStringBuilder.Append(wrongText);
     }
 
     void ToStringAnswer()
     {
         correctAnswerString = _correctAnswerStringBuilder.ToString();
         wrongAnswerString = _wrongAnswerStringBuilder.ToString();
-        Debug.Log($"correctAnswerString{correctAnswerString}");
-        Debug.Log($"wrongAnswerString{wrongAnswerString}");
+        Debug.Log($"correctAnswerString_{correctAnswerString}");
+        Debug.Log($"wrongAnswerString_{wrongAnswerString}");
     }
     
     //回答ボタンの正誤判定
@@ -194,9 +207,17 @@ public class GCheckButton : MonoBehaviour {
             _piyoDamage.DamageCall();//ピヨをダメージを受けさせる
 
         }
+        //MarkTextLocalization();//markTextスコアをローカライズしつつ表示する
         Invoke("DelayImageOff", 0.5f);
         Invoke("DelayMathAnswer", 1.5f);
       
+    }
+    void MarkTextLocalization()
+    {
+        const string tableName = "RenshuuScene"; // ローカライズテーブルの名前
+        var localizedString = LocalizationSettings.StringDatabase.GetLocalizedString(tableName, "markText");
+        string localizedText = localizedString.Replace("{score}", score.ToString());; // 報酬コインの値を文字列に埋め込む
+        markText.text = localizedText; // ローカライズされた報酬テキストを更新
     }
 
     //不回答で全問題不正解にしたい場合
@@ -216,7 +237,7 @@ public class GCheckButton : MonoBehaviour {
         }
         GameManager.singleton.currentCount = count;
         _wrongAnswerStringBuilder.AppendLine($"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}");
-        wrongAnswer.text += $"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}\n";
+        //wrongAnswer.text += $"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}\n";
         // パーティクルを再生
          for (int i = 0; i < AnsButtons.Length; i++)
          {
@@ -241,7 +262,6 @@ public class GCheckButton : MonoBehaviour {
     }
     void DelayImageOff()
     {
-        
         _doQuesPanelRotate.InVisibleQuesPanel();
         doRenshuButtonAnim.InvisibleButton();
     }

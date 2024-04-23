@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;//DoTweenを使用する記述
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
+
 
 public class RModeMenuManager : MonoBehaviour
 {
@@ -17,10 +21,16 @@ public class RModeMenuManager : MonoBehaviour
     [SerializeField] private GameObject piyoRenshuuPanel;//出題パネルのpiyoのオンオフ
 
     [SerializeField] private BackgroundControll _backgroundControll;
+    public Text markText;
+    public Text countText;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        const string tableName = "RenshuuScene";
+        // ローカライズされた文字列を取得
+        string countText = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "countTextBefore");
+        string scoreText  = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "scoreTextBefore");
     }
 //RenshuuPanelのピヨはスタート時でオン
     public void PiyoSetOn()

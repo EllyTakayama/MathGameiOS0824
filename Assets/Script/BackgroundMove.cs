@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BackgroundMove : MonoBehaviour
 {
+    Vector3 defaultPosition;
     [SerializeField]
     float scrollSpeed = -30;
     Vector3 cameraRectMin;
@@ -12,11 +13,8 @@ public class BackgroundMove : MonoBehaviour
     public bool scrollXEnabled = true;
     void Start()
     {
-        //カメラの範囲を取得
-        cameraRectMin = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.transform.position.z));
-        cameraBottom = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane));
-        Debug.Log($"cameraRectMin_{cameraRectMin}");
-        Debug.Log($"cameraBottom_{cameraBottom}");
+        // GameObjectの初期位置を取得
+        defaultPosition = transform.position;
     }
     void Update()
     {
@@ -41,13 +39,18 @@ public class BackgroundMove : MonoBehaviour
         else//y軸に移動 SpriteのpivotをBottomにしておく
         {
             transform.Translate(Vector3.down * scrollSpeed * Time.deltaTime); //y軸方向にスクロール
+            //カメラの下から完全に出たら、上に瞬間移動
+            if (transform.position.y <= -1500f ) {
+                transform.position = new Vector3 (defaultPosition.x, 1100f, 0);
+            }
             // カメラの下端から完全に出たら、上端に瞬間移動
+            /*
             if (transform.position.y < (cameraRectMin.y - Camera.main.transform.position.y) * 2)
             {
                 transform.position = new Vector2(transform.position.x,
                     (Camera.main.transform.position.y - cameraRectMin.y) * 2);
             }
-      
+            */
         }
     }
 

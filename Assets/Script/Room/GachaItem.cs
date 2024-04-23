@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using System;
 
 public class GachaItem : MonoBehaviour
@@ -58,10 +61,17 @@ public class GachaItem : MonoBehaviour
         ItemButtonIndex = ButtonNum;
         print("i,"+i);
         NekoitemPanel.SetActive(true);
+        // NekoNameのローカライズキーを設定
+        string nekoNameKey = "NekoName_" + ButtonNum; // 例: "NekoName_0", "NekoName_1", ...
+        // NekoNameのローカライズキーを設定
+        // ItemNameのローカライズキーを設定
+        string itemNameKey = "ItemName_" + ButtonNum; // 例: "ItemName_0", "ItemName_1", ...
         string NekoName = GachaChara[ButtonNum];
         NnameText.text = NekoName.Replace(".",System.Environment.NewLine);
         string ItemName = setumeiText[ButtonNum];
         NsetumeiText.text = ItemName.Replace(".",System.Environment.NewLine);
+        NnameText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = nekoNameKey;
+        NsetumeiText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = itemNameKey;
         NnekoItemImage.sprite = ItemNeko[ButtonNum];
         SoundManager.instance.PlaySE3();
         _gachaManager.OpenPanel();//スワイプを止める

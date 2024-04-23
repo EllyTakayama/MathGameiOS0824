@@ -5,6 +5,9 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 
 //5月19日更新
 
@@ -21,17 +24,22 @@ public class DoGAfterReward : MonoBehaviour
     [SerializeField] private GameObject RegradePanel;
     [SerializeField] GameObject AdMobManager;
     //[SerializeField] private GachaManager _gachaManager;
-
+    private string afRewardText;
+    
+    void Start()
+    {
+        const string tableName = "GachaScene";
+        // ローカライズされた文字列を取得
+        afRewardText = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "af_rewardText");
+    }
     public void AfterReward(){
-        
         rewardText.text = "";
         SpinnerPanel.SetActive(false);
         //SoundManager.instance.PlayPanelBGM("GradePanel");
         RewardButton.SetActive(false);
         RewardCoinImage.SetActive(false);
         RewardflashImage.SetActive(false);
-        
-        Debug.Log("AfterReward,SpinPanel,"+SpinnerPanel.activeSelf);
+        //Debug.Log("AfterReward,SpinPanel,"+SpinnerPanel.activeSelf);
         StartCoroutine(DoRewardPanel());
     }
     IEnumerator DoRewardPanel()
@@ -42,7 +50,7 @@ public class DoGAfterReward : MonoBehaviour
         yield break;
     }
     public void DoRewardText(){
-        rewardText.DOText("\nやったね!\nコインを100枚\nゲットしたよ"
+        rewardText.DOText(afRewardText
         , 0.5f)
         .OnComplete(Coinhoka)
         ;

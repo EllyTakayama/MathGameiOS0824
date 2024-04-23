@@ -5,6 +5,10 @@ using DG.Tweening;
 using UniRx;
 using UnityEngine.Serialization;
 using System.Text;
+using UnityEngine.Events;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 
 /*かけ算アプリで解答ボタンを押したときに正誤判定スクリプト0628
 *マルばつ画像表示
@@ -12,7 +16,7 @@ using System.Text;
 */
 
 public class CheckButton : MonoBehaviour {
-    ReactiveProperty<int> currentCount = new ReactiveProperty<int>(0);
+    //ReactiveProperty<int> currentCount = new ReactiveProperty<int>(0);
     private Button thisButton;
     //正誤チェックと共にスコア、問題表示回数、正解数の表示を行うために宣言です
     private int hiScore;
@@ -48,25 +52,36 @@ public class CheckButton : MonoBehaviour {
     [SerializeField] private DOTweenPanel doTweenPanel;//GradePanelを表示させるTween
     [SerializeField] private ParticleManager _particleManager; // ParticleManagerをインスペクターから参照するための変数
     [SerializeField] private BackgroundControll _backgroundControll;//背景Spriteの取得のため
+    private string markT;//markTextのローカライズ変数を取得するため
+    private string correctText;//ローカライズを代入
+    private string wrongText;//ローカライズを代入
+
     void Start()
     {
         //Startですること
         //score,count リセット
         //maruImage,batsuImage 非表示
-
+        const string tableName = "RenshuuScene";
+        // ローカライズされた文字列を取得
+        correctText = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "correctAnswerString");
+        wrongText  = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "wrongAnswerString");
+        markT = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "markTextBefore");
+        Debug.Log($"markT_{markT}");
+        // ローカライズされた文字列を取得
+        //string correctAnswerText = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "correctAnswerString");
+        //string wrongAnswerText  = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "wrongAnswerString");
         score = 0;
         count = 0;
         time = 0.0f;
-        _correctAnswerStringBuilder = new StringBuilder("せいかいしたもんだい\n");
-        _wrongAnswerStringBuilder = new StringBuilder("まちがえたもんだい\n");
+        _correctAnswerStringBuilder = new StringBuilder(correctText);
+        _wrongAnswerStringBuilder = new StringBuilder(wrongText);
 
         for (int i = 0; i < maruImage.Length; i++)
         {
             maruImage[i].SetActive(false);
             batsuImage[i].SetActive(false);
         }
-
-
+        
         //回答ボタン（3こ）のコンポーネントを取得 
         thisButton = GetComponent<Button>();
         hiScore = GameManager.singleton.hiScore;
@@ -75,6 +90,7 @@ public class CheckButton : MonoBehaviour {
         canAnswer = true;
         correctAnswer.text = "";
         wrongAnswer.text = "";
+        //MarkTextLocalization();
     }
 
     public void ResetButtonScore()
@@ -87,19 +103,19 @@ public class CheckButton : MonoBehaviour {
         wrongAnswer.text = "";
         _correctAnswerStringBuilder.Clear();
         _wrongAnswerStringBuilder.Clear();
-        _correctAnswerStringBuilder.Append("せいかいしたもんだい\n");
-        _wrongAnswerStringBuilder.Append("まちがえたもんだい\n");
+        _correctAnswerStringBuilder.Append(correctText);
+        _wrongAnswerStringBuilder.Append(wrongText);
     }
 
     void ToStringAnswer()
     {
         int correctNum = _correctAnswerStringBuilder.Length;
         int wrongNum = _wrongAnswerStringBuilder.Length;
-        print($"correctNum,{correctNum}");//11文字
-        print($"wrongNum,{wrongNum}");//10文字
+        //print($"correctNum,{correctNum}");//11文字
+        //print($"wrongNum,{wrongNum}");//10文字
         if (correctNum == 11)
         {
-            correctAnswerString = "せいかいしたもんだい\nなし";
+            //correctAnswerString = "せいかいしたもんだい\nなし";
         }
         else
         {
@@ -108,7 +124,7 @@ public class CheckButton : MonoBehaviour {
 
         if (wrongNum == 10)
         {
-            wrongAnswerString = "まちがえたもんだい\nなし";
+            //wrongAnswerString = "まちがえたもんだい\nなし";
         }
         else
         {
@@ -172,7 +188,7 @@ public class CheckButton : MonoBehaviour {
             piyo.GetComponent<piyoPlayer>().Happy();//正解ならpiyoPlayer.csのHappy（）を実行
             SoundManager.instance.PlaySE0();//SoundManagerからPlaySE0を実行
             //UniRxのvalueの変化
-            currentCount.Value ++;
+            //currentCount.Value ++;
             score++;
             GameManager.singleton.currentScore = score;
             GameManager.singleton.currentCount = count;
@@ -180,7 +196,7 @@ public class CheckButton : MonoBehaviour {
             
             //correctAnswer.text += $"{MathAndAnswer.instance.valueA.text}×{MathAndAnswer.instance.valueB.text}={MathAndAnswer.instance.answer}\n";
             //UpdateScore(scoreToAdd);
-            markText.text = $"{score}";
+            //markText.text = $"markT{score}";
             //countText.GetComponent<CountText>().CountMove();
             //markText.GetComponent<ScoreText>().ScoreMove();
             // 正解時にパーティクルを再生
@@ -207,11 +223,18 @@ public class CheckButton : MonoBehaviour {
             }
         }
         //countText.text = $"{count}/もんめ";
-        markText.text = $"せいかい{score}コ";
+        //markText.text = markT+$"{score}";
+        MarkTextLocalization();//markTextスコアをローカライズしつつ表示する
         Invoke("DelayImageOff", 0.5f);
         Invoke("DelayMathAnswer", 1.2f);
         //MathAndAnswer.instance.MathsProblem();
-        
+    }
+    void MarkTextLocalization()
+    {
+        const string tableName = "RenshuuScene"; // ローカライズテーブルの名前
+        var localizedString = LocalizationSettings.StringDatabase.GetLocalizedString(tableName, "markText");
+        string localizedText = localizedString.Replace("{score}", score.ToString());; // 報酬コインの値を文字列に埋め込む
+        markText.text = localizedText; // ローカライズされた報酬テキストを更新
     }
 
     void DelayImageOff()

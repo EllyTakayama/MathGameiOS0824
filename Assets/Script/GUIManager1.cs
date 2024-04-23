@@ -11,21 +11,12 @@ using TMPro;
 /// </summary>
 
 public class GUIManager1 : MonoBehaviour {
-    //ref to score text in game over panel
-    //public Text scoreOverText;
-    //ref to hiscore text in game over panel
-    //public Text hiScoreOverText;
-    //public Text wrongAnswerText;
-    //ref to game over panel
-    //public GameObject gameOverPanel;
-    //ref to game over panel animator
-    //public Animator gameOverAnim;
     public Text markText;
     public Text gameOverMarkText;
     //public TextMeshProUGUI fruitCountText;
     public Text countText;
     private int currentMode;
-    public Text quesCountText;
+    //public Text quesCountText;
     public GameObject tableButton;
     public GameObject RenshuuPanel;
     public GameObject imageTable1;
@@ -41,8 +32,10 @@ public class GUIManager1 : MonoBehaviour {
     public GameObject AdMobManager;
     public GameObject[] imageTables;
     [SerializeField] private GameObject playerFlyPiyo;//ピヨのオンオフ
-
-
+    [SerializeField] private TextMeshProUGUI[] _kukuTexts;//九九表のテキストをふりがななしにするため 
+    [SerializeField] private AdMobBanner _adMobBanner;
+    [SerializeField] private AdMobInterstitial _adMobInterstitial;
+    [SerializeField] private AdMobReward _adMobReward;
 	// Use this for initialization
 	void Start ()
     {
@@ -55,13 +48,13 @@ public class GUIManager1 : MonoBehaviour {
          {
              case GameManagerMathsType.multiplicationRenshuu:
                  // multiplicationRenshuu の処理をここに書く
-                 quesCountText.text = TestToggle.testQuestion.ToString();
+                 //quesCountText.text = TestToggle.testQuestion.ToString();
                  tableButton.SetActive(true);
                  break;
 
              case GameManagerMathsType.multiplicationTest:
                  // multiplicationTest の処理をここに書く
-                 quesCountText.text = "9";
+                 //quesCountText.text = "9";
                  tableButton.SetActive(false);
                  break;
 
@@ -97,13 +90,45 @@ public class GUIManager1 : MonoBehaviour {
             imageTable.SetActive(false);
         }
     }
-    //九九パネルを表示させる
-    public void ImageTable()
+
+    public void SetKukuPanel()
     {
         playerFlyPiyo.SetActive(false);
+        if (Application.systemLanguage == SystemLanguage.Japanese)
+        {
+            ImageTable();
+        }
+        else
+        {
+            FImageTable();
+        }
+        
+    }
+    //言語が日本語の場合九九パネルを表示させる
+    public void ImageTable()
+    {
         int index = GameManager.singleton.currentMode;
         SoundManager.instance.PlaySE10Button2();
         imageTables[index -1].SetActive(true);
+    }
+
+    //言語が日本語の場合、ふりがななしで九九パネルを表示させる
+    public void FImageTable()
+    {
+        imageTables[0].SetActive(true);//九九パネル0を表示させる
+        UpdateKukuTexts();//テキストを差し替える
+    }
+    //日本語以外の九九テキスト対応のため
+    void UpdateKukuTexts()
+    {
+        int digit = GameManager.singleton.currentMode;
+        for (int i = 0; i < _kukuTexts.Length; i++)
+        {
+            TextMeshProUGUI buttonText = _kukuTexts[i].GetComponentInChildren<TextMeshProUGUI>();
+            int buttonNumber = i + 1;
+            //buttonText.text = $"{digit}\u00d7{buttonNumber}= {digit * buttonNumber}";
+            buttonText.text = $"{digit}\u00d7{buttonNumber}";
+        }
     }
         public void CloseTablePre(){
             int index = GameManager.singleton.currentMode;
@@ -140,11 +165,14 @@ public class GUIManager1 : MonoBehaviour {
         GameManager.singleton.SaveSceneCount();
         Debug.Log("SceneCount"+GameManager.singleton.SceneCount);
         int IScount = GameManager.singleton.SceneCount;
+        _adMobBanner.DestroyAd();
+        _adMobReward.DestroyAd();
         if(GameManager.singleton.SceneCount > 0 && GameManager.singleton.SceneCount % 3 ==0){
 
             AdMobManager.GetComponent<AdMobInterstitial>().ShowAdMobInterstitial();
             return;
         }
+        _adMobInterstitial.DestroyAd();
         if(GameManager.singleton.currentMathsType == GameManagerMathsType.multiplicationRenshuu)
         {
             EasySaveManager.singleton.Save();
@@ -154,7 +182,6 @@ public class GUIManager1 : MonoBehaviour {
         {
             SceneManager.LoadScene("Game");
         }
-
     }
 
     public void MenuBackButton()
@@ -167,6 +194,7 @@ public class GUIManager1 : MonoBehaviour {
     void MenuBackMove(){
         EasySaveManager.singleton.Save();
         DOTween.KillAll();
+        /*
         GameManager.singleton.SceneCount++;
         GameManager.singleton.SaveSceneCount();
         Debug.Log("SceneCount"+GameManager.singleton.SceneCount);
@@ -175,7 +203,7 @@ public class GUIManager1 : MonoBehaviour {
 
             AdMobManager.GetComponent<AdMobInterstitial>().ShowAdMobInterstitial();
             return;
-        }
+        }*/
         //SoundManager.instance.PlayBGM("ModeMenuPanel");
         SceneManager.LoadScene("Menu");
     }

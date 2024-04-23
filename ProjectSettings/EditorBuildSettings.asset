@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GachaScene.unity
     guid: d4600cad0a8f94646895a5fb08738466
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 6df374e25f5444cd39210d4cdd872554, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: cb1cc0c51613148ef9b68c4c72961737, type: 2}
+  m_UseUCBPForAssetBundles: 0

@@ -1,0 +1,46 @@
+Key,Id,Chinese (Simplified)(zh-Hans),English(en),Japanese(ja),Korean(ko)
+top_title,41518034313216,"<size=42>与 Piyo 一起</size>\n
+让我们来玩一个有趣的乘法游戏！",Fun multiplicationwith Piyo!,"<size=42>ピヨといっしょに</size>
+たのしいかけざん","<size=42>피요와 함께</size>
+즐거운 가케잔을 하자"
+info_txt,0,点击进入外部网站,Click to go to external site,クリックで外部サイトへ移動します,클릭하면 외부 사이트로 이동합니다
+set_ex_txt,0,"序列中的笔画数为
+×x1（升序）或 x9（降序）。
+
+在游戏中，问题是随机播放的。","You can choose the number of strokes in a row
+×You can choose the number of multiplication from x1 (ascending order) or x9 (descending order).
+
+In Game, you will be asked a random question.","れんしゅうではかける数を
+×1(昇順)、×9(降順)から選べます
+
+Gameではランダムに出題されます","연수는 곱할 숫자를
+×1(오름차순), 9(내림차순) 중에서 선택할 수 있습니다.
+
+Game에서는 랜덤으로 출제됩니다."
+info_contact,0,"如果您有任何意见或要求，请
+请通过以下电子邮件地址与我们联系。
+<color=blue>rietakayama.app@gmail.com</color>。","If you have any comments or requests
+Please contact us at this email address.
+<color=blue>rietakayama.app@gmail.com</color>","ご意見・ご要望がございましたら
+こちらのメールまでご連絡ください。
+<color=blue>rietakayama.app@gmail.com</color>","의견이나 요청사항이 있으시면
+이메일로 연락 주시기 바랍니다.
+<color=blue>rietakayama.app@gmail.com</color>"
+info_review,0,"如果您喜欢这款应用程序，请
+如果您喜欢这款应用程序，请在商店中给予高度评价。
+<color=blue>商店链接</color>.","If you like the application
+If you like the app, please give us a high rating in the store.
+<color=blue>Store Link</color>.","アプリを気に入っていただけましたら
+ストアにて高評価をお願いいたします。
+<color=blue>ストアリンク</color>","앱이 마음에 드셨다면
+스토어에서 높은 평가를 부탁드립니다.
+<color=blue>스토어 링크</color>"
+top_renshuu,0,练习,Training,れんしゅう,연쇄살인
+top_game,0,比赛,Play,ゲーム,게임
+top_table,0,乘法表,multiplication table,"<size=20>くくひょう</size>\n
+九九表",九九表
+login_cointext,0,"登录奖励。
+你有 100 个金币。","Login Bonus.
+You got 100 coins.","ログインボーナスで
+コインを100まいゲットしたよ","로그인 보너스로
+당신은 100개의 코인을 얻었습니다!"

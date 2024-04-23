@@ -6,7 +6,6 @@ using TMPro;
 
 public class KuKuSpawn : MonoBehaviour
 {
-   
     public Toggle[] digitToggles; // 1から9までの数字用のToggle
        //public GameObject multiplicationPanel; // 九九の段ごとのパネル
        //public Text resultText; // 答えを表示するテキスト
@@ -59,7 +58,8 @@ public class KuKuSpawn : MonoBehaviour
            {
                TextMeshProUGUI buttonText = calculateButtons[i].GetComponentInChildren<TextMeshProUGUI>();
                int buttonNumber = i + 1;
-               buttonText.text = $"{digit}\u00d7{buttonNumber}= {digit * buttonNumber}";
+               //buttonText.text = $"{digit}\u00d7{buttonNumber}= {digit * buttonNumber}";
+               buttonText.text = $"{digit}\u00d7{buttonNumber}";
            }
        }
        public void PlayKukuSE(int digit, int number)

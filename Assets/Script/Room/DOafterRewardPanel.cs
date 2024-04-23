@@ -71,7 +71,6 @@ public class DOafterRewardPanel : MonoBehaviour
     //GameシーンのAdCloseボタン
     public void GCloseAdPanel()
     {
-        
         RegradePanel.SetActive(false);
     }
     

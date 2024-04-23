@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: MenuScene
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: 78a22f55a3ba04a7fab9d7decb62c061, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: ce908abdd396049928a6bdb533700d93, type: 2}
+  - {fileID: 11400000, guid: 1de43bfe098f9459089d71ff6816a0c8, type: 2}
+  - {fileID: 11400000, guid: 4ffd2190e05b8481da69ae53607f590f, type: 2}
+  - {fileID: 11400000, guid: 525e47cb17bb243439b9700cfaed46ee, type: 2}
+  m_Extensions:
+  - rid: 100948707533914113
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds:
+    - rid: 100948707533914113
+      type: {class: GoogleSheetsExtension, ns: UnityEditor.Localization.Plugins.Google, asm: Unity.Localization.Editor}
+      data:
+        m_Collection: {fileID: 11400000}
+        m_SheetsServiceProvider: {fileID: 11400000, guid: e05b5d655219944528d1a22f9fb82f94, type: 2}
+        m_SpreadsheetId: 
+        m_SheetId: 0
+        m_Columns: []
+        m_RemoveMissingPulledKeys: 1

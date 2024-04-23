@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour {
          SceneCount = ES3.Load<int>("SceneCount","SceneCount.es3",0);
          Debug.Log("ロードSceneCount"+SceneCount);
     }
-    /*
+    
     public void RequestReview()
     {
        
@@ -165,6 +165,5 @@ public class GameManager : MonoBehaviour {
     }
     
 #endif
-*/
 
 }

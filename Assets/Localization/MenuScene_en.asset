@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: MenuScene_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 78a22f55a3ba04a7fab9d7decb62c061, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 116768671522816
+    m_Localized: Click to go to external site
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41518034313216
+    m_Localized: Fun multiplicationwith Piyo!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42552429371392
+    m_Localized: "You can choose the number of strokes in a row\n\xD7You can choose
+      the number of multiplication from x1 (ascending order) or x9 (descending order).\n\nIn
+      Game, you will be asked a random question."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 389939056336896
+    m_Localized: 'If you have any comments or requests
+
+      Please contact us at
+      this email address.
+
+      <color=blue>rietakayama.app@gmail.com</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 389939060531200
+    m_Localized: 'If you like the application
+
+      If you like the app, please
+      give us a high rating in the store.
+
+      <color=blue>Store Link</color>.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 828301244358656
+    m_Localized: Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 828301248552960
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 828301248552961
+    m_Localized: multiplication table
+    m_Metadata:
+      m_Items: []
+  - m_Id: 834445480288256
+    m_Localized: 'Login Bonus.
+
+      You got 100 coins.'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

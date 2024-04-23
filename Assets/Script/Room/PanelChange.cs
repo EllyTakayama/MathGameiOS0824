@@ -30,6 +30,7 @@ public class PanelChange : MonoBehaviour
     private Vector2 fingerPosStart;
     private Vector2 fingerPosEnd;
     private const float swipeThreshold = 20.0f;
+    [SerializeField] private GachaManager _gachaManager;
 
     // 矢印の表示/非表示
     
@@ -40,18 +41,22 @@ public class PanelChange : MonoBehaviour
         
     }
     public void ShowGachaPanel0() {
+        _gachaManager.CloseItemPanel();
         ShowGachaPanel(Panel.gachaPanel);
     }
 
     public void ShowGachaPanel1() {
+        _gachaManager.CloseItemPanel();
         ShowGachaPanel(Panel.Panel1chara);
     }
 
     public void ShowGachaPanel2() {
+        _gachaManager.CloseItemPanel();
         ShowGachaPanel(Panel.Panel2chara);
     }
 
     public void ShowGachaPanel3() {
+        _gachaManager.CloseItemPanel();
         ShowGachaPanel(Panel.Panel3item);
     }
   void Update(){

@@ -60,14 +60,15 @@ public class AdMobReward : MonoBehaviour
         {
             rewardeFlag = false;//報酬付与用のフラグをfalseへ戻す
             //ここに報酬の処理を書く
+            SoundManager.instance.PlaySE16GetCoin();//コインをゲットする音
             GameManager.singleton.coinNum += 100;
             //Debug.Log("リワードcoinGet" + GameManager.instance.totalCoin + "枚");
             GameManager.singleton.CoinSave();
             TextValue.text = GameManager.singleton.coinNum.ToString();
             endImage.SetActive(true);
-            endImage.GetComponent<DOTextBounceAnim>();
+            endImage.GetComponent<DOTextBounceAnim>().TextBounce();//雲のアニメーション
             gameOverMarkText.gameObject.SetActive(true);
-            gameOverMarkText.text = "コインはガチャでつかえるよ";
+            //gameOverMarkText.text = "コインはガチャでつかえるよ";
             
         }
     }
@@ -129,13 +130,13 @@ public class AdMobReward : MonoBehaviour
         // Raised when an impression is recorded for an ad.
         ad.OnAdImpressionRecorded += () =>
         {
-            rewardeFlag = true;
+            //rewardeFlag = true;
             Debug.Log("Rewarded ad recorded an impression.");
         };
         // Raised when a click is recorded for an ad.
         ad.OnAdClicked += () =>
         {
-            rewardeFlag = true;
+            //rewardeFlag = true;
             Debug.Log("Rewarded ad was clicked.");
         };
         // Raised when the ad opened full screen content.

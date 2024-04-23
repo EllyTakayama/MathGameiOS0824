@@ -1,0 +1,251 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: GachaScene_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 4b2d2c363bf204366844a33bb07604ea, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 4941035855872
+    m_Localized: '150 coins.
+
+      You can spin it once.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168492728320
+    m_Localized: What will it be?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922624
+    m_Localized: perch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922625
+    m_Localized: feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922626
+    m_Localized: 'Basic
+
+      Stopping Tree'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922627
+    m_Localized: 'Lemon Ice Cream
+
+      perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922628
+    m_Localized: 'Pineapple Ice Cream
+
+      perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922629
+    m_Localized: 'Stick candy
+
+      perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922630
+    m_Localized: 'Strawberry candy
+
+      perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922631
+    m_Localized: 'chilled cucumber
+
+      perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168496922632
+    m_Localized: 'Frankfurt''s
+
+      perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116928
+    m_Localized: 'Chocolate Banana
+
+      perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116929
+    m_Localized: 'of a human fingernail
+
+      perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116930
+    m_Localized: plain feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116931
+    m_Localized: Pale blue feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116932
+    m_Localized: Pink feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116933
+    m_Localized: Green feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116934
+    m_Localized: Purple feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116935
+    m_Localized: Yellow feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116936
+    m_Localized: Feed to get chatty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116937
+    m_Localized: Golden feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116938
+    m_Localized: Rainbow feed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116939
+    m_Localized: 'Simple but calm
+
+      be able to communicate with one''s neighbors'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116940
+    m_Localized: 'Fresh and cute
+
+      4 birds can perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116941
+    m_Localized: 'Fruity perches
+
+      4 birds can perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116942
+    m_Localized: 'Can perch up to 5 birds
+
+      Long perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116943
+    m_Localized: 'Very popular strawberry candy style
+
+      4 birds can perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116944
+    m_Localized: 'fresh perch
+
+      Three-part harmony'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116945
+    m_Localized: 'high quality perch
+
+      5 birds can perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116946
+    m_Localized: 'Cute chocolate banana style perch
+
+      Only one bird can perch.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116947
+    m_Localized: 'hand-held perch
+
+      5 birds can perch'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116948
+    m_Localized: Normal feces comes out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116949
+    m_Localized: It produces light blue feces.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116950
+    m_Localized: It produces pink feces.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116951
+    m_Localized: It produces green feces.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116952
+    m_Localized: It produces purple feces.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116953
+    m_Localized: It produces yellow feces.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116954
+    m_Localized: It produces feces that looks like it talks.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116955
+    m_Localized: It produces feces that look like gold.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116956
+    m_Localized: ' Rainbow poop comes out.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116957
+    m_Localized: set
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366168501116958
+    m_Localized: Not set.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793097020628992
+    m_Localized: 'Watch the video ad.
+
+      100 coins
+
+      You can earn 100 coins'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793097024823296
+    m_Localized: Your coins are not enough.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793097024823297
+    m_Localized: "Watch the ad and\n get 100 coins."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793097024823298
+    m_Localized: 'You did it!
+
+      You got 100 coins!'
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

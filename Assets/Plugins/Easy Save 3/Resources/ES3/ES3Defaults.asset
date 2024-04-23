@@ -35,18 +35,25 @@ MonoBehaviour:
     - CW.Common
     - PsdPlugin
     - LeanCommonPlus
+    - Google.Android.AppBundle.Editor
     - SimpleScrollSnap
     - LeanCommon
     - LeanTouchPlus
     - ScriptablePacker
     - SimpleScrollSnapEditor
+    - Google.Play.Common
     - UniRx.Examples
     - LeanTouch
+    - Google.Play.Core
     - GoogleMobileAds.Editor
     - SimpleInspectorAttributesEditor
     - Utilities
+    - Sirenix.OdinInspector.Modules.UnityLocalization
+    - Sirenix.OdinInspector.Modules.Unity.Addressables
     - CopyrightNoticeEditor
+    - Google.Play.Review
     - SimpleInspectorAttributes
+    - Sirenix.OdinInspector.Modules.UnityLocalization.Editor
     - UtilitiesEditor
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 1

@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using DG.Tweening;
-//0524更新
+using UnityEngine.Events;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class GachaManager : MonoBehaviour
 {
@@ -207,11 +209,10 @@ public class GachaManager : MonoBehaviour
 			SoundManager.instance.PlaySE3();
 			return;
 		}
-		
-		//コインから保存する
-		GameManager.singleton.coinNum -= 150;
-		GameManager.singleton.CoinSave();
-		coinText.text = GameManager.singleton.coinNum.ToString();
+	
+		//見せかけだけコインを減らす。ガチャ実行後にcoinNumを減らして保存
+		int temptCoin = GameManager.singleton.coinNum-= 150;
+		coinText.text = temptCoin.ToString();
 		//Debug時はオフ
 		
 		RightButton.SetActive(false);
@@ -287,20 +288,23 @@ public class GachaManager : MonoBehaviour
 		yield return new WaitForSeconds(0.4f);
 		getNekoPanel.SetActive(true);
 		gachaButton.enabled = true;
-		nameText.text = "なにがでるかな？";
+		nameText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference ="getNekop_nameText";
 		nekoImage.SetActive(false);
 		closeButton.SetActive(false);
 		openBallImage.SetActive(true);
 		openBallImage.GetComponent<DOGachaBall>().BallShake();//アニメーション
-		
 		yield return new WaitForSeconds(0.8f);
 		yield return fadePanel.DOFade(0.9f,0.4f).WaitForCompletion();
 		fadePanel.DOFade(0,0.4f);
 		openBallImage.SetActive(false);
+		nameText.gameObject.SetActive(false);
         yield return new WaitForSeconds(0.4f);
 		//yield return new WaitForSeconds(0.2f);
-		string name = GetComponent<GachaItem>().GachaChara[nekoNum];//nameで取得した"."を改行に置き換える
-		nameText.text = name.Replace(".",System.Environment.NewLine);
+		//string name = GetComponent<GachaItem>().GachaChara[nekoNum];//nameで取得した"."を改行に置き換える
+		string nekoNameKey = "NekoName_" + nekoNum; // 例: "NekoName_0", "NekoName_1", ...
+		nameText.gameObject.SetActive(true);
+		nameText.GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference = nekoNameKey;
+		//nameText.text = name.Replace(".",System.Environment.NewLine);
 		//nameText.text = GetComponent<GachaItem>().GachaChara[nekoNum];
 		nekoImage.SetActive(true);
 		nekochanImage.sprite = GetComponent<GachaItem>().ItemNeko[nekoNum];
@@ -309,6 +313,9 @@ public class GachaManager : MonoBehaviour
 		flashImage.SetActive(true);
 		flashImage.GetComponent<DOflash>().Flash18();
 		SoundManager.instance.PlaySE18();//ジャン音
+		//ガチャ成功後コインを減らして保存する
+		GameManager.singleton.coinNum -= 150;
+		GameManager.singleton.CoinSave();
 		//nameText.text = itemName + "\nをゲットした"
 		yield return new WaitForSeconds(0.4f);
 		closeButton.SetActive(true);

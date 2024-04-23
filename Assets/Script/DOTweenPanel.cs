@@ -51,6 +51,7 @@ public class DOTweenPanel : MonoBehaviour
     void SetGradePanel()
     {
         gradePanel.SetActive(true);
+        /*
         if (GameManager.singleton.currentMode > 10)
         {
             gradeText.text = "ちからだめし\nがんばったね";
@@ -58,7 +59,7 @@ public class DOTweenPanel : MonoBehaviour
         else
         {
             gradeText.text = "れんしゅう\nがんばったね";
-        }
+        }*/
         GradeImage();
     }
     
@@ -113,7 +114,7 @@ public class DOTweenPanel : MonoBehaviour
     {
         //gradeImage.enabled = true;
         //gradeImage.GetComponent<DoGradeImage>().DoImageChange();
-        if (GameManager.singleton.currentScore == 9)
+        if (GameManager.singleton.currentScore >= 9)
         {
             //9点満点
             gradeImage.sprite = grades[0];

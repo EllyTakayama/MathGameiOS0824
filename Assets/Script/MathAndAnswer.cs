@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Shapes2D;
-
+using UnityEngine.Localization.Settings;
 
 //かけ算アプリ問題出題のScriptだよ
 
@@ -45,6 +45,7 @@ public class MathAndAnswer : MonoBehaviour
     int[] ary = new int[9];
     [SerializeField] private int countText;//出題数を表記する
     [SerializeField] private GUIManager1 _guiManager1;//GUIの管理マネージャーの変数取得
+    private string countT;//countTextのローカライズ変数を取得するため
 
     void Awake()
     {
@@ -62,7 +63,8 @@ public class MathAndAnswer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        countText = 0;
+        const string tableName = "RenshuuScene";
+        //countText = 0;
         if (GameManager.singleton.isAsendingOrder == true)
         {
             multi1 = true;
@@ -92,7 +94,8 @@ public class MathAndAnswer : MonoBehaviour
         //MathsProblem();
         SoundManager.instance.PlayBGM("Renshuu");
         //Invoke("MathsProblem",1.2f);
-
+        countT = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "countTextBefore");
+        //CountTextLocalization();
     }
     //this method keeps the track of mode 
     void CurrentMode()
@@ -171,7 +174,13 @@ public class MathAndAnswer : MonoBehaviour
          multi9 = false;
     }
     */
-
+    void CountTextLocalization()
+    {
+        const string tableName = "RenshuuScene"; // ローカライズテーブルの名前
+        var localizedString = LocalizationSettings.StringDatabase.GetLocalizedString(tableName, "countText");
+        string localizedText = localizedString.Replace("{count}", countText.ToString());; // 報酬コインの値を文字列に埋め込む
+        _guiManager1.countText.text = localizedText; // ローカライズされた報酬テキストを更新
+    }
     public void MultiplicationMethodRenshuu()//練習
     {
         if (GameManager.singleton.currentCount >= 9)
@@ -180,7 +189,8 @@ public class MathAndAnswer : MonoBehaviour
             return;
         }
         countText++;
-        _guiManager1.countText.text = $"{countText} もんめ";
+        //_guiManager1.countText.text = countT+$"{countText}";
+        //CountTextLocalization();//出題数をローカライズして取得
         //Gameシーンデバッグ用
         a = GameManager.singleton.currentMode;
         Debug.Log($"a_{a}");

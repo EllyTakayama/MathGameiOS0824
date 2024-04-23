@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System;
+using Shapes2D;
+using UnityEngine.Localization.Settings;
 
 public class GameMath : MonoBehaviour
 {
@@ -147,6 +150,7 @@ public class GameMath : MonoBehaviour
     public void MathsProblem()
     {
         currentMode = GameManager.singleton.currentMode;
+        Debug.Log($"currentMode_{GameManager.singleton.currentMode}");
         switch (mathsType)
         {
             case (GameManagerMathsType.multiplicationRenshuu):
@@ -189,7 +193,6 @@ public class GameMath : MonoBehaviour
                 break;
         }
     }
-    
     void DelayRenshuButton()
     {
         _doRenshuButtonAnim.GResetButton();
@@ -203,7 +206,7 @@ public class GameMath : MonoBehaviour
             return;
         }
         countText++;
-        _guiManager1.countText.text = $"{countText} 問目";
+        //_guiManager1.countText.text = $"{countText} 問目";
         //Degubようコメント
         a = currentMode;
         if (multi1 == true)
@@ -279,7 +282,8 @@ public class GameMath : MonoBehaviour
             n = 0;
         }
         countText++;
-        _guiManager1.countText.text = $"{countText} 問目";
+        //GCountTextLocalization();//出題数をローカライズして取得
+        //_guiManager1.countText.text = $"{countText} 問目";
         //n++;
         print("n_" + n);
         Invoke("PiyoSE", 0.6f);
@@ -333,7 +337,7 @@ public class GameMath : MonoBehaviour
             n = 0;
         }
         countText++;
-        _guiManager1.countText.text = $"{countText} もんめ";
+        //_guiManager1.countText.text = $"{countText} もんめ";
         //n++;
         print("n_" + n);
         Invoke("PiyoSE", 0.6f);

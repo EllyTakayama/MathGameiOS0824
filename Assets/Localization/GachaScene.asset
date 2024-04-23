@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: GachaScene
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: 4b2d2c363bf204366844a33bb07604ea, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: 2b9581e0df7604d90af2d3e0079b0a29, type: 2}
+  - {fileID: 11400000, guid: 6fde753b11760430c817a3a6d2f36d9b, type: 2}
+  - {fileID: 11400000, guid: bd99484a6505b4c18ae1bdc8d1d3830e, type: 2}
+  - {fileID: 11400000, guid: 63c6cc461ad8b46118edba9d2f16a703, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []

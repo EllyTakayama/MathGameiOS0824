@@ -19,11 +19,23 @@ public class AdMobInterstitial : MonoBehaviour
 #endif
 
     private InterstitialAd _interstitialAd;//InterstitialAd型の変数interstitialを宣言　この中にインタースティシャル広告の情報が入る
-
+    public string AdSceneName;//各シーンのトップへ移動する
+    private bool rewardeFlag = false;//リワード広告の報酬付与用　初期値はfalse
     private void Start()
     {
         RequestInterstitial();
         Debug.Log("読み込み開始");
+    }
+
+    private void Update()
+    {
+        //広告を見た後にrewardeFlagをtrueにしている
+        //広告を見たらこの中の処理が実行される
+        if (rewardeFlag == true)
+        {
+            rewardeFlag = false;
+            SceneManager.LoadScene(AdSceneName);
+        }
     }
 
     //インタースティシャル広告を表示する関数
@@ -133,6 +145,7 @@ public class AdMobInterstitial : MonoBehaviour
         // Raised when the ad closed full screen content.
         ad.OnAdFullScreenContentClosed += () =>
         {
+            rewardeFlag = true;
             _interstitialAd.Destroy();
             //インタースティシャル再読み込み開始
             RequestInterstitial();

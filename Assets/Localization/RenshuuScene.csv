@@ -1,0 +1,47 @@
+Key,Id,Chinese (Simplified)(zh-Hans),English(en),Japanese(ja),Korean(ko)
+AnnounceText,534881755136,让我们相乘！,Let's multiply.,えらんでね!,곱셈을 해봅시다!
+Button1,0,1,1,"1
+<size=25>のだん</size>",1
+Button2,0,2,2,"2
+<size=25>のだん</size>",2
+Button3,0,3,3,"3
+<size=25>のだん</size>",3
+Button4,0,4,4,"4
+<size=25>のだん</size>",4
+Button5,0,5,5,"5
+<size=25>のだん</size>",5
+Button6,0,6,6,"6
+<size=25>のだん</size>",6
+Button7,0,7,7,"7
+<size=25>のだん</size>",7
+Button8,0,8,8,"8
+<size=25>のだん</size>",8
+Button9,0,9,9,"9
+<size=25>のだん</size>",9
+Button10,0,10,10,"10
+<size=25>のだん</size>",10
+Button11,0,11,11,"11
+<size=25>のだん</size>",11
+Button12,0,12,12,"12
+<size=25>のだん</size>",12
+Imagetables,0,乘法表,multiplication table,九九の表,곱셈 테이블
+countText,0,问题{count},Question{count}.,もんだい{count},질문{count}
+markText,0,正确答案{score},Correct answer{score},せいかい{score},정답{score}
+correctAnswerString,0,"正确答案
+","Correct answer.
+","せいかいしたもんだい
+","정답
+"
+wrongAnswerString,0,"答案错误
+","Wrong answer.
+","まちがえたもんだい
+","오답
+"
+ribonText,0,成绩,Grades,せいせき,성적
+af_rewardText,0,获取 {_rewardCoin} 硬币！,"Get {_rewardCoin}
+ coins!","コイン{_rewardCoin}
+枚ゲット!","보상 코인 {_rewardCoin}
+을 받으세요!"
+gameOvercoinText,,硬币可以用来换加查。,You can use the coins for gacha.,コインはガチャでつかえるよ,코인을 뽑기에 사용할 수 있습니다!
+countTextBefore,0,问题,Question.,もんだい,질문
+markTextBefore,0,正确答案,Correct answer,せいかい,정답

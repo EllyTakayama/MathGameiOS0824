@@ -4,6 +4,10 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Events;
 
 public class GameOverPanel : MonoBehaviour
 {
@@ -29,6 +33,7 @@ public class GameOverPanel : MonoBehaviour
     //[SerializeField] private DOTweenPanel _doTweenPanel;//DOTweenPanel.csの参照
     [SerializeField] private CheckButton _checkButton;//リセットのため
     [SerializeField] private GameObject[] clouds;//雲のGameObject
+    private LocalizeStringEvent rewardLocalizedStringEvent; // Localized String Event を格納する変数を追加
     /*確率の実行のため
     public int totalExecutions = 100; // 実行回数
     public Dictionary<int, int> rewardCoinCounts = new Dictionary<int, int>(); // 各報酬の出現回数を記録する辞書
@@ -204,9 +209,19 @@ public class GameOverPanel : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         SoundManager.instance.PlaySE18();//効果音ジャン
         rewardText.gameObject.SetActive(true);
-        rewardText.text = $"コイン{_rewardCoin}まい";
+        //rewardText.text = $"コイン{_rewardCoin}まい";
+        UpdateRewardTextLocalization();//_rewardCoinを埋め込んだローカライズテキスト反映
         rewardText.GetComponent<DOTextBounceAnim>().TextBounce();//rewardTextをバウンスさせるアニメーション
         
+    }
+    // 報酬コインの値に基づいてローカライズされた報酬テキストを更新するメソッド
+    void UpdateRewardTextLocalization()
+    {
+        const string tableName = "RenshuuScene"; // ローカライズテーブルの名前
+        var rewardLocalizedString = LocalizationSettings.StringDatabase.GetLocalizedString(tableName, "af_rewardText");
+        var localizedString = LocalizationSettings.StringDatabase.GetLocalizedString(tableName, "af_rewardText");
+        string localizedText = localizedString.Replace("{_rewardCoin}", _rewardCoin.ToString());; // 報酬コインの値を文字列に埋め込む
+        rewardText.text = localizedText; // ローカライズされた報酬テキストを更新
     }
     
     
