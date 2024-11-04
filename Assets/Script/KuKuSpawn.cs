@@ -31,7 +31,7 @@ public class KuKuSpawn : MonoBehaviour
                    if (isOn)
                    {
                        selectedDigit = digit;
-                       danText.text = $"{selectedDigit} のだん";
+                       //danText.text = $"{selectedDigit} のだん";
                        UpdateButtonTexts(selectedDigit);
                        // SEを再生
                        SoundManager.instance.PlaySE3();

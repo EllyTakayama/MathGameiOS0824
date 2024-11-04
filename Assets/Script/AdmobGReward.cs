@@ -21,12 +21,12 @@ public class AdmobGReward : MonoBehaviour
     public GameObject SpinnerPanel;
     public Text rewardText;//広告読み込めなかった時にテキスト差し替え
 #if UNITY_ANDROID
-    string _adUnitId = "ca-app-pub-3940256099942544/5224354917";//TestAndroidのリワード広告ID
-    //string _adUnitId = "ca-app-pub-7439888210247528/4069893017";//ここにAndroidのリワード広告IDを入力
+    //string _adUnitId = "ca-app-pub-3940256099942544/5224354917";//TestAndroidのリワード広告ID
+    string _adUnitId = "ca-app-pub-7439888210247528/4069893017";//ここにAndroidのリワード広告IDを入力
         
 #elif UNITY_IPHONE
-    string _adUnitId = "ca-app-pub-3940256099942544/1712485313";//TestiOSのリワード広告ID
-    //string _adUnitId = "ca-app-pub-7439888210247528/7409830625";//ここにiOSのリワード広告IDを入力
+    //string _adUnitId = "ca-app-pub-3940256099942544/1712485313";//TestiOSのリワード広告ID
+    string _adUnitId = "ca-app-pub-7439888210247528/7409830625";//ここにiOSのリワード広告IDを入力
         
 #else
         _adUnitId = "unexpected_platform";

@@ -60,10 +60,12 @@ public class GCheckButton : MonoBehaviour {
     [SerializeField] private QuesChangeCollider _quesChangeCollider;//AnsButtonParentのコライダーのスクリプトをfalseにする
     [SerializeField] private GameObject damageParticlePrefab;
     [SerializeField] private ParticleManager _particleManager1;
-    [SerializeField] private BoxCollider2D _ansButtonCollider;//衝突感知のコライダーをオフする
+    [SerializeField] private BoxCollider2D _ansButtonCollider;//DOPanel呼び出し時に衝突感知のコライダーをオフする
+    [SerializeField] private CapsuleCollider2D _piyoPlayer;//ピヨと衝突時のコライダーオフ
     private string markT;//markTextのローカライズ変数を取得するため
     private string correctText;//ローカライズを代入
     private string wrongText;//ローカライズを代入
+    private bool piyoCollision = false;
 
     void Awake()
     {
@@ -83,6 +85,8 @@ public class GCheckButton : MonoBehaviour {
         GameManager.singleton.currentScore = 0;
         GameManager.singleton.currentCount = 0;
         time = 0.0f;
+        Debug.Log($"correctText_{correctText}");
+        Debug.Log($"wrongText_{wrongText}");
         _correctAnswerStringBuilder = new StringBuilder(correctText);
         _wrongAnswerStringBuilder = new StringBuilder(wrongText);
 
@@ -143,6 +147,7 @@ public class GCheckButton : MonoBehaviour {
     }
     IEnumerator CheckButtonCoroutine(int buttonIndex)
     {
+        SoundManager.instance.PlaySE11Button3();
         _doAnsButtonMove.PauseButtonMovement();//AnsButtonの動きを止める
         CalculateMultiplication();
         Index = buttonIndex;
@@ -170,7 +175,7 @@ public class GCheckButton : MonoBehaviour {
             GameManager.singleton.currentCount = count;
             _correctAnswerStringBuilder.AppendLine($"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}");
             
-            correctAnswer.text += $"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}\n";
+            //correctAnswer.text += $"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}\n";
             Debug.Log($"score_{score}");
             // 正解のボタンが押されたらDoCoinAnim.csのSpawnCoinOnButtonメソッドを実行してcoinを生成する
             if (coinAnimScript != null)
@@ -195,7 +200,7 @@ public class GCheckButton : MonoBehaviour {
             SoundManager.instance.PlaySE1();//SoundManagerからPlaySE1を実行
             GameManager.singleton.currentCount = count;
             _wrongAnswerStringBuilder.AppendLine($"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}");
-            wrongAnswer.text += $"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}\n";
+            //wrongAnswer.text += $"{GameMath.instance.valueA.text}×{GameMath.instance.valueB.text}={GameMath.instance.answer}\n";
             // 不正解時にパーティクルを再生
             if (particleManager != null)
             {
@@ -223,10 +228,15 @@ public class GCheckButton : MonoBehaviour {
     //不回答で全問題不正解にしたい場合
     public void ChangeQues()
     {
+        if (piyoCollision == true)
+        {
+            return;
+        }
         StartCoroutine(ChangeQuesCoroutine());
     }
     IEnumerator ChangeQuesCoroutine()
     {
+        piyoCollision　= true;
         _doAnsButtonMove.PauseButtonMovement();//AnsButtonの動きを止める
         CalculateMultiplication();
         count++;
@@ -251,6 +261,7 @@ public class GCheckButton : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         DelayImageOff();
         DelayMathAnswer();
+       
     }
     private void InstantiateParticle(Vector3 position)
     {
@@ -277,6 +288,7 @@ public class GCheckButton : MonoBehaviour {
         {
             ToStringAnswer();
             _ansButtonCollider.enabled = false;
+            _piyoDamage.enabled = false;
             _quesChangeCollider.enabled = false;//コライダーを管理するスクリプトをオフする
             _doGameResultPanel.SetResult();
             print("count9isRenshu");
@@ -284,6 +296,7 @@ public class GCheckButton : MonoBehaviour {
         }
         //SoundManager.instance.StopPlaySE();//SEの効果音を停止
         GameMath.instance.MathsProblem();
+        piyoCollision　= false;
     }
 
 }

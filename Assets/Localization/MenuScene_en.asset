@@ -23,7 +23,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41518034313216
-    m_Localized: Fun multiplicationwith Piyo!
+    m_Localized: 'Fun multiplication
+
+      with Piyo!'
     m_Metadata:
       m_Items: []
   - m_Id: 42552429371392

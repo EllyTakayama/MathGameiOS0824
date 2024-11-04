@@ -94,8 +94,8 @@ public class MathAndAnswer : MonoBehaviour
         //MathsProblem();
         SoundManager.instance.PlayBGM("Renshuu");
         //Invoke("MathsProblem",1.2f);
-        countT = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "countTextBefore");
-        //CountTextLocalization();
+        //countT = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "countTextBefore");
+        CountTextLocalization();
     }
     //this method keeps the track of mode 
     void CurrentMode()
@@ -190,7 +190,7 @@ public class MathAndAnswer : MonoBehaviour
         }
         countText++;
         //_guiManager1.countText.text = countT+$"{countText}";
-        //CountTextLocalization();//出題数をローカライズして取得
+        CountTextLocalization();//出題数をローカライズして取得
         //Gameシーンデバッグ用
         a = GameManager.singleton.currentMode;
         Debug.Log($"a_{a}");

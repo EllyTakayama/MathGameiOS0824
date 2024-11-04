@@ -13,6 +13,7 @@ public class DoGradeImage : MonoBehaviour
     public void DoImageChange(){
          transform.DOScale(new Vector3(1.2f, 1.2f, 1f), 0.6f)
         .SetRelative()
+        .SetLink(gameObject)
         ;
     }
 }

@@ -125,12 +125,12 @@ public class TipsPush : MonoBehaviour
         // (int)targetTimeSpans[0].TotalSeconds
         //  TotalSecondsで全部で何秒かに変換
         //  この値はdouble型なので(int)をつけることでint型に変換する
-        LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, 200, channelId, notificationIds[0]);
-        LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, 600, channelId, notificationIds[1]);
-        LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, 3600, channelId, notificationIds[2]);
-        //LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, (int)targetTimeSpans[0].TotalSeconds, channelId, notificationIds[0]);
-        //LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, (int)targetTimeSpans[1].TotalSeconds, channelId, notificationIds[1]);
-        //LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, (int)targetTimeSpans[2].TotalSeconds, channelId, notificationIds[2]);
+        //LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, 200, channelId, notificationIds[0]);
+        //LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, 600, channelId, notificationIds[1]);
+        //LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, 3600, channelId, notificationIds[2]);
+        LocalPushNotification.AddNotification(pushTitle, tipsTexts[0], 1, (int)targetTimeSpans[0].TotalSeconds, channelId, notificationIds[0]);
+        LocalPushNotification.AddNotification(pushTitle, tipsTexts[1], 2, (int)targetTimeSpans[1].TotalSeconds, channelId, notificationIds[1]);
+        LocalPushNotification.AddNotification(pushTitle, tipsTexts[2], 3, (int)targetTimeSpans[2].TotalSeconds, channelId, notificationIds[2]);
         LocalPushNotification.AddNotification(pushTitle, tipsTexts[3], 4, (int)targetTimeSpans[3].TotalSeconds, channelId, notificationIds[3]);
         LocalPushNotification.AddNotification(pushTitle, tipsTexts[4], 5, (int)targetTimeSpans[4].TotalSeconds, channelId, notificationIds[4]);
         //LocalPushNotification.AddNotification(pushTitle, pushTextList[5].ToString(), 6, (int)targetTimeSpans[5].TotalSeconds, channelId, notificationIds[5]);
@@ -157,7 +157,7 @@ public class TipsPush : MonoBehaviour
 
         //通知を送りたい時間を設定
         //今回は18時 0分 0秒
-        int targetPushHour = 15;
+        int targetPushHour = 17;
         int targetPushMinute = 0;
         int targetPushSecond = 0;
 
@@ -166,8 +166,8 @@ public class TipsPush : MonoBehaviour
 
         //アプリ起動日の18:00の日時データに日数を追加
         //これがプッシュ通知を送りたい日時になる
-        targetPushDateTimes[0] = basePushDateTime.AddDays(3);//3日後の18:00
-        targetPushDateTimes[1] = basePushDateTime.AddDays(7);//7日後の18:00
+        targetPushDateTimes[0] = basePushDateTime.AddDays(2);//3日後の18:00
+        targetPushDateTimes[1] = basePushDateTime.AddDays(6);//7日後の18:00
         targetPushDateTimes[2] = basePushDateTime.AddDays(14);//14日後の18:00
         targetPushDateTimes[3] = basePushDateTime.AddDays(21);//21日後の18:00
         targetPushDateTimes[4] = basePushDateTime.AddDays(28);//28日後の18:00

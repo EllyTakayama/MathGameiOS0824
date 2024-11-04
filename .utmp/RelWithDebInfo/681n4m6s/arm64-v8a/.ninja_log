@@ -1,5 +1,5 @@
 # ninja log v5
-182	331	1712960125398496383	/Users/rietakayama/MathGameiOS0828/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/681n4m6s/obj/arm64-v8a/libswappywrapper.so	f728f1340301e7cd
-0	182	1712960125284990294	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	2ae1489222843a9a
-1	608	1713877123992142580	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	2ae1489222843a9a
-608	1013	1713877124348248554	/Users/rietakayama/MathGameiOS0828/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/681n4m6s/obj/arm64-v8a/libswappywrapper.so	f728f1340301e7cd
+0	437	1714052529565754304	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	2ae1489222843a9a
+437	674	1714052529778492860	/Users/rietakayama/MathGameiOS0828/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/681n4m6s/obj/arm64-v8a/libswappywrapper.so	f728f1340301e7cd
+1	523	1728612251815569256	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	2ae1489222843a9a
+523	2643	1728612253909108112	/Users/rietakayama/MathGameiOS0828/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/681n4m6s/obj/arm64-v8a/libswappywrapper.so	f728f1340301e7cd

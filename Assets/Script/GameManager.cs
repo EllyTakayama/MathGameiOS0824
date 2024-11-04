@@ -6,6 +6,10 @@ using System.Runtime.Serialization.Formatters.Binary;//this is required to conve
 using UnityEngine.UI;
 using GoogleMobileAds.Api;
 using UniRx;
+using UnityEngine.Networking;
+#if UNITY_ANDROID
+using Google.Play.Review;
+#endif
 //MathAndScriptの方のゲームマネージャー
 
 public enum GameManagerMathsType
@@ -134,7 +138,7 @@ public class GameManager : MonoBehaviour {
 #if UNITY_IOS && !UNITY_EDITOR
         UnityEngine.iOS.Device.RequestStoreReview();
 #elif UNITY_ANDROID && !UNITY_EDITOR
-        StartCoroutine(RequestReviewAndroid());
+        RateAndReview();
 #else
         Debug.LogWarning("This platform is not support RequestReview.");
 #endif
@@ -143,27 +147,48 @@ public class GameManager : MonoBehaviour {
 
 #if UNITY_ANDROID
 
-    private IEnumerator RequestReviewAndroid()
+    private ReviewManager _reviewManager;
+    private PlayReviewInfo _playReviewInfo;
+    private Coroutine _coroutine;
+    private void RateAndReview()
     {
-        var reviewManager = new Google.Play.Review.ReviewManager();
-        var requestFlowOperation = reviewManager.RequestReviewFlow();
+        StartCoroutine(LaunchReview());
+    }
+    private IEnumerator InitReview(bool force = false)
+    {
+        if (_reviewManager == null) _reviewManager = new ReviewManager();
+
+        var requestFlowOperation = _reviewManager.RequestReviewFlow();
         yield return requestFlowOperation;
-        if (requestFlowOperation.Error != Google.Play.Review.ReviewErrorCode.NoError)
+        if (requestFlowOperation.Error != ReviewErrorCode.NoError)
         {
-            // Log error. For example, using requestFlowOperation.Error.ToString().
+            if (force) DirectlyOpen();
             yield break;
         }
-        var playReviewInfo = requestFlowOperation.GetResult();
-        var launchFlowOperation = reviewManager.LaunchReviewFlow(playReviewInfo);
-        yield return launchFlowOperation;
-        playReviewInfo = null; // Reset the object
-        if (launchFlowOperation.Error != Google.Play.Review.ReviewErrorCode.NoError)
+
+        _playReviewInfo = requestFlowOperation.GetResult();
+    }
+
+    public IEnumerator LaunchReview()
+    {
+        if (_playReviewInfo == null)
         {
-            // Log error. For example, using requestFlowOperation.Error.ToString().
+            if (_coroutine != null) StopCoroutine(_coroutine);
+            yield return StartCoroutine(InitReview(true));
+        }
+
+        var launchFlowOperation = _reviewManager.LaunchReviewFlow(_playReviewInfo);
+        yield return launchFlowOperation;
+        _playReviewInfo = null;
+        if (launchFlowOperation.Error != ReviewErrorCode.NoError)
+        {
+            //DirectlyOpen();
+            Debug.Log("AppReviewエラー");
             yield break;
         }
     }
-    
+
+    private void DirectlyOpen() { Application.OpenURL("https://play.google.com/store/apps/details?id=com.RieTakayama.MathGame"); }
 #endif
 
 }

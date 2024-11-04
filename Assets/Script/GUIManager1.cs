@@ -194,6 +194,11 @@ public class GUIManager1 : MonoBehaviour {
     void MenuBackMove(){
         EasySaveManager.singleton.Save();
         DOTween.KillAll();
+        // 以下の条件を追加してGameManager.singleton.SceneCountが4か16か32か40の場合にRequestReview()を呼び出す
+        if (GameManager.singleton.SceneCount == 4 || GameManager.singleton.SceneCount == 16 || GameManager.singleton.SceneCount == 32 || GameManager.singleton.SceneCount == 40)
+        {
+            GameManager.singleton.RequestReview();
+        }
         /*
         GameManager.singleton.SceneCount++;
         GameManager.singleton.SaveSceneCount();

@@ -68,6 +68,16 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 938e3614004f041a0b823aaa2bb9be72
+    m_Address: Assets/Localization/Kuku Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ce23eda6414442e38f2b703df306d75
+    m_Address: Assets/Localization/BuildTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: ba908bd7692554de39b5a442c39b6594, type: 2}
   m_SchemaSet:

@@ -8,6 +8,5 @@ using UnityEngine.Localization.Components;
 using System;
 [AddComponentMenu("Localization/Asset/" + nameof(LocalizedTextFontEvent))]
 public class LocalizedTextFontEvent : LocalizedAssetEvent<Font, LocalizedAsset<Font>, UnityEventTextFont> {}
-
 [Serializable]
 public class UnityEventTextFont : UnityEvent<Font> {}

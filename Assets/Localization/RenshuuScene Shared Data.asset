@@ -107,6 +107,10 @@ MonoBehaviour:
     m_Key: markTextBefore
     m_Metadata:
       m_Items: []
+  - m_Id: 1298628592263168
+    m_Key: endText
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

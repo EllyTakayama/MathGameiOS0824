@@ -211,7 +211,9 @@ public class GachaManager : MonoBehaviour
 		}
 	
 		//見せかけだけコインを減らす。ガチャ実行後にcoinNumを減らして保存
-		int temptCoin = GameManager.singleton.coinNum-= 150;
+		int temptCoin = GameManager.singleton.coinNum;
+		temptCoin -= 150;
+		Debug.Log($"temptCoin_{temptCoin}");
 		coinText.text = temptCoin.ToString();
 		//Debug時はオフ
 		

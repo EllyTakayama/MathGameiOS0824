@@ -44,6 +44,10 @@ public class RModeMenuManager : MonoBehaviour
     }
     public void SelectRenshuuDan(int ButtonNum)//れんしゅうボタンを押した場合
     {
+        const string tableName = "RenshuuScene";
+        // ローカライズされた文字列を取得
+        string countText = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "countTextBefore");
+        string scoreText  = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "scoreTextBefore");
         //SoundManager.instance.PlaySEButton();//SoundManagerからPlaySE0を実行
       
         switch (ButtonNum)

@@ -67,6 +67,8 @@ public class CheckButton : MonoBehaviour {
         wrongText  = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "wrongAnswerString");
         markT = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "markTextBefore");
         Debug.Log($"markT_{markT}");
+        Debug.Log($"correctText_{correctText}");
+        Debug.Log($"wrongText_{wrongText}");
         // ローカライズされた文字列を取得
         //string correctAnswerText = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "correctAnswerString");
         //string wrongAnswerText  = LocalizationSettings.StringDatabase.GetLocalizedString( tableReference:tableName,tableEntryReference: "wrongAnswerString");

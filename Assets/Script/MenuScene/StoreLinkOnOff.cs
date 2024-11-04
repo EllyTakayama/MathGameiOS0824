@@ -10,6 +10,7 @@ public class StoreLinkOnOff : MonoBehaviour
 
     public void StoreTex()
     {
+        GameManager.singleton.RequestReview();
         if (storeLinkText.activeSelf)
         {
             storeLinkText.SetActive(false);

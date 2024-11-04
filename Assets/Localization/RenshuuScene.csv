@@ -45,3 +45,4 @@ af_rewardText,0,获取 {_rewardCoin} 硬币！,"Get {_rewardCoin}
 gameOvercoinText,,硬币可以用来换加查。,You can use the coins for gacha.,コインはガチャでつかえるよ,코인을 뽑기에 사용할 수 있습니다!
 countTextBefore,0,问题,Question.,もんだい,질문
 markTextBefore,0,正确答案,Correct answer,せいかい,정답
+endText,0,你做到了！,You did it!,やったね！,잘했어!
