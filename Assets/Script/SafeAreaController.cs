@@ -25,17 +25,34 @@ public class SafeAreaController : MonoBehaviour
     private void ApplySafeArea(Rect r)
     {
         lastSafeArea = r;
-
-        // スクリーンのサイズに対するSafeAreaの比率を計算する
-        float ratio = (float)r.width / (float)r.height;
         SetSafeArea();
 
     }
 
     public void SetSafeArea()
     {
-        var panel = GetComponent<RectTransform>();
+        if (panelRectTransform == null || Screen.width <= 0 || Screen.height <= 0)
+            return;
+
         var area = Screen.safeArea;
+
+        // Unity 6のGameビューやAndroidの縦画面切り替え直後は、
+        // Screen.safeAreaとScreen.width/heightの向きが一時的に一致しないことがある。
+        // その状態の値をアンカーへ適用すると、Anchor Maxが1を超えてUIが画面外へずれる。
+        bool isValidSafeArea = area.width > 0f
+            && area.height > 0f
+            && area.xMin >= 0f
+            && area.yMin >= 0f
+            && area.xMax <= Screen.width
+            && area.yMax <= Screen.height;
+
+        if (!isValidSafeArea)
+        {
+            panelRectTransform.anchorMin = Vector2.zero;
+            panelRectTransform.anchorMax = Vector2.one;
+            return;
+        }
+
         /*
 
         print("panelRectTransform_" + panelRectTransform);

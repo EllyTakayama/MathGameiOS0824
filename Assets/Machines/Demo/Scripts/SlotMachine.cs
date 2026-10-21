@@ -138,7 +138,7 @@ namespace MinigamesDemo
             {
                 foreach (var body in balls)
                     if (body.bodyType != RigidbodyType2D.Static)
-                        body.velocity += Random.insideUnitCircle.normalized * Random.Range(minShuffleSpeed, maxShuffleSpeed) * powerOverIteration.Evaluate((float)index / shufflesCount);
+                        body.linearVelocity += Random.insideUnitCircle.normalized * Random.Range(minShuffleSpeed, maxShuffleSpeed) * powerOverIteration.Evaluate((float)index / shufflesCount);
 
                 yield return new WaitForSeconds(shufflesInterval);
             }
