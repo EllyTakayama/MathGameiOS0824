@@ -29,7 +29,7 @@ public class AdmobGReward : MonoBehaviour
     string _adUnitId = "ca-app-pub-7439888210247528/7409830625";//ここにiOSのリワード広告IDを入力
         
 #else
-        _adUnitId = "unexpected_platform";
+        string _adUnitId = "unexpected_platform";
 #endif
 
     private void Start()
