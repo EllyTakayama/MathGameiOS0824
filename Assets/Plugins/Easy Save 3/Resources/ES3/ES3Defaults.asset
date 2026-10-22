@@ -37,8 +37,8 @@ MonoBehaviour:
     - LeanCommonPlus
     - Google.Android.AppBundle.Editor
     - SimpleScrollSnap
-    - LeanCommon
     - LeanTouchPlus
+    - LeanCommon
     - ScriptablePacker
     - SimpleScrollSnapEditor
     - Google.Play.Common
